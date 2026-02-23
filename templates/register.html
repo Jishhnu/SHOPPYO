@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Seller Portal | LUXE Professional</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1a1a1a",
+                        "accent": "#3b82f6",
+                        "surface-low": "#f8fafc",
+                        "surface-high": "#ffffff",
+                        "border-muted": "#e2e8f0",
+                        "text-muted": "#64748b"
+                    },
+                    fontFamily: {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "md": "0.375rem", "lg": "0.5rem"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .technical-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+        }
+    </style>
+</head>
+<body class="bg-[#f1f5f9] text-[#0f172a] antialiased">
+<header class="sticky top-0 z-50 w-full border-b border-border-muted bg-white px-6 lg:px-12 py-3">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-7 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<div class="flex flex-col leading-none">
+<span class="text-lg font-bold tracking-tight">LUXE</span>
+<span class="technical-label text-[10px] text-accent">Business Division</span>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<nav class="hidden lg:flex gap-6 text-sm font-medium text-text-muted">
+<a class="hover:text-primary transition-colors" href="#">Solutions</a>
+<a class="hover:text-primary transition-colors" href="#">API Docs</a>
+<a class="hover:text-primary transition-colors" href="#">Logistics</a>
+</nav>
+<div class="flex items-center gap-4 border-l border-border-muted pl-8">
+<span class="text-sm text-text-muted hidden sm:block">Existing partner?</span>
+<button class="bg-primary text-white text-xs font-bold px-5 py-2 hover:bg-zinc-800 transition-all rounded">
+                    CONSOLE LOGIN
+                </button>
+</div>
+</div>
+</div>
+</header>
+<main class="min-h-[calc(100vh-140px)] flex flex-col items-center py-16 px-4">
+<div class="w-full max-w-[1000px]">
+<div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h2 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-2">Merchant Onboarding</h2>
+<p class="text-text-muted max-w-md">Complete the business verification to begin trading on the global LUXE infrastructure.</p>
+</div>
+<div class="bg-white border-l-4 border-accent p-5 shadow-sm max-w-sm rounded-r-lg">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-accent mt-0.5">verified_user</span>
+<div>
+<p class="text-[11px] font-bold text-accent technical-label mb-1">Enterprise Protocol</p>
+<p class="text-xs text-slate-600 leading-relaxed font-medium">
+                            Requires internal clearance? 
+                            <a class="text-accent underline decoration-2 underline-offset-2 hover:text-blue-700" href="#">Request Admin Provisioning</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white border border-border-muted shadow-2xl rounded-lg overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+<div class="lg:col-span-3 bg-slate-50 border-r border-border-muted p-6 hidden lg:block">
+<div class="space-y-1">
+<button class="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-text-muted hover:bg-white rounded">
+<span class="material-symbols-outlined text-lg">person</span>
+                        Customer Account
+                    </button>
+<button class="w-full flex items-center gap-3 px-3 py-2 text-sm font-bold text-primary bg-white border border-border-muted shadow-sm rounded">
+<span class="material-symbols-outlined text-lg text-accent">storefront</span>
+                        Seller Portal
+                    </button>
+</div>
+<div class="mt-auto pt-10">
+<div class="p-4 bg-slate-100 rounded border border-dashed border-slate-300">
+<p class="technical-label text-[9px] mb-2 text-slate-500">System Status</p>
+<div class="flex items-center gap-2 text-[11px] font-bold text-green-600">
+<span class="size-2 bg-green-500 rounded-full"></span>
+                            API ENDPOINTS ACTIVE
+                        </div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-9 p-8 md:p-12">
+<div class="flex lg:hidden border-b border-border-muted mb-8 -mx-8">
+<button class="flex-1 py-4 text-xs font-bold border-b-2 border-transparent text-text-muted">CUSTOMER</button>
+<button class="flex-1 py-4 text-xs font-bold border-b-2 border-primary text-primary">SELLER PORTAL</button>
+</div>
+<form class="space-y-8">
+<section>
+<h3 class="technical-label text-accent mb-6 flex items-center gap-2">
+<span class="size-1.5 bg-accent rounded-full"></span>
+                            01. Business Entity Information
+                        </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-1.5">
+<label class="text-[11px] font-bold text-slate-500 technical-label">Legal Company Name</label>
+<input class="w-full bg-slate-50 border border-slate-200 rounded px-4 py-2.5 text-sm focus:ring-1 focus:ring-accent focus:border-accent transition-all placeholder:text-slate-400" placeholder="Global Trade Ltd." required="" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-[11px] font-bold text-slate-500 technical-label">VAT / Tax Identification</label>
+<input class="w-full bg-slate-50 border border-slate-200 rounded px-4 py-2.5 text-sm focus:ring-1 focus:ring-accent focus:border-accent transition-all placeholder:text-slate-400" placeholder="GB123456789" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-[11px] font-bold text-slate-500 technical-label">Business Email (Authorized)</label>
+<input class="w-full bg-slate-50 border border-slate-200 rounded px-4 py-2.5 text-sm focus:ring-1 focus:ring-accent focus:border-accent transition-all placeholder:text-slate-400" placeholder="procurement@company.com" required="" type="email"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-[11px] font-bold text-slate-500 technical-label">Business Phone</label>
+<input class="w-full bg-slate-50 border border-slate-200 rounded px-4 py-2.5 text-sm focus:ring-1 focus:ring-accent focus:border-accent transition-all placeholder:text-slate-400" placeholder="+44 20 7946 0000" type="tel"/>
+</div>
+</div>
+</section>
+<section>
+<h3 class="technical-label text-accent mb-6 flex items-center gap-2">
+<span class="size-1.5 bg-accent rounded-full"></span>
+                            02. Security Configuration
+                        </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-1.5">
+<label class="text-[11px] font-bold text-slate-500 technical-label">Account Password</label>
+<div class="relative">
+<input class="w-full bg-slate-50 border border-slate-200 rounded px-4 py-2.5 text-sm focus:ring-1 focus:ring-accent focus:border-accent transition-all placeholder:text-slate-400" placeholder="••••••••" required="" type="password"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg cursor-pointer">visibility</span>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-[11px] font-bold text-slate-500 technical-label">Primary Contact Person</label>
+<input class="w-full bg-slate-50 border border-slate-200 rounded px-4 py-2.5 text-sm focus:ring-1 focus:ring-accent focus:border-accent transition-all placeholder:text-slate-400" placeholder="Lead Administrator Name" type="text"/>
+</div>
+</div>
+</section>
+<section>
+<h3 class="technical-label text-accent mb-6 flex items-center gap-2">
+<span class="size-1.5 bg-accent rounded-full"></span>
+                            03. Operational Profile
+                        </h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="space-y-1.5 md:col-span-1">
+<label class="text-[11px] font-bold text-slate-500 technical-label">Inventory Category</label>
+<select class="w-full bg-slate-50 border border-slate-200 rounded px-4 py-2.5 text-sm focus:ring-1 focus:ring-accent outline-none">
+<option>Consumer Electronics</option>
+<option>Apparel &amp; Textiles</option>
+<option>Industrial Equipment</option>
+<option>Home &amp; Lifestyle</option>
+</select>
+</div>
+<div class="space-y-1.5 md:col-span-2">
+<label class="text-[11px] font-bold text-slate-500 technical-label">Company Headquarters Address</label>
+<input class="w-full bg-slate-50 border border-slate-200 rounded px-4 py-2.5 text-sm focus:ring-1 focus:ring-accent focus:border-accent transition-all placeholder:text-slate-400" placeholder="Street, City, Postcode, Country" type="text"/>
+</div>
+</div>
+</section>
+<div class="pt-6 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-start gap-3">
+<input class="mt-1 size-4 rounded border-slate-300 text-primary focus:ring-accent" id="b2b-terms" type="checkbox"/>
+<label class="text-xs text-text-muted leading-relaxed" for="b2b-terms">
+                                I confirm authority to represent this entity and agree to the 
+                                <a class="text-primary font-bold hover:underline" href="#">Merchant Service Agreement</a>.
+                            </label>
+</div>
+<button class="w-full md:w-auto bg-primary text-white text-xs font-bold px-10 py-4 tracking-widest hover:bg-zinc-800 transition-all flex items-center justify-center gap-3">
+                            INITIALIZE ONBOARDING
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+<div class="mt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] technical-label text-slate-400">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">lock</span> 256-BIT ENCRYPTION</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">gavel</span> COMPLIANCE READY</span>
+</div>
+<p>Verification typically processed within 24-48 business hours.</p>
+</div>
+</div>
+</main>
+<footer class="w-full py-8 px-6 lg:px-12 border-t border-border-muted bg-white mt-12">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 opacity-80">
+<div class="size-5 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="font-bold text-xs tracking-[0.2em] uppercase">Luxe Business</span>
+</div>
+<p class="text-[10px] text-slate-400 font-medium">Infrastructure for Global Premium Trade</p>
+</div>
+<div class="flex flex-wrap justify-center gap-6 text-[11px] font-bold text-text-muted technical-label">
+<a class="hover:text-accent transition-colors" href="#">Legal</a>
+<a class="hover:text-accent transition-colors" href="#">Data Governance</a>
+<a class="hover:text-accent transition-colors" href="#">API SLA</a>
+<a class="hover:text-accent transition-colors" href="#">Merchant Portal</a>
+</div>
+<p class="text-[10px] text-slate-400 technical-label">
+            © 2024 LUXE GLOBAL INFRASTRUCTURE
+        </p>
+</div>
+</footer>
+
+</body></html>

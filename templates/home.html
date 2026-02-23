@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DjangoStore | Professional E-commerce</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "blue-gray": {
+                            50: "#f8fafc",
+                            100: "#f1f5f9",
+                            200: "#e2e8f0",
+                            300: "#cbd5e1",
+                            400: "#94a3b8",
+                            500: "#64748b",
+                            600: "#475569",
+                            700: "#334155",
+                            800: "#1e293b",
+                            900: "#0f172a",
+                        }
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .product-card:hover .cart-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-blue-gray-900 dark:text-white font-display">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden">
+<!-- Navigation Bar -->
+<header class="sticky top-0 z-50 w-full border-b border-blue-gray-200 bg-white/95 backdrop-blur-sm dark:bg-background-dark/95 dark:border-blue-gray-800">
+<div class="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-4 lg:px-12">
+<!-- Logo & Search -->
+<div class="flex items-center gap-12 flex-1">
+<a class="flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-primary text-3xl">terminal</span>
+<h1 class="text-xl font-bold tracking-tight text-blue-gray-900 dark:text-white">DjangoStore</h1>
+</a>
+<div class="hidden md:flex flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-blue-gray-400">search</span>
+<input class="w-full rounded-lg border-blue-gray-200 bg-blue-gray-50 py-2 pl-10 pr-4 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:bg-blue-gray-800 dark:border-blue-gray-700 dark:text-white" placeholder="Search for premium tech..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden lg:flex items-center gap-8 px-8">
+<a class="text-sm font-semibold text-blue-gray-600 hover:text-primary transition-colors dark:text-blue-gray-300" href="#">Categories</a>
+<a class="text-sm font-semibold text-blue-gray-600 hover:text-primary transition-colors dark:text-blue-gray-300" href="#">New Arrivals</a>
+<a class="text-sm font-semibold text-blue-gray-600 hover:text-primary transition-colors dark:text-blue-gray-300" href="#">Trending</a>
+<a class="text-sm font-semibold text-blue-gray-600 hover:text-primary transition-colors dark:text-blue-gray-300" href="#">Deals</a>
+</nav>
+<!-- User Actions -->
+<div class="flex items-center gap-4">
+<button class="p-2 text-blue-gray-600 hover:text-primary dark:text-blue-gray-300">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="relative p-2 text-blue-gray-600 hover:text-primary dark:text-blue-gray-300">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">3</span>
+</button>
+<button class="hidden sm:flex items-center gap-2 rounded-lg bg-blue-gray-100 px-4 py-2 text-sm font-bold text-blue-gray-900 hover:bg-blue-gray-200 transition-colors dark:bg-blue-gray-800 dark:text-white dark:hover:bg-blue-gray-700">
+<span class="material-symbols-outlined text-[20px]">person</span>
+                        Account
+                    </button>
+</div>
+</div>
+</header>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="mx-auto max-w-[1440px] px-6 py-8 lg:px-12">
+<div class="relative overflow-hidden rounded-2xl bg-blue-gray-900 @container">
+<div class="flex flex-col-reverse lg:flex-row items-center">
+<div class="flex flex-col gap-6 p-8 lg:p-16 lg:w-1/2">
+<span class="inline-block w-fit rounded-full bg-primary/20 px-4 py-1 text-xs font-bold uppercase tracking-widest text-primary">New Season 2024</span>
+<h2 class="text-4xl font-extrabold leading-tight text-white md:text-6xl">Upgrade Your Tech Stack</h2>
+<p class="text-lg text-blue-gray-300">Experience the next generation of performance with our Django-powered platform. Fast, secure, and built for professionals.</p>
+<div class="flex flex-wrap gap-4 pt-4">
+<button class="rounded-lg bg-primary px-8 py-4 font-bold text-white transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30">Shop Collection</button>
+<button class="rounded-lg border border-white/20 px-8 py-4 font-bold text-white hover:bg-white/10">View Deals</button>
+</div>
+</div>
+<div class="h-[300px] w-full lg:h-[600px] lg:w-1/2 bg-cover bg-center" data-alt="High-end workstation computer setup with multiple monitors" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCVw_etJg12IFiG2DphsF8dnAyn5365ArUpnSe1g71PijBLKYe6lBOUWBSUOkAvjrlzTCehtG0M4aYC8mNJqUxNXYUBD1umdBEsFmPy2SYdhfQXBDpadA0XPQgGcv5n9NSmC5gDvqFws7rfesguzQ4rIfCEh5rs-FMSF1qXnXvwyfPawixzZg7lrwijYCvyAObnLI67RruBCYMYRP9FOfqBPhoq1_nJiAfnszk5NT_495NFPA1_0CBcFEv97AZeJdzjgT9eek2lsgZ2');"></div>
+</div>
+</div>
+</section>
+<!-- Trust Bar -->
+<section class="mx-auto max-w-[1440px] px-6 lg:px-12 pb-12">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="flex items-center gap-4 rounded-xl border border-blue-gray-200 bg-white p-6 dark:bg-blue-gray-900/50 dark:border-blue-gray-800">
+<span class="material-symbols-outlined text-primary text-3xl">local_shipping</span>
+<div>
+<p class="font-bold text-blue-gray-900 dark:text-white">Free Shipping</p>
+<p class="text-xs text-blue-gray-500">On orders over $99</p>
+</div>
+</div>
+<div class="flex items-center gap-4 rounded-xl border border-blue-gray-200 bg-white p-6 dark:bg-blue-gray-900/50 dark:border-blue-gray-800">
+<span class="material-symbols-outlined text-primary text-3xl">support_agent</span>
+<div>
+<p class="font-bold text-blue-gray-900 dark:text-white">24/7 Support</p>
+<p class="text-xs text-blue-gray-500">Always here to help</p>
+</div>
+</div>
+<div class="flex items-center gap-4 rounded-xl border border-blue-gray-200 bg-white p-6 dark:bg-blue-gray-900/50 dark:border-blue-gray-800">
+<span class="material-symbols-outlined text-primary text-3xl">security</span>
+<div>
+<p class="font-bold text-blue-gray-900 dark:text-white">Secure Payments</p>
+<p class="text-xs text-blue-gray-500">100% encryption</p>
+</div>
+</div>
+<div class="flex items-center gap-4 rounded-xl border border-blue-gray-200 bg-white p-6 dark:bg-blue-gray-900/50 dark:border-blue-gray-800">
+<span class="material-symbols-outlined text-primary text-3xl">currency_exchange</span>
+<div>
+<p class="font-bold text-blue-gray-900 dark:text-white">Money Back</p>
+<p class="text-xs text-blue-gray-500">30-day guarantee</p>
+</div>
+</div>
+</div>
+</section>
+<!-- New Arrivals Section -->
+<section class="mx-auto max-w-[1440px] px-6 py-12 lg:px-12">
+<div class="mb-8 flex items-end justify-between">
+<div>
+<h3 class="text-3xl font-extrabold text-blue-gray-900 dark:text-white">New Arrivals</h3>
+<p class="mt-2 text-blue-gray-500">The latest gadgets curated just for you.</p>
+</div>
+<a class="group flex items-center gap-1 font-bold text-primary" href="#">
+                        View All 
+                        <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+<!-- Product Card 1 -->
+<div class="product-card group relative flex flex-col gap-4 overflow-hidden">
+<div class="aspect-square relative overflow-hidden rounded-xl bg-blue-gray-100">
+<img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Professional studio wireless over-ear headphones in matte black" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtplGalBRqEUX1UKgmfRwclrtSlmiIx3FnhmdGJryRNr2_RPwo4wxKjY81RvJlniVnj02J4mOJEWVTT3xcqVuumEGvUm8K0GZOGRAnPytnyyAFAqXIbKTAL0_PKbJBU5TfhQR_puE-C1eGJRuEMlJ4cjZzFlN-nHefeHwNZ3I0-6r7VFkWVVwHKwM__fikbYWgRYAVeHjDscxkS3CKO_J-DTfzD2xU5AImBfLXWKwJx3sfR0diw2b_xv_VPdaThmOpooiIH_ex5aXy"/>
+<div class="absolute top-3 left-3 rounded bg-primary px-2 py-1 text-[10px] font-black text-white">NEW</div>
+<div class="cart-btn absolute inset-x-3 bottom-3 translate-y-4 opacity-0 transition-all duration-300">
+<button class="w-full rounded-lg bg-white/90 py-3 text-sm font-bold text-blue-gray-900 shadow-xl backdrop-blur-md hover:bg-primary hover:text-white transition-colors">Quick Add</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="font-bold text-blue-gray-800 dark:text-blue-gray-100">Pro Audio Wireless Headphones</h4>
+<div class="flex items-center gap-2">
+<span class="text-lg font-black text-primary">$299.00</span>
+<div class="flex items-center text-yellow-500">
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="text-xs font-bold text-blue-gray-500 ml-1">4.9</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="product-card group relative flex flex-col gap-4 overflow-hidden">
+<div class="aspect-square relative overflow-hidden rounded-xl bg-blue-gray-100">
+<img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Minimalist white designer wristwatch with silver accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGFt7B_wQDQB0JE4Szte4ziZs0e31Z9I_JLfpkH07qc6Ob_6Vg3Ic94c8wKJEbR6vIB7BuVFCNNQ-oaihXvmmNy6QdZt_3gyzvyl-HwCKJ0KdQj2yao7g9NtKEH1Dh6nE33M9mjZstTWxY5ufmUQGk95eH-wEXDOLTT4bCnRkhUGN7UmnwN_YVsZXwHnl4iDQz8gRy5oNt7IfrtpQAUDZmprOYnVyuvoJY8KektXmv4davHrLhSzE6yxqsmqxWKOo3NfxRCBxMRbM4"/>
+<div class="cart-btn absolute inset-x-3 bottom-3 translate-y-4 opacity-0 transition-all duration-300">
+<button class="w-full rounded-lg bg-white/90 py-3 text-sm font-bold text-blue-gray-900 shadow-xl backdrop-blur-md hover:bg-primary hover:text-white transition-colors">Quick Add</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="font-bold text-blue-gray-800 dark:text-blue-gray-100">Minimalist Quartz Watch</h4>
+<div class="flex items-center gap-2">
+<span class="text-lg font-black text-primary">$159.00</span>
+<div class="flex items-center text-yellow-500">
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="text-xs font-bold text-blue-gray-500 ml-1">4.8</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="product-card group relative flex flex-col gap-4 overflow-hidden">
+<div class="aspect-square relative overflow-hidden rounded-xl bg-blue-gray-100">
+<img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Mechanical keyboard with RGB lighting on dark desk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcHBra_Ot7wr5xk_sbYfuw5C_nvQ3D76SwkmHiMZZVWTneFw1OACl0f0j9matPF_S3xPtK9Pt-74I6LnqVOVw8n8-f2GbugoziDMRXIgIA-JIqQp4LUjFDBT1Ie5FmDJSdNgPpkzKDJ6cSaMQj0qWtSL99VMCyDV8EEVrmY3wdQjhSkEHXHsYbgv1xcJ9rdonoX-zqiCEe1NyzmmwXnqD5UwLLnBXzftqeR4UNWWVozvK2PljlDII6xT4xNYT0IiPv2pHrTzIdiw_6"/>
+<div class="cart-btn absolute inset-x-3 bottom-3 translate-y-4 opacity-0 transition-all duration-300">
+<button class="w-full rounded-lg bg-white/90 py-3 text-sm font-bold text-blue-gray-900 shadow-xl backdrop-blur-md hover:bg-primary hover:text-white transition-colors">Quick Add</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="font-bold text-blue-gray-800 dark:text-blue-gray-100">Tactile Mechanical Keyboard</h4>
+<div class="flex items-center gap-2">
+<span class="text-lg font-black text-primary">$129.00</span>
+<div class="flex items-center text-yellow-500">
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="text-xs font-bold text-blue-gray-500 ml-1">4.7</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="product-card group relative flex flex-col gap-4 overflow-hidden">
+<div class="aspect-square relative overflow-hidden rounded-xl bg-blue-gray-100">
+<img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="High-resolution digital camera lens reflecting light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTWPDF6BbxZeqd2C49yiZRQaKpJQJVzbBaEbnA3fl90_foBXiQARdhuZYz_nNvctV5CzaWZjFDn7zNYJLrgeBJ55-UZhdmFkY-Asai5a0pa16LM5CYoL5vSgJeabiDU-JQVgcIN_S4h0RVqO3_iSlvXGcb8C2BB58Pr7VoYPi1sMh_eESpz8w1RdGaY4_eBDgTiE9sj_x2b68QFXY4hCZst1z6R8EdwkeiTZcVAcuKHl4H0Zm4CUk_O-FfhiCtDoRaSzKEJegCWqFT"/>
+<div class="cart-btn absolute inset-x-3 bottom-3 translate-y-4 opacity-0 transition-all duration-300">
+<button class="w-full rounded-lg bg-white/90 py-3 text-sm font-bold text-blue-gray-900 shadow-xl backdrop-blur-md hover:bg-primary hover:text-white transition-colors">Quick Add</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="font-bold text-blue-gray-800 dark:text-blue-gray-100">85mm f/1.4 Portrait Lens</h4>
+<div class="flex items-center gap-2">
+<span class="text-lg font-black text-primary">$849.00</span>
+<div class="flex items-center text-yellow-500">
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="text-xs font-bold text-blue-gray-500 ml-1">5.0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trending Section -->
+<section class="bg-blue-gray-50 dark:bg-blue-gray-900/30">
+<div class="mx-auto max-w-[1440px] px-6 py-20 lg:px-12">
+<div class="mb-12 text-center">
+<h3 class="text-3xl font-extrabold text-blue-gray-900 dark:text-white">Trending Now</h3>
+<p class="mt-2 text-blue-gray-500">Items that everyone's talking about.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Featured Promo 1 -->
+<div class="group relative h-[400px] overflow-hidden rounded-2xl">
+<img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Close up of a premium smartphone and accessories" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPx9QYKQRZe99yOp5Ih9WXE2s5p3oeBO-3YIBL1wlTey7UK3GucXy37yIIV9CyXI-gOWi1ZXgZ83K8Ue25DmQTcUfBlYrNF6PWeYlFOerVGlso-OD6oVGFq1mAG9VIZReMwPfX6A92tRUS7rzc6m98UNqRL6Lw2d8MrvyvF_vEl54973iRbow4Vcn4-ZA1g7HJ4L9oJe7WtFAU_NWftwRA9uqLaCoct2-vcvoL14UQMcIAxwhjgsMu-T-ayXgnkh5nPLvyHGU7CR8w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-blue-gray-900/80 via-transparent to-transparent p-10 flex flex-col justify-end">
+<h4 class="text-2xl font-bold text-white">Smart Living</h4>
+<p class="mb-4 text-blue-gray-200">The most popular IoT devices for your modern home.</p>
+<button class="w-fit rounded-lg bg-white px-6 py-3 font-bold text-blue-gray-900 hover:bg-primary hover:text-white transition-colors">Shop Smart</button>
+</div>
+</div>
+<!-- Featured Promo 2 -->
+<div class="group relative h-[400px] overflow-hidden rounded-2xl">
+<img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Modern laptop open on a wooden table with coffee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi-PT9E1f-ZzCELPa2WMrYZs84StO76TwMJdRyS6Z8-un1p25LVkHbM5vE2HIoCAGmrJX16yTyWmj35gKUHwAvAOXERSJDHmEbAPpJl5OSgtKfA0AsdDJU5crZhwCo1NxOY7buHqb6dJN9TOydkS_7-9hBc0Jw5T7V7Oci4E2leJdQDjwdSwKQc7O4P_1fBoXN4btNrWPvg9Oz_N6nJW5sJaQ1OxrrsoqpqYltyh3kmDq2a9SRzXGm4TIeB9wm8pFuVBbvSi0SghHX"/>
+<div class="absolute inset-0 bg-gradient-to-t from-blue-gray-900/80 via-transparent to-transparent p-10 flex flex-col justify-end">
+<h4 class="text-2xl font-bold text-white">Office Essentials</h4>
+<p class="mb-4 text-blue-gray-200">Everything you need for a peak performance workspace.</p>
+<button class="w-fit rounded-lg bg-white px-6 py-3 font-bold text-blue-gray-900 hover:bg-primary hover:text-white transition-colors">Browse Gear</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="border-t border-blue-gray-200 bg-white pt-16 pb-8 dark:bg-background-dark dark:border-blue-gray-800">
+<div class="mx-auto max-w-[1440px] px-6 lg:px-12">
+<div class="grid grid-cols-1 gap-12 lg:grid-cols-4">
+<div class="flex flex-col gap-6">
+<a class="flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-primary text-3xl">terminal</span>
+<h2 class="text-xl font-bold text-blue-gray-900 dark:text-white">DjangoStore</h2>
+</a>
+<p class="text-sm text-blue-gray-500 leading-relaxed">
+                            Leading the way in high-performance electronics and accessories. Powered by an enterprise-grade Django infrastructure for seamless shopping.
+                        </p>
+<div class="flex gap-4">
+<a class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-gray-100 text-blue-gray-600 hover:bg-primary hover:text-white transition-colors dark:bg-blue-gray-800" href="#">
+<span class="material-symbols-outlined text-[20px]">public</span>
+</a>
+<a class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-gray-100 text-blue-gray-600 hover:bg-primary hover:text-white transition-colors dark:bg-blue-gray-800" href="#">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</a>
+<a class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-gray-100 text-blue-gray-600 hover:bg-primary hover:text-white transition-colors dark:bg-blue-gray-800" href="#">
+<span class="material-symbols-outlined text-[20px]">contact_support</span>
+</a>
+</div>
+</div>
+<div>
+<h5 class="mb-6 font-bold text-blue-gray-900 dark:text-white">Quick Links</h5>
+<ul class="flex flex-col gap-4 text-sm text-blue-gray-500">
+<li><a class="hover:text-primary" href="#">New Arrivals</a></li>
+<li><a class="hover:text-primary" href="#">Best Sellers</a></li>
+<li><a class="hover:text-primary" href="#">Trending Products</a></li>
+<li><a class="hover:text-primary" href="#">Flash Sale</a></li>
+</ul>
+</div>
+<div>
+<h5 class="mb-6 font-bold text-blue-gray-900 dark:text-white">Support</h5>
+<ul class="flex flex-col gap-4 text-sm text-blue-gray-500">
+<li><a class="hover:text-primary" href="#">Help Center</a></li>
+<li><a class="hover:text-primary" href="#">Track Order</a></li>
+<li><a class="hover:text-primary" href="#">Shipping Policy</a></li>
+<li><a class="hover:text-primary" href="#">Return &amp; Refund</a></li>
+</ul>
+</div>
+<div>
+<h5 class="mb-6 font-bold text-blue-gray-900 dark:text-white">Stay Updated</h5>
+<p class="mb-4 text-sm text-blue-gray-500">Join our newsletter for exclusive offers and tech news.</p>
+<div class="flex gap-2">
+<input class="w-full rounded-lg border-blue-gray-200 bg-blue-gray-50 px-4 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:bg-blue-gray-800 dark:border-blue-gray-700" placeholder="Email address" type="email"/>
+<button class="rounded-lg bg-primary px-4 py-2 font-bold text-white hover:bg-primary/90">Join</button>
+</div>
+</div>
+</div>
+<div class="mt-16 border-t border-blue-gray-200 pt-8 dark:border-blue-gray-800">
+<div class="flex flex-col items-center justify-between gap-4 md:flex-row">
+<p class="text-xs text-blue-gray-400">© 2024 DjangoStore Enterprise. All rights reserved.</p>
+<div class="flex gap-6 text-xs text-blue-gray-400">
+<a class="hover:text-blue-gray-600" href="#">Privacy Policy</a>
+<a class="hover:text-blue-gray-600" href="#">Terms of Service</a>
+<a class="hover:text-blue-gray-600" href="#">Cookie Settings</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

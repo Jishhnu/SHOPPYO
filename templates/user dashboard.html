@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Dashboard | DjangoShop</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-gray-100 font-display">
+<div class="flex min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="w-72 bg-white dark:bg-gray-900 border-r border-[#dbdfe6] dark:border-gray-800 flex flex-col fixed h-full">
+<div class="p-6 border-b border-[#f0f2f4] dark:border-gray-800 flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">shopping_bag</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">DjangoShop</h2>
+</div>
+<nav class="flex-1 p-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">package</span>
+<span>Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span>Wishlist</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span>Addresses</span>
+</a>
+<div class="pt-4 mt-4 border-t border-[#f0f2f4] dark:border-gray-800">
+<p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Account</p>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</nav>
+<div class="p-4">
+<div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex items-center gap-3 border border-[#f0f2f4] dark:border-gray-700">
+<div class="w-10 h-10 rounded-full bg-cover bg-center border-2 border-white dark:border-gray-700 shadow-sm" data-alt="User profile avatar circle" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCxmy4wOV8x7otPu6fE-_VkRPE1RVpnu08AEO5S-fDo-vyIDSEDFvMYQQbP-rwpz405l3S9FXq5AmYW_dUAMXMOesnPG6sbXhShRN7BclFWX9Jhd4iHLiq9OycDbL-wmTkTzEhG4HYYhihUjoCWIMdKZGJMZ1dm6Tp0IfI0dqnd8NEEaYjmKUyAefcyHO6-C-MopR4bRhYP-E2u02kPEM4dB06SeTEGfZu07gsBa-eiBVsJMEJR61QQfyaNgfpIxSsXMjXzJPI4O4U5');"></div>
+<div class="overflow-hidden">
+<p class="text-sm font-bold truncate">Alex Johnson</p>
+<p class="text-xs text-gray-500 truncate">Customer Account</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 ml-72">
+<!-- Top Header -->
+<header class="h-16 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-10 px-8 flex items-center justify-between border-b border-[#dbdfe6] dark:border-gray-800">
+<div class="flex items-center gap-2 text-sm text-gray-500">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-gray-900 dark:text-gray-100 font-medium">Dashboard</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</header>
+<div class="p-8 max-w-7xl mx-auto space-y-8">
+<!-- Welcome Section -->
+<div>
+<h1 class="text-3xl font-extrabold tracking-tight">Welcome back, Alex</h1>
+<p class="text-gray-600 dark:text-gray-400 mt-1">Here is a quick overview of your activity and recent orders.</p>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-[#dbdfe6] dark:border-gray-800 flex items-center gap-4 shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">local_mall</span>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-500">Total Orders</p>
+<h3 class="text-2xl font-bold">24</h3>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-[#dbdfe6] dark:border-gray-800 flex items-center gap-4 shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-green-100 text-green-600 flex items-center justify-center">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-500">Active Shipments</p>
+<h3 class="text-2xl font-bold">1</h3>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-[#dbdfe6] dark:border-gray-800 flex items-center gap-4 shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center">
+<span class="material-symbols-outlined">star</span>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-500">Reward Points</p>
+<h3 class="text-2xl font-bold">450</h3>
+</div>
+</div>
+</div>
+<!-- Main Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left: Recent Order & Account Details -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Order Status Card -->
+<section class="bg-white dark:bg-gray-900 rounded-2xl border border-[#dbdfe6] dark:border-gray-800 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-[#f0f2f4] dark:border-gray-800 flex justify-between items-center">
+<h2 class="font-bold text-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">shopping_cart</span>
+                                    Most Recent Order
+                                </h2>
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">In Transit</span>
+</div>
+<div class="p-6 space-y-6">
+<div class="flex flex-wrap gap-x-12 gap-y-4">
+<div>
+<p class="text-xs text-gray-500 uppercase font-bold tracking-widest">Order ID</p>
+<p class="font-semibold text-[#111318] dark:text-gray-100">#ORD-772189</p>
+</div>
+<div>
+<p class="text-xs text-gray-500 uppercase font-bold tracking-widest">Ordered On</p>
+<p class="font-semibold text-[#111318] dark:text-gray-100">Oct 24, 2023</p>
+</div>
+<div>
+<p class="text-xs text-gray-500 uppercase font-bold tracking-widest">Expected Delivery</p>
+<p class="font-semibold text-[#111318] dark:text-gray-100">Oct 28, 2023</p>
+</div>
+</div>
+<!-- Stepper -->
+<div class="relative py-4">
+<div class="absolute top-1/2 left-0 w-full h-1 bg-gray-100 dark:bg-gray-800 -translate-y-1/2 rounded-full"></div>
+<div class="absolute top-1/2 left-0 w-2/3 h-1 bg-primary -translate-y-1/2 rounded-full"></div>
+<div class="relative flex justify-between">
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm">
+<span class="material-symbols-outlined text-base">check</span>
+</div>
+<span class="text-[10px] font-bold mt-2 text-gray-400">Confirmed</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm">
+<span class="material-symbols-outlined text-base">check</span>
+</div>
+<span class="text-[10px] font-bold mt-2 text-gray-400">Shipped</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm animate-pulse">
+<span class="material-symbols-outlined text-base">local_shipping</span>
+</div>
+<span class="text-[10px] font-bold mt-2 text-primary">In Transit</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-400 flex items-center justify-center text-sm">
+<span class="material-symbols-outlined text-base">home</span>
+</div>
+<span class="text-[10px] font-bold mt-2 text-gray-400">Delivered</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-[#f0f2f4] dark:border-gray-800">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center overflow-hidden">
+<img alt="Product thumbnail" class="object-cover" data-alt="Product thumbnail of a high-end smartphone" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN1WJYEM82iz2tHdqU3eprcBfQsLWNxVLyBQg1HDgv4s_6RVUmim7StWc1LFKK8FByU6vAINZjpSHtRWakSqgbrCWswMd4leLPDzMwDMTunGQ1H-FT2Vi9unBarB7D9oTD3d2k67OxHFu2z1Vunv7psc1b6E8NcHNq-b3He6ar88LHh_SuWI2yFnNHhhWxUVi1Z8KQCroinGlrLrbUZZEw57dupFGsJ80BrbOiGFrDfkX0XwV1BA6g3dyUk4HyxsW8TQxINFW9JUK9"/>
+</div>
+<div>
+<p class="text-sm font-bold">Quantum X Smartphone</p>
+<p class="text-xs text-gray-500">Quantity: 1 • $899.00</p>
+</div>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md shadow-primary/20">
+                                        Track Order
+                                    </button>
+</div>
+</div>
+</section>
+<!-- Account Summary -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-white dark:bg-gray-900 rounded-2xl border border-[#dbdfe6] dark:border-gray-800 p-6 shadow-sm">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-bold">Default Shipping Address</h3>
+<button class="text-primary text-sm font-bold hover:underline">Edit</button>
+</div>
+<div class="space-y-1 text-gray-600 dark:text-gray-400 text-sm">
+<p class="font-bold text-gray-900 dark:text-gray-100">Alex Johnson</p>
+<p>123 Innovation Drive</p>
+<p>Tech Valley, CA 94043</p>
+<p>United States</p>
+<p class="pt-2 flex items-center gap-2"><span class="material-symbols-outlined text-xs">call</span> +1 (555) 000-1234</p>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-900 rounded-2xl border border-[#dbdfe6] dark:border-gray-800 p-6 shadow-sm">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-bold">Primary Payment</h3>
+<button class="text-primary text-sm font-bold hover:underline">Edit</button>
+</div>
+<div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl border border-dashed border-[#dbdfe6] dark:border-gray-700">
+<div class="w-10 h-6 bg-[#1a1f71] rounded flex items-center justify-center">
+<span class="text-[8px] text-white font-bold italic">VISA</span>
+</div>
+<div>
+<p class="text-xs font-bold">Visa Ending in 4242</p>
+<p class="text-[10px] text-gray-500 uppercase tracking-widest">Expires 12/26</p>
+</div>
+</div>
+<p class="mt-4 text-xs text-gray-500">Your card is securely stored for faster checkout. No CVV is saved on our servers.</p>
+</div>
+</section>
+</div>
+<!-- Right Side: Wishlist Quick View -->
+<aside class="space-y-6">
+<section class="bg-white dark:bg-gray-900 rounded-2xl border border-[#dbdfe6] dark:border-gray-800 shadow-sm overflow-hidden flex flex-col h-full">
+<div class="p-6 border-b border-[#f0f2f4] dark:border-gray-800 flex justify-between items-center">
+<h2 class="font-bold text-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">favorite</span>
+                                    Your Wishlist
+                                </h2>
+<a class="text-xs font-bold text-primary hover:underline" href="#">See All</a>
+</div>
+<div class="p-6 space-y-5">
+<!-- Wishlist Item 1 -->
+<div class="flex items-center gap-4 group">
+<div class="size-16 rounded-xl bg-gray-100 dark:bg-gray-800 p-1 shrink-0 overflow-hidden">
+<img alt="Watch product" class="w-full h-full object-cover rounded-lg" data-alt="High-end minimalist silver watch" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyPgWKvTubSxesIM-qq7eNXKOjhpr0U02Z4LiC0DN0VHfha-m6EMuu9lSdZDgnfXgLbqcGLMhpSu-XNtiMlPWaLCN3LGGo8KsS39MARixcEcJ5F3iSmblfGsNoOUnTciPztuL9avwCL51yfISSYgyV6YHkyZBHk_WbXN9qkPQSDRO-os1pkzUBnn0kMnWDNP1LBpiCATfqCDSl1uBtwSD6PKtTF-Cv_SSjVRBVsiTVCJAHDN3WURWhxhrLya5VZjY9rhgvUk5Tj1TL"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold leading-tight group-hover:text-primary transition-colors">Aether Hybrid Smartwatch</p>
+<p class="text-primary font-bold text-sm">$249.00</p>
+</div>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+<!-- Wishlist Item 2 -->
+<div class="flex items-center gap-4 group">
+<div class="size-16 rounded-xl bg-gray-100 dark:bg-gray-800 p-1 shrink-0 overflow-hidden">
+<img alt="Headphones product" class="w-full h-full object-cover rounded-lg" data-alt="Noise cancelling wireless over-ear headphones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxY4sysDEW1BOyrXoVTShXgVpWkEy_tc-b-do75H4IIY4y0db0zyraPmCjC9_4zsPxsLWdo7LjzLgfnC4ZUgE1AxkKJMT7RxzOeI8Oo-0BA7ASQGNiBMyX10SkvDld6RSqqdCBWlm5GO7fqlzwdpw_Lrf5d7MiA9M9XBb168tPTrZa1iZ7P2kz1IsVMEfg2KJCl_5wwYoGBED5bRMMvj9RTLw78qdbLyCOz5tyhue1AkY38knqo11AePweEwG7pR-NjggjgCTt8lS6"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold leading-tight group-hover:text-primary transition-colors">SonicPure NC Headphones</p>
+<p class="text-primary font-bold text-sm">$320.00</p>
+</div>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+<!-- Wishlist Item 3 -->
+<div class="flex items-center gap-4 group">
+<div class="size-16 rounded-xl bg-gray-100 dark:bg-gray-800 p-1 shrink-0 overflow-hidden">
+<img alt="Backpack product" class="w-full h-full object-cover rounded-lg" data-alt="Matte black waterproof commuter backpack" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzEburBePZ_vFkF50xdi9hNFIU7j2zRx46FfnaU8MFW6b667xDNuFVbr0wvFajBcuz4I6sPljpi8tfakDV7LOlJexLv_l70xG8ioVKQusMmNDKHLNeaTM8U3E7PVjLSMm6C2xZlFmrVedbtBgQQxbxNhlaoI1pB6saslTUfVsRnRn6h7ATPICTKaQ63aRAQXCBtDxCQpAVBP3ysJnxLTOwSPkowQEBDi4Ht2HSnR4mFJ-y8311TCIVwcdsQvLT0Vu78VKClmxeHl2O"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold leading-tight group-hover:text-primary transition-colors">Urban Nomad Backpack</p>
+<p class="text-primary font-bold text-sm">$125.00</p>
+</div>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+<button class="w-full py-3 rounded-xl bg-gray-100 dark:bg-gray-800 font-bold text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors mt-4">
+                                    Manage Wishlist
+                                </button>
+</div>
+</section>
+<!-- Help Widget -->
+<div class="bg-primary rounded-2xl p-6 text-white relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="font-bold text-lg mb-2">Need Help?</h3>
+<p class="text-white/80 text-sm mb-4">Our support team is available 24/7 to help you with your orders.</p>
+<button class="bg-white text-primary font-bold px-4 py-2 rounded-lg text-sm shadow-lg">
+                                    Chat with Us
+                                </button>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-white/10 text-[120px] pointer-events-none">support_agent</span>
+</div>
+</aside>
+</div>
+</div>
+</main>
+</div>
+</body></html>

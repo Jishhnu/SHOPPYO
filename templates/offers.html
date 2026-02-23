@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Offers &amp; Promotions | DjangoCommerce</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "slate-custom": "#334155",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-custom dark:text-gray-100 antialiased">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-white dark:bg-background-dark border-b border-gray-200 dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<!-- Logo -->
+<div class="flex items-center gap-2">
+<div class="text-primary">
+<svg class="w-8 h-8" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="text-xl font-extrabold tracking-tight text-slate-custom dark:text-white">DjangoCommerce</span>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Shop</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Categories</a>
+<a class="text-sm font-semibold text-primary border-b-2 border-primary" href="#">Offers</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Deals</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Support</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+<span class="material-symbols-outlined text-sm">search</span>
+</span>
+<input class="block w-full pl-10 pr-3 py-2 border-none bg-gray-100 dark:bg-gray-800 rounded-lg text-sm placeholder-gray-500 focus:ring-2 focus:ring-primary" placeholder="Search offers..." type="text"/>
+</div>
+<button class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-all">Login</button>
+<div class="w-9 h-9 rounded-full bg-gray-200 border border-gray-300 overflow-hidden" data-alt="User profile placeholder" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDo-twu1I3LYme4EGbhl-UkwUftWWcsjXl9e0lVQ5Qufa2WRtGU4YOGMM2v-9SNBBJRX57xViw3wedPyAdnl6wV47-NtHFfH_RQN8HGaqkK9TtH-U_5b3_qZHU1S29-y8Y1gyGOpMjbAvjdXabnh0IW07a1wXpqso9jE7J8lvCGJulmgBFGIezGzaSIXcWcvkx4eZFwy_ozwE6ntGCCoI8GYcussSfN0OO_I549XrCYTIcKuBdbFJ-bnkB6fgNqdEAtS0vN3pA7WbHP')"></div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Hero Banner Section -->
+<section class="mb-10">
+<div class="relative rounded-xl overflow-hidden min-h-[320px] flex items-center bg-slate-900 shadow-xl" data-alt="Seasonal promotion background showing products and abstract shapes" style="background-image: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuC4P-OL9T1YQAVfshmrljzZP8q2giQpZm9Y8xLVdHCubmp_iCJk7fp5rO_kZ3pCCgdLBm7WCFWWajj9MWPsGBYO0GSD0IyTCPB5inojls_b2QPa6657RrfvrbvOplst2lCxxynJSJA7CCRa0i8LXsjYsngSGkU-D9Sr0r241H3N6mKVfkNlBZCg-RYzSe81rLsj28oEC0qEpQ-1mQv9IYXL8xom_7A-EUApWbKysh3qugn7KfacDjxjHk42TtdgesigvByySpgZevjV'); background-size: cover; background-position: center;">
+<div class="relative z-10 p-8 md:p-16 max-w-2xl">
+<span class="inline-block px-3 py-1 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded mb-4">Summer 2024</span>
+<h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">Seasonal Savings: Up to 50% Off</h1>
+<p class="text-gray-200 text-lg mb-8 leading-relaxed">Upgrade your lifestyle with our exclusive seasonal collection. Limited time offers across all major categories.</p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform hover:-translate-y-0.5">Shop the Sale</button>
+<button class="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-bold py-3 px-8 rounded-lg border border-white/30 transition-all">View Lookbook</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Filter Tabs -->
+<section class="mb-8 overflow-x-auto">
+<div class="flex border-b border-gray-200 dark:border-gray-800 space-x-8 min-w-max">
+<button class="flex items-center gap-2 py-4 px-1 border-b-2 border-primary text-primary font-bold text-sm">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+                    All Offers
+                </button>
+<button class="flex items-center gap-2 py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-slate-custom font-semibold text-sm transition-all">
+<span class="material-symbols-outlined text-[18px]">confirmation_number</span>
+                    Coupons
+                </button>
+<button class="flex items-center gap-2 py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-slate-custom font-semibold text-sm transition-all">
+<span class="material-symbols-outlined text-[18px]">package_2</span>
+                    Bundle Deals
+                </button>
+<button class="flex items-center gap-2 py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-slate-custom font-semibold text-sm transition-all">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+                    Exclusive
+                </button>
+</div>
+</section>
+<!-- Active Promo Codes Grid -->
+<section class="mb-12">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-2xl font-extrabold text-slate-custom dark:text-white">Active Promo Codes</h2>
+<a class="text-primary text-sm font-bold hover:underline" href="#">View All Coupons</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Promo Card 1 -->
+<div class="bg-white dark:bg-background-dark rounded-xl border border-gray-200 dark:border-gray-800 p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between mb-4">
+<div class="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">shopping_cart</span>
+</div>
+<span class="text-[10px] font-bold text-red-500 bg-red-50 px-2 py-1 rounded">EXPIRES IN 2 DAYS</span>
+</div>
+<h3 class="text-xl font-extrabold mb-1">20% OFF EVERYTHING</h3>
+<p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">Applicable on all items including already discounted electronics and home appliances.</p>
+<div class="flex items-center justify-between bg-gray-50 dark:bg-gray-800/50 p-2 rounded-lg border border-dashed border-gray-300 dark:border-gray-700">
+<code class="text-primary font-bold text-lg px-2">SAVE20</code>
+<button class="bg-primary text-white text-xs font-bold px-4 py-2 rounded shadow-sm hover:bg-blue-700">COPY CODE</button>
+</div>
+</div>
+<!-- Promo Card 2 -->
+<div class="bg-white dark:bg-background-dark rounded-xl border border-gray-200 dark:border-gray-800 p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between mb-4">
+<div class="p-3 bg-green-50 dark:bg-green-900/30 rounded-lg">
+<span class="material-symbols-outlined text-green-600 text-3xl">local_shipping</span>
+</div>
+<span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded">NO EXPIRY</span>
+</div>
+<h3 class="text-xl font-extrabold mb-1">FREE SHIPPING</h3>
+<p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">Free standard shipping on all orders over $50. No region restrictions apply.</p>
+<div class="flex items-center justify-between bg-gray-50 dark:bg-gray-800/50 p-2 rounded-lg border border-dashed border-gray-300 dark:border-gray-700">
+<code class="text-primary font-bold text-lg px-2">FREESHIP</code>
+<button class="bg-primary text-white text-xs font-bold px-4 py-2 rounded shadow-sm hover:bg-blue-700">COPY CODE</button>
+</div>
+</div>
+<!-- Promo Card 3 -->
+<div class="bg-white dark:bg-background-dark rounded-xl border border-gray-200 dark:border-gray-800 p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between mb-4">
+<div class="p-3 bg-purple-50 dark:bg-purple-900/30 rounded-lg">
+<span class="material-symbols-outlined text-purple-600 text-3xl">celebration</span>
+</div>
+<span class="text-[10px] font-bold text-primary bg-blue-50 px-2 py-1 rounded">NEW USERS ONLY</span>
+</div>
+<h3 class="text-xl font-extrabold mb-1">WELCOME10</h3>
+<p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">First time shopping? Use this code at checkout to get an extra $10 off your first purchase.</p>
+<div class="flex items-center justify-between bg-gray-50 dark:bg-gray-800/50 p-2 rounded-lg border border-dashed border-gray-300 dark:border-gray-700">
+<code class="text-primary font-bold text-lg px-2">WELCOME10</code>
+<button class="bg-primary text-white text-xs font-bold px-4 py-2 rounded shadow-sm hover:bg-blue-700">COPY CODE</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Bundle Deals & Banners -->
+<section class="mb-12">
+<h2 class="text-2xl font-extrabold text-slate-custom dark:text-white mb-6">Exclusive Bundle Deals</h2>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Bundle Card 1 -->
+<div class="group relative bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-sm hover:shadow-lg transition-all">
+<div class="md:w-2/5 relative h-48 md:h-auto overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Electronics bundle showing a laptop and headphones" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAWsVlxIVthQv9ymFR8Zbl03Jua5_oMOuBlNG-1_JPgztQAA3GnWG2T15-U0h1cuzcuC02FzcqPRwQYzKOhBaEQVPRFbUi456sQqTOqvKYOoNStNtOiofv8O0V8utzw3lSonun4ioHHZKffoOSa2nVeUoY4gA-feDGXdC0vuSynh6YOJYWeFiHDfz-ugz7SaRsHPSDl3IrjL_ufQLgkUInxbEVYh0N7dZ25iOB1DfJMLRd6HgRGccabWCzyXN567r5d1a-B2DSI53j2')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded">BEST SELLER</span>
+</div>
+</div>
+<div class="md:w-3/5 p-6 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-xl font-extrabold">Ultimate Workspace Bundle</h3>
+<span class="text-primary font-bold">Save $120</span>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm mb-4 leading-relaxed">Get the X-Series Pro Laptop + Wireless Noise Cancelling Headphones together.</p>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div>
+<span class="text-sm text-gray-400 line-through">$1,299.00</span>
+<p class="text-2xl font-extrabold text-slate-custom dark:text-white">$1,179.00</p>
+</div>
+<button class="bg-slate-custom hover:bg-slate-800 text-white px-6 py-2 rounded-lg text-sm font-bold flex items-center gap-2">
+                                Add to Cart <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bundle Card 2 -->
+<div class="group relative bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-sm hover:shadow-lg transition-all">
+<div class="md:w-2/5 relative h-48 md:h-auto overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Home office bundle showing desk accessories" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD2Bu7WM-vSRzCuPkg-kgOjpiY8RSoyBIihk48RJ3JizHUPtcY4zzu9NEcsxgnxLCtDx6VaLBAVmj19jEEeZDq3J8Cn9__79l_Crf1OPNY4M2BKorqtz-DeEG83j82JrPckDW5_upr5i9KQuz37kFqS3pfaQkjzBn5jqDtCJNECK_7hZgvVlZtj8RgvmnZfsYgy097MT0nDbPu3NJsE3FbxrxFBzq4bWFBmteqz3MACi4co-Vu5Z9QMwiSoyCLUozXEXXWN-0KlzEA7')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded">LIMITED EDITION</span>
+</div>
+</div>
+<div class="md:w-3/5 p-6 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-xl font-extrabold">Executive Suite Kit</h3>
+<span class="text-primary font-bold">Save $45</span>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm mb-4 leading-relaxed">Ergonomic Mouse, Mechanical Keyboard, and XXL Desk Mat combo for maximum productivity.</p>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div>
+<span class="text-sm text-gray-400 line-through">$225.00</span>
+<p class="text-2xl font-extrabold text-slate-custom dark:text-white">$180.00</p>
+</div>
+<button class="bg-slate-custom hover:bg-slate-800 text-white px-6 py-2 rounded-lg text-sm font-bold flex items-center gap-2">
+                                Add to Cart <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter Subscription -->
+<section class="bg-primary/5 dark:bg-primary/10 rounded-2xl p-8 md:p-12 text-center border border-primary/20">
+<div class="max-w-2xl mx-auto">
+<span class="material-symbols-outlined text-primary text-5xl mb-4">mail</span>
+<h2 class="text-3xl font-extrabold text-slate-custom dark:text-white mb-2">Never miss a deal again</h2>
+<p class="text-gray-600 dark:text-gray-400 mb-8 text-lg">Subscribe to our newsletter and be the first to receive exclusive coupons, early access to sales, and product highlights.</p>
+<form class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+<input class="flex-1 px-5 py-3 rounded-xl border-gray-200 focus:border-primary focus:ring-primary dark:bg-gray-800 dark:border-gray-700" placeholder="Enter your email address" type="email"/>
+<button class="bg-primary hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-md" type="submit">Subscribe Now</button>
+</form>
+<p class="text-xs text-gray-500 mt-4 italic">By subscribing, you agree to our Privacy Policy and Terms of Service.</p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-white dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 py-12 mt-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+<div class="col-span-2 lg:col-span-2">
+<div class="flex items-center gap-2 mb-6">
+<div class="text-primary">
+<svg class="w-6 h-6" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="text-lg font-extrabold text-slate-custom dark:text-white">DjangoCommerce</span>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm max-w-sm">The world's most advanced e-commerce platform built for speed, security, and the ultimate shopping experience.</p>
+</div>
+<div>
+<h4 class="font-bold text-slate-custom dark:text-white mb-4">Shop</h4>
+<ul class="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">New Arrivals</a></li>
+<li><a class="hover:text-primary" href="#">Best Sellers</a></li>
+<li><a class="hover:text-primary" href="#">Sale Items</a></li>
+<li><a class="hover:text-primary" href="#">Gift Cards</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-slate-custom dark:text-white mb-4">Support</h4>
+<ul class="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">Help Center</a></li>
+<li><a class="hover:text-primary" href="#">Shipping Policy</a></li>
+<li><a class="hover:text-primary" href="#">Returns &amp; Refunds</a></li>
+<li><a class="hover:text-primary" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-slate-custom dark:text-white mb-4">Company</h4>
+<ul class="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">About Us</a></li>
+<li><a class="hover:text-primary" href="#">Careers</a></li>
+<li><a class="hover:text-primary" href="#">Sustainability</a></li>
+<li><a class="hover:text-primary" href="#">Investor Relations</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-gray-100 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-gray-500 dark:text-gray-400">© 2024 DjangoCommerce Inc. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-gray-400 hover:text-primary" href="#"><span class="material-symbols-outlined text-xl">social_leaderboard</span></a>
+<a class="text-gray-400 hover:text-primary" href="#"><span class="material-symbols-outlined text-xl">language</span></a>
+<a class="text-gray-400 hover:text-primary" href="#"><span class="material-symbols-outlined text-xl">share</span></a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
