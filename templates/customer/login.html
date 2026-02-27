@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShoppyO - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1a2d37",
+                        "background-light": "#f6f7f7",
+                        "background-dark": "#151a1d",
+                        "ice-blue": "#D6E8EE",
+                        "mist-white": "#F5F9FA",
+                        "charcoal": "#333333",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="dark:bg-background-dark min-h-screen flex items-center justify-center p-4" style="background: linear-gradient(135deg, #D6E8EE 0%, #F5F9FA 100%);">
+<div class="w-full max-w-md">
+<!-- Brand Logo & Header -->
+<div class="text-center mb-8">
+<div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-xl mb-4 shadow-lg">
+<span class="material-icons text-white text-3xl">shopping_bag</span>
+</div>
+<h1 class="text-3xl font-bold text-primary dark:text-slate-100">ShoppyO</h1>
+<p class="text-charcoal/70 dark:text-slate-400 mt-2">Manage your shopping effortlessly</p>
+</div>
+<!-- Login Card -->
+<div class="bg-mist-white dark:bg-slate-900 rounded-xl shadow-xl overflow-hidden border border-primary/5">
+<div class="p-8">
+<h2 class="text-xl font-semibold text-charcoal dark:text-slate-100 mb-6">Login to your account</h2>
+
+<!-- Messages Alert -->
+{% if messages %}
+    <div class="mb-4">
+        {% for message in messages %}
+            <div class="px-4 py-3 rounded-lg text-sm font-medium
+                {% if message.tags == 'error' %}
+                    bg-red-100 text-red-700 border border-red-300
+                {% elif message.tags == 'success' %}
+                    bg-green-100 text-green-700 border border-green-300
+                {% endif %}
+            ">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if error %}
+    <div class="mb-4 px-4 py-3 rounded-lg text-sm font-medium bg-red-100 text-red-700 border border-red-300">
+        {{ error }}
+    </div>
+{% endif %}
+
+<form method="POST" class="space-y-5">
+    {% csrf_token %}
+<!-- Email Field -->
+<div>
+<label class="block text-sm font-medium text-charcoal dark:text-slate-300 mb-1" for="email">Email Address</label>
+<div class="relative">
+<span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-primary/40 text-sm">email</span>
+<input class="w-full pl-10 pr-4 py-3 rounded-lg border border-primary/10 bg-white dark:bg-slate-800 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-charcoal dark:text-slate-100" id="email" name="email" placeholder="name@company.com" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div>
+<label class="block text-sm font-medium text-charcoal dark:text-slate-300 mb-1" for="password">Password</label>
+<div class="relative">
+<span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-primary/40 text-sm">lock</span>
+<input class="w-full pl-10 pr-12 py-3 rounded-lg border border-primary/10 bg-white dark:bg-slate-800 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-charcoal dark:text-slate-100" id="password" name="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-primary/40 hover:text-primary transition-colors" type="button">
+<span class="material-icons text-sm">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Me & Forgot Password -->
+<div class="flex items-center justify-between text-sm">
+<label class="flex items-center cursor-pointer group">
+<input class="rounded border-primary/20 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="ml-2 text-charcoal/80 dark:text-slate-400 group-hover:text-charcoal transition-colors">Remember me</span>
+</label>
+<a class="font-medium text-primary hover:underline dark:text-slate-300" href="#">Forgot password?</a>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all active:scale-[0.98]" type="submit">
+                        Login to ShoppyO
+                    </button>
+</form>
+<!-- Divider -->
+<div class="relative my-8">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-primary/10"></div>
+</div>
+<div class="relative flex justify-center text-sm">
+<span class="px-2 bg-mist-white dark:bg-slate-900 text-charcoal/50 dark:text-slate-500 uppercase tracking-wider font-medium">Or continue with</span>
+</div>
+</div>
+<!-- Social Logins -->
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center px-4 py-2 border border-primary/10 rounded-lg bg-white hover:bg-slate-50 transition-colors dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700">
+<img alt="" class="w-5 h-5 mr-2" data-alt="Google colorful letter G logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABLrRihB9PNeuYWt02Nz9mnRfFSytV6gXholWvhyZlncnQh0L6HiYWEXZiOLu8G2r480jVSZun04vkj8N5HYfZYXh-6_6ED_1obDlLOtWGvIxEOdbyMiVsK1vEpJizNKwAw8GOZBkZGzKxgcbSc2RW-nmGKaEKONFI6WPRNSb9UnihenGE7bM9YKv3rjKiDjb_3nfg5kuq7q1H-t4_ZIxT236-3cEU-aVrUfNlTnFqFLDMzxuNs3LsWoUBLJ4gBO03wgK-JJS8uFsu"/>
+<span class="text-sm font-medium text-charcoal dark:text-slate-200">Google</span>
+</button>
+<button class="flex items-center justify-center px-4 py-2 border border-primary/10 rounded-lg bg-white hover:bg-slate-50 transition-colors dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700">
+<span class="material-icons text-charcoal dark:text-white mr-2 text-xl">apple</span>
+<span class="text-sm font-medium text-charcoal dark:text-slate-200">Apple</span>
+</button>
+</div>
+</div>
+<!-- Footer Link -->
+<div class="bg-primary/5 dark:bg-slate-800/50 py-4 px-8 text-center border-t border-primary/5">
+<p class="text-sm text-charcoal/70 dark:text-slate-400">
+                    New to ShoppyO? 
+                    <a class="font-bold text-primary dark:text-slate-300 hover:underline" href="{% url 'Customer_Register' %}">Create an account</a>
+</p>
+</div>
+</div>
+<!-- Secondary Navigation/Legal -->
+<div class="mt-8 text-center flex justify-center space-x-6">
+<a class="text-xs text-charcoal/50 hover:text-primary transition-colors uppercase tracking-widest font-medium" href="#">Help</a>
+<a class="text-xs text-charcoal/50 hover:text-primary transition-colors uppercase tracking-widest font-medium" href="#">Privacy</a>
+<a class="text-xs text-charcoal/50 hover:text-primary transition-colors uppercase tracking-widest font-medium" href="#">Terms</a>
+</div>
+</div>
+</body></html>

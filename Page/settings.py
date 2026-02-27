@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'core',
     'seller',
     'customer',
-    'admin',
+    'adminapk',
 ]
 AUTH_USER_MODEL = 'core.User'
 
@@ -79,8 +79,12 @@ WSGI_APPLICATION = 'Page.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Ecommerce',
+        'USER': 'root',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -120,3 +124,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

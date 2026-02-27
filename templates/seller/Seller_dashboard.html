@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShoppyO Seller Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D6E8EE",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                        "navy-dark": "#1A2D37",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .ice-blue-gradient {
+            background: linear-gradient(135deg, #f8faff 0%, #eef2ff 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<!-- Sticky Deep Navy Header -->
+<header class="sticky top-0 z-50 bg-[#1A2D37] text-white px-4 lg:px-10 py-3 shadow-lg">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<div class="text-primary" style="color: #D6E8EE;">
+<span class="material-symbols-outlined text-4xl">shopping_bag</span>
+</div>
+<h2 class="text-xl font-extrabold tracking-tight hidden md:block">ShoppyO <span class="text-primary/90 font-medium text-lg">Seller</span></h2>
+</div>
+<div class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-300">
+<a class="hover:text-primary transition-colors border-b-2 border-primary pb-1" href="#">Dashboard</a>
+<a class="hover:text-primary transition-colors pb-1" href="#">Orders</a>
+<a class="hover:text-primary transition-colors pb-1" href="#">Inventory</a>
+<a class="hover:text-primary transition-colors pb-1" href="#">Analytics</a>
+</div>
+</div>
+<div class="flex-1 max-w-md mx-4 hidden sm:block">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary">search</span>
+<input class="w-full bg-slate-800/50 border-slate-700 rounded-xl pl-10 pr-4 py-2 text-sm focus:ring-primary focus:border-primary transition-all" placeholder="Search orders, products..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-3 lg:gap-5">
+<button class="relative p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-[#1A2D37]"></span>
+</button>
+<button class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors hidden sm:block">
+<span class="material-symbols-outlined">settings</span>
+</button>
+{% for i in seller_profile %}
+<div class="h-8 w-px bg-slate-700 mx-1"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden md:block">
+<p class="text-xs font-bold">{{i.store_name}}</p>
+<p class="text-[10px] text-slate-400">Pro Merchant</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary/20 border-2 border-primary/50 overflow-hidden">
+<img alt="Seller profile" class="w-full h-full object-cover" data-alt="Professional seller profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEIW5nl49fBQJ_YMYNtypZwX3CvdcItYKrmjDqBkC1tCheKN1n5mYrqxrC4c7T2hVXtMUgOz6Z_UAl1zCaomQRlfe-gau1VWaDpIFHwBGh1YdlTAwTD86xwJEhsWX78bQsbBEuZ3DjKbakxCR2mO2ZU2QBU9HBVfAU5w2WVkvaHvPxvHcn4cQt_fqq6XmpcKVuxLuWQ3boTeztxCcgpixxGzHH2lziL1dvl2_EhwMYWrUfRGmCsAu84wzZZUF7B5tUTQBh9dNO3m-B"/>
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto p-4 lg:p-8 ice-blue-gradient min-h-screen">
+<!-- Dashboard Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h1 class="text-3xl font-black text-slate-900 tracking-tight">Store Overview</h1>
+<p class="text-slate-500 mt-1">Welcome back, Alex. Your store is performing 12% better than last week.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white border rounded-xl text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm" style="color: #1A2D37; border-color: #D6E8EE;">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+                    Last 30 Days
+                </button>
+<button class="flex items-center gap-2 px-6 py-2 rounded-xl text-sm font-bold transition-all shadow-md bg-[#1A2D37] hover:bg-slate-800 text-slate-900" style="background-color: #D6E8EE;">
+<span class="material-symbols-outlined text-lg">download</span>
+                    Export Data
+                </button>
+</div>
+</div>
+<!-- Metric Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/10 text-primary rounded-xl group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full" style="background-color: #D6E8EE; color: #1A2D37;">+14.2%</span>
+</div>
+<p class="text-sm font-medium text-slate-500">Total Revenue</p>
+<h3 class="text-2xl font-extrabold text-slate-900 mt-1">$54,230.15</h3>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/10 text-primary rounded-xl group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">shopping_cart</span>
+</div>
+<span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full" style="background-color: #D6E8EE; color: #1A2D37;">+5.1%</span>
+</div>
+<p class="text-sm font-medium text-slate-500">Active Orders</p>
+<h3 class="text-2xl font-extrabold text-slate-900 mt-1">1,482</h3>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/10 text-primary rounded-xl group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<span class="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-1 rounded-full">-2.4%</span>
+</div>
+<p class="text-sm font-medium text-slate-500">Conversion Rate</p>
+<h3 class="text-2xl font-extrabold text-slate-900 mt-1">3.42%</h3>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/10 text-primary rounded-xl group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">star</span>
+</div>
+<span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full" style="background-color: #D6E8EE; color: #1A2D37;">Top 1%</span>
+</div>
+<p class="text-sm font-medium text-slate-500">Seller Rating</p>
+<h3 class="text-2xl font-extrabold text-slate-900 mt-1">4.9 / 5.0</h3>
+</div>
+</div>
+<!-- Main Analytics & Content -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Revenue Trends Graph Area -->
+<div class="lg:col-span-2 bg-white p-8 rounded-xl border border-slate-100 shadow-sm">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h2 class="text-lg font-bold text-slate-900">Revenue Analytics</h2>
+<p class="text-sm text-slate-500">Sales performance over the last 30 days</p>
+</div>
+<div class="flex bg-slate-100 p-1 rounded-lg">
+<button class="px-3 py-1 text-xs font-bold bg-white text-slate-900 rounded shadow-sm">Sales</button>
+<button class="px-3 py-1 text-xs font-bold text-slate-500 hover:text-slate-700">Visitors</button>
+</div>
+</div>
+<div class="h-64 w-full relative">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 800 200">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#D6E8EE" stop-opacity="0.5"></stop><stop offset="100%" stop-color="#D6E8EE" stop-opacity="0"></stop></lineargradient>
+</defs>
+<path d="M0,180 C50,160 100,170 150,120 C200,70 250,90 300,60 C350,30 400,100 450,80 C500,60 550,40 600,70 C650,100 700,50 750,40 L800,20 L800,200 L0,200 Z" fill="url(#chartGradient)"></path>
+<path d="M0,180 C50,160 100,170 150,120 C200,70 250,90 300,60 C350,30 400,100 450,80 C500,60 550,40 600,70 C650,100 700,50 750,40 L800,20" fill="none" stroke="#D6E8EE" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<div class="flex justify-between mt-4 px-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Oct 01</span>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Oct 08</span>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Oct 15</span>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Oct 22</span>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Oct 30</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-slate-50">
+<div class="text-center">
+<p class="text-xs text-slate-400 font-bold uppercase mb-1">Avg Order</p>
+<p class="text-xl font-black text-slate-800">$124.50</p>
+</div>
+<div class="text-center border-x border-slate-100">
+<p class="text-xs text-slate-400 font-bold uppercase mb-1">Total Sales</p>
+<p class="text-xl font-black text-slate-800">4,129</p>
+</div>
+<div class="text-center">
+<p class="text-xs text-slate-400 font-bold uppercase mb-1">Refunds</p>
+<p class="text-xl font-black text-slate-800">12</p>
+</div>
+</div>
+</div>
+<!-- Inventory Widget -->
+<div class="bg-white p-8 rounded-xl border border-slate-100 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-lg font-bold text-slate-900">Low Stock Alerts</h2>
+<span class="material-symbols-outlined text-slate-400">inventory_2</span>
+</div>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between text-sm">
+<span class="font-bold text-slate-700">ShoppyO Wireless Buds</span>
+<span class="text-rose-500 font-bold">12 left</span>
+</div>
+<div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-rose-500" style="width: 15%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm">
+<span class="font-bold text-slate-700">Ergonomic Office Chair</span>
+<span class="text-amber-500 font-bold">45 left</span>
+</div>
+<div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-amber-500" style="width: 35%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm">
+<span class="font-bold text-slate-700">Mechanical Keyboard v2</span>
+<span class="text-rose-500 font-bold">8 left</span>
+</div>
+<div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-rose-500" style="width: 10%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm">
+<span class="font-bold text-slate-700">USB-C Fast Charger</span>
+<span class="text-slate-400 font-bold">120 left</span>
+</div>
+<div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 70%"></div>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-3 border-2 border-dashed rounded-xl text-sm font-bold transition-all hover:bg-[#D6E8EE]" style="color: #607D8B; border-color: #607D8B;">
+                    Restock All Items
+                </button>
+<div class="mt-8 p-4 bg-slate-50 rounded-xl">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary" style="color: #1A2D37;">info</span>
+<div>
+<p class="text-xs font-bold text-slate-800">Inventory Health</p>
+<p class="text-[11px] text-slate-500 mt-0.5">Your stock turnover is 20% faster than average.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Orders Table -->
+<div class="mt-8 bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+<div class="px-8 py-6 border-b border-slate-100 flex items-center justify-between">
+<h2 class="text-lg font-bold text-slate-900">Recent Active Orders</h2>
+<a class="text-sm font-bold text-primary hover:underline" href="#" style="color: #607D8B;">View All Orders</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-slate-50/50">
+<th class="px-8 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Order ID</th>
+<th class="px-8 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Customer</th>
+<th class="px-8 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Product</th>
+<th class="px-8 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Amount</th>
+<th class="px-8 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Status</th>
+<th class="px-8 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50/50 transition-colors">
+<td class="px-8 py-4 text-sm font-bold text-slate-900">#ORD-90210</td>
+<td class="px-8 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold">JD</div>
+<span class="text-sm font-medium text-slate-700">Jane Doe</span>
+</div>
+</td>
+<td class="px-8 py-4 text-sm text-slate-600">Wireless Buds Pro</td>
+<td class="px-8 py-4 text-sm font-bold text-slate-900">$129.00</td>
+<td class="px-8 py-4">
+<span class="px-2.5 py-1 bg-amber-50 text-amber-600 rounded-full text-[10px] font-bold uppercase tracking-wide">Processing</span>
+</td>
+<td class="px-8 py-4">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 transition-colors">
+<td class="px-8 py-4 text-sm font-bold text-slate-900">#ORD-90211</td>
+<td class="px-8 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold">MS</div>
+<span class="text-sm font-medium text-slate-700">Mark Smith</span>
+</div>
+</td>
+<td class="px-8 py-4 text-sm text-slate-600">Ergo Office Chair</td>
+<td class="px-8 py-4 text-sm font-bold text-slate-900">$345.50</td>
+<td class="px-8 py-4">
+<span class="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-bold uppercase tracking-wide" style="background-color: #D6E8EE; color: #1A2D37;">Shipped</span>
+</td>
+<td class="px-8 py-4">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 transition-colors">
+<td class="px-8 py-4 text-sm font-bold text-slate-900">#ORD-90212</td>
+<td class="px-8 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold">AW</div>
+<span class="text-sm font-medium text-slate-700">Anna White</span>
+</div>
+</td>
+<td class="px-8 py-4 text-sm text-slate-600">USB-C Cable (3m)</td>
+<td class="px-8 py-4 text-sm font-bold text-slate-900">$15.00</td>
+<td class="px-8 py-4">
+<span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full text-[10px] font-bold uppercase tracking-wide">Delivered</span>
+</td>
+<td class="px-8 py-4">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<!-- Dark Footer -->
+<footer class="bg-[#1A2D37] text-slate-400 py-12 px-6 lg:px-10 border-t border-slate-800">
+<div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 text-white mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">shopping_bag</span>
+<span class="text-xl font-bold tracking-tight">ShoppyO</span>
+</div>
+<p class="text-sm leading-relaxed mb-6">Empowering modern sellers with data-driven insights and world-class e-commerce tools. Manage, scale, and thrive.</p>
+<div class="flex gap-4">
+<a class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-sm">public</span>
+</a>
+<a class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-sm">support_agent</span>
+</a>
+</div>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Platform</h4>
+<ul class="space-y-4 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Dashboard</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Seller Academy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">API Reference</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Fee Schedule</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Support</h4>
+<ul class="space-y-4 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Community Forum</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">System Status</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Seller Policies</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Newsletter</h4>
+<p class="text-sm mb-4">Get the latest platform updates and selling tips.</p>
+<div class="flex gap-2">
+<input class="bg-slate-800 border-slate-700 rounded-lg py-2 px-3 text-sm focus:ring-primary focus:border-primary w-full" placeholder="Enter email" type="email"/>
+<button class="text-white p-2 rounded-lg transition-colors bg-[#1A2D37] hover:bg-slate-800" style="border: 1px solid slate-700">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto mt-12 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] font-bold uppercase tracking-widest">
+<p>© 2024 ShoppyO E-commerce Platform. All rights reserved.</p>
+<div class="flex gap-8">
+<a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-white transition-colors" href="#">Cookie Settings</a>
+</div>
+</div>
+</footer>
+</body></html>

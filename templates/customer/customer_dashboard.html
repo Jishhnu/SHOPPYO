@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShoppyO | User Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1a2d37", // Deep Navy
+                        "ice-blue": "#D6E8EE",
+                        "mist-white": "#F5F9FA",
+                        "slate-grey": "#607D8B",
+                        "charcoal": "#333333",
+                        "background-light": "#D6E8EE",
+                        "background-dark": "#151a1d",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+            color: #333333;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-ice-blue via-mist-white to-ice-blue dark:from-background-dark dark:to-background-dark min-h-screen">
+<div class="flex flex-col md:flex-row min-h-screen w-full max-w-[1440px] mx-auto overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-full md:w-64 lg:w-72 bg-mist-white dark:bg-slate-900 border-r border-slate-grey/20 flex flex-col justify-between p-6">
+<div class="flex flex-col gap-8">
+<!-- Logo/Brand -->
+<div class="flex items-center gap-3 px-2">
+<div class="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">shopping_bag</span>
+</div>
+<div>
+<h1 class="text-primary dark:text-ice-blue text-xl font-bold leading-tight">ShoppyO</h1>
+<p class="text-slate-grey text-xs font-medium uppercase tracking-wider">Account Portal</p>
+</div>
+</div>
+<!-- Nav Links -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary text-white transition-all" href="#">
+<span class="material-symbols-outlined text-[22px]">person</span>
+<span class="text-sm font-semibold">Profile Info</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-charcoal dark:text-slate-300 hover:bg-slate-grey/10 transition-all" href="#">
+<span class="material-symbols-outlined text-[22px]">receipt_long</span>
+<span class="text-sm font-medium">Order History</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-charcoal dark:text-slate-300 hover:bg-slate-grey/10 transition-all" href="#">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<div class="h-px bg-slate-grey/10 my-2"></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-all" href="{% url 'customer_logout' %}">
+<span class="material-symbols-outlined text-[22px]">logout</span>
+<span class="text-sm font-medium">Logout</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Footer -->
+<div class="mt-auto pt-8">
+<button class="w-full bg-slate-grey/10 hover:bg-slate-grey/20 text-primary dark:text-white py-3 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">headset_mic</span>
+                    Support Center
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12 space-y-8">
+<!-- Top Profile Card -->
+<section class="bg-mist-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-grey/10 overflow-hidden">
+<div class="h-32 bg-primary/10 relative">
+<div class="absolute -bottom-12 left-8 p-1 bg-mist-white dark:bg-slate-800 rounded-full border-4 border-mist-white dark:border-slate-800">
+<img alt="Profile avatar" class="size-24 rounded-full object-cover" {% if profile_user.profile_image %}src="{{ profile_user.profile_image.url }}"{% else %}src="https://lh3.googleusercontent.com/aida-public/AB6AXuBL5za07jelhdvmwaPHT2grelzz-DRtx3iNccq1Raq7zSZZI-Q9bbLQXMwc7G4ys8mOsVlbsYJPBCu5uIgIp-jiDHY-WpKEZxmM7IHgs8YbTNJTdY432cNg9hRBdnzyGOzCKwVZD2T1dIgt6mShlwwR7HRhdHIWnPas5q-IIM2ApshPisuW5efHVzqdMVirHopQVlq9Yw2ing8LfdSv0rYcO5lChSw6c-wgQtw6u7adxYixoegZ-y4stK_mw7CLbQmJP3iP_h3HvTG_"{% endif %}/>
+</div>
+</div>
+<div class="pt-16 pb-8 px-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h2 class="text-charcoal dark:text-white text-3xl font-bold">{{profile_user.first_name}} {{profile_user.last_name}}</h2>
+<p class="text-slate-grey dark:text-slate-400 font-medium">Verified Customer • Member since {{ profile_user.created_at|date:"M Y" }}</p>
+</div>
+<a href="{% url 'customer_update' %}" class="inline-block bg-primary text-white px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 hover:bg-opacity-90 transition-all shadow-md">
+    <span class="material-symbols-outlined text-lg">edit</span>Edit Profile
+</a>
+</div>
+</section>
+<!-- Grid Content -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Details Form/Grid -->
+<div class="lg:col-span-2 space-y-8">
+<div class="bg-mist-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-grey/10">
+<h3 class="text-primary dark:text-ice-blue text-xl font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined">badge</span>
+                            Personal Information
+                        </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+<div class="space-y-1">
+<label class="text-xs uppercase tracking-wider font-bold text-slate-grey">User Name</label>
+<p class="text-charcoal dark:text-slate-200 font-medium border-b border-slate-grey/10 pb-2">{{profile_user.first_name}} {{profile_user.last_name}}</p>
+</div>
+<div class="space-y-1">
+<label class="text-xs uppercase tracking-wider font-bold text-slate-grey">Email Address</label>
+<p class="text-charcoal dark:text-slate-200 font-medium border-b border-slate-grey/10 pb-2">{{profile_user.email}}</p>
+</div>
+<div class="space-y-1">
+<label class="text-xs uppercase tracking-wider font-bold text-slate-grey">Phone Number</label>
+<p class="text-charcoal dark:text-slate-200 font-medium border-b border-slate-grey/10 pb-2">{{profile_user.phone_number}}</p>
+</div>
+<div class="space-y-1">
+<label class="text-xs uppercase tracking-wider font-bold text-slate-grey">Default Language</label>
+<p class="text-charcoal dark:text-slate-200 font-medium border-b border-slate-grey/10 pb-2">English (US)</p>
+</div>
+<div class="md:col-span-2 space-y-1">
+    <label class="text-xs uppercase tracking-wider font-bold text-slate-grey">Shipping Address</label>
+    {% if default_address %}
+        <p class="text-charcoal dark:text-slate-200 font-medium border-b border-slate-grey/10 pb-2">
+            {{ default_address.house_info }}, {{ default_address.locality }}<br>
+            {{ default_address.city }}, {{ default_address.state }} {{ default_address.pincode }}<br>
+            {{ default_address.country }}
+        </p>
+    {% else %}
+        <p class="text-charcoal/60 dark:text-slate-500 font-medium border-b border-slate-grey/10 pb-2">No shipping address on file. <a class="text-primary hover:underline" href="{% url 'customer_address' %}">Add one</a></p>
+    {% endif %}
+</div>
+</div>
+</div>
+<!-- Recent Orders Section -->
+<div class="bg-mist-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-grey/10 overflow-hidden">
+<div class="p-8 pb-4 flex items-center justify-between">
+<h3 class="text-primary dark:text-ice-blue text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined">shopping_cart</span>
+                                Recent Orders
+                            </h3>
+<a class="text-primary dark:text-ice-blue text-sm font-bold hover:underline" href="#">View All</a>
+</div>
+<div class="overflow-x-auto px-4 pb-4">
+<table class="w-full text-left">
+<thead class="bg-slate-grey/5 text-slate-grey text-xs uppercase tracking-widest font-bold">
+<tr>
+<th class="px-4 py-3">Order ID</th>
+<th class="px-4 py-3">Date</th>
+<th class="px-4 py-3">Total</th>
+<th class="px-4 py-3">Status</th>
+<th class="px-4 py-3">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-grey/10">
+<tr class="hover:bg-slate-grey/5 transition-colors">
+<td class="px-4 py-4 font-bold text-primary dark:text-slate-300">#SO-98212</td>
+<td class="px-4 py-4 text-sm text-charcoal dark:text-slate-400">Oct 24, 2023</td>
+<td class="px-4 py-4 text-sm font-bold text-charcoal dark:text-slate-200">$124.50</td>
+<td class="px-4 py-4">
+<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-green-100 text-green-700">Delivered</span>
+</td>
+<td class="px-4 py-4">
+<button class="text-slate-grey hover:text-primary"><span class="material-symbols-outlined text-lg">visibility</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-grey/5 transition-colors">
+<td class="px-4 py-4 font-bold text-primary dark:text-slate-300">#SO-98105</td>
+<td class="px-4 py-4 text-sm text-charcoal dark:text-slate-400">Sep 12, 2023</td>
+<td class="px-4 py-4 text-sm font-bold text-charcoal dark:text-slate-200">$89.00</td>
+<td class="px-4 py-4">
+<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary">In Transit</span>
+</td>
+<td class="px-4 py-4">
+<button class="text-slate-grey hover:text-primary"><span class="material-symbols-outlined text-lg">visibility</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-grey/5 transition-colors">
+<td class="px-4 py-4 font-bold text-primary dark:text-slate-300">#SO-97994</td>
+<td class="px-4 py-4 text-sm text-charcoal dark:text-slate-400">Aug 29, 2023</td>
+<td class="px-4 py-4 text-sm font-bold text-charcoal dark:text-slate-200">$210.15</td>
+<td class="px-4 py-4">
+<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-green-100 text-green-700">Delivered</span>
+</td>
+<td class="px-4 py-4">
+<button class="text-slate-grey hover:text-primary"><span class="material-symbols-outlined text-lg">visibility</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Column Side Info -->
+<div class="space-y-8">
+<!-- Rewards Card -->
+<div class="bg-primary p-8 rounded-xl text-white shadow-lg relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-ice-blue/70 text-sm font-bold uppercase tracking-widest mb-2">Rewards Balance</p>
+<h4 class="text-4xl font-bold mb-6">2,450 <span class="text-lg font-medium opacity-80">pts</span></h4>
+<div class="w-full bg-white/20 rounded-full h-2 mb-4">
+<div class="bg-ice-blue h-2 rounded-full w-3/4"></div>
+</div>
+<p class="text-xs opacity-80 mb-6">You're 550 points away from a $25 reward coupon!</p>
+<button class="w-full bg-ice-blue text-primary py-2.5 rounded-lg font-bold text-sm hover:bg-white transition-colors">Redeem Points</button>
+</div>
+<!-- Abstract Background Decoration -->
+<div class="absolute -bottom-4 -right-4 size-32 bg-ice-blue/10 rounded-full blur-2xl"></div>
+<div class="absolute -top-10 -left-10 size-40 bg-white/5 rounded-full blur-3xl"></div>
+</div>
+<!-- Notification Preferences -->
+<div class="bg-mist-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-grey/10">
+<h3 class="text-primary dark:text-ice-blue text-lg font-bold mb-4">Quick Preferences</h3>
+<div class="space-y-4">
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="text-sm font-medium text-charcoal dark:text-slate-300">Order Updates</span>
+<div class="relative inline-flex items-center">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-grey/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="text-sm font-medium text-charcoal dark:text-slate-300">Marketing Emails</span>
+<div class="relative inline-flex items-center">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-grey/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="text-sm font-medium text-charcoal dark:text-slate-300">SMS Notifications</span>
+<div class="relative inline-flex items-center">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-grey/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
