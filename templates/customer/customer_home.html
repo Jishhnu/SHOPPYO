@@ -42,59 +42,83 @@
     
 <!-- Top Navigation Bar -->
 <header class="sticky top-0 z-50 w-full bg-primary text-white border-b border-white/10">
-<div class="max-w-[1280px] mx-auto flex items-center justify-between px-6 py-4">
-    <div class="flex items-center gap-10">
-        <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-3xl">shopping_bag</span>
-            <h1 class="text-2xl font-black tracking-tight">ShoppyO</h1>
-        </div>
-        <nav class="hidden md:flex items-center gap-6">
-        <a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Electronics</a>
-        <a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Fashion</a>
-        <a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Home</a>
-        <a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Beauty</a>
-        </nav>
+
+<div class="max-w-[1380px] mx-auto flex items-center justify-between px-1 py-4">
+
+    <!-- LEFT : LOGO -->
+    <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+        <h1 class="text-3xl font-black tracking-tight">ShoppyO</h1>
     </div>
-    <div class="flex flex-1 justify-center max-w-md mx-8">
-        <div class="relative w-full">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary">search</span>
-        <input class="w-full text-charcoal rounded-lg pl-10 pr-4 py-2 border-none focus:ring-2 focus:ring-ice-blue placeholder:text-slate-400" placeholder="Search products..." style="background-color: #FFFFFF;" type="text"/>
-        </div>
+
+    <!-- CENTER : SEARCH -->
+    <div class="flex-1 max-w-xl hidden md:block">
+        <form action="#" method="GET" class="relative group">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+            </div>
+            <input type="text" name="q" 
+                   class="w-full bg-white text-charcoal rounded-2xl pl-12 pr-4 py-2.5 border-none focus:ring-4 focus:ring-ice-blue/30 transition-all placeholder:text-slate-400 font-medium" 
+                   placeholder="Find your next favorite thing...">
+            <button type="submit" class="absolute right-2 top-1.5 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-xl hover:bg-opacity-90 transition-opacity">
+                Search
+            </button>
+        </form>
     </div>
-    <div class="flex items-center gap-4">
-        <a href="{% url 'wishlist_view' %}" class="p-2 hover:bg-white/10 rounded-lg transition-colors relative">
-            <span class="material-symbols-outlined">favorite</span>
-        </a>
 
-        <!-- <button class="p-2 hover:bg-white/10 rounded-lg transition-colors relative">
-            <span class="material-symbols-outlined">shopping_cart</span>
-            <span class="absolute top-1 right-1 bg-red-500 text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
-        </button> -->
+    <!-- RIGHT : ICONS -->
+    <div class="flex items-center gap-6">
+
+        <!-- Wishlist -->
+            <a href="{% url 'wishlist_view' %}" class="p-2.5 hover:bg-white/10 rounded-xl transition-all relative group" title="Wishlist">
+                <span class="material-symbols-outlined group-hover:scale-110 transition-transform">favorite</span>
+                <span class="absolute top-2 right-2 w-2 h-2 bg-ice-blue rounded-full border-2 border-primary"></span>
+            </a>
 
 
-        <a href="{% url 'view_cart' %}" class="relative p-2 hover:bg-white/10 rounded-full transition-colors group">
-            <span class="material-symbols-outlined text-white">shopping_cart</span>
-            {% if items %}
-                <span class="absolute top-0 right-0 bg-red-500 text-[10px] font-bold px-1.5 py-0.5 rounded-full border-2 border-primary">
-                    {{ items|length }}
+    <!-- Cart -->
+        <a href="{% url 'view_cart' %}" class="group relative flex items-center justify-center p-2 transition-all duration-300" title="Cart">
+
+            <div class="relative transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[-5deg]">
+                <span class="material-symbols-outlined text-white text-[30px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
+                    shopping_cart
                 </span>
+            </div>
+        
+            {% if cart_count %}
+            <div class="absolute -top-1 flex items-center justify-center">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-ice-blue opacity-40"></span>
+                <span class="relative flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-gradient-to-tr from-red-600 to-pink-500 text-[9px] font-black text-white rounded-full shadow-[0_0_10px_rgba(239,68,68,0.4)] border-2 border-primary">
+                    {{ cart_count }}
+                </span>
+            </div>
             {% endif %}
         </a>
-        </div>
-        
-        
-        <a href="{% url 'customer_dashboard' %}" class="flex items-center gap-1 p-1 hover:bg-white/10 rounded-lg transition-colors">
+
+
+        <!-- USER -->
+        {% if user.is_authenticated %}
+
+        <a href="{% url 'customer_dashboard' %}"
+            class="flex items-center gap-2 px-3 py-2 hover:bg-white/10 rounded-lg transition-colors">
             <span class="material-symbols-outlined">person</span>
-            {% if user.is_authenticated %}
-                <span class="hidden sm:inline font-medium ml-1 text-white">Hi, {{ user.first_name }}</span>
-            {% else %}
-                <a href="{% url 'login' %}" class="flex items-center gap-2 p-2 hover:bg-white/10 rounded-lg transition-colors group">
-                <span class="material-symbols-outlined text-white group-hover:text-ice-blue">person</span>
-                <span class="hidden sm:inline font-medium text-sm text-white">Sign in</span>
-                </a>
-            {% endif %}
+            <span class="hidden sm:inline font-medium text-sm">Hi, {{ user.first_name }}</span>
         </a>
+
+        {% else %}
+
+        <a href="{% url 'login' %}"
+            class="flex items-center gap-2 px-3 py-2 hover:bg-white/10 rounded-lg transition-colors">
+            <span class="material-symbols-outlined">person</span>
+            <span class="hidden sm:inline text-sm font-medium">Sign in</span>
+        </a>
+
+        {% endif %}
+
+    </div>
+
 </div>
+
 </header>
 
 <main class="max-w-[1500px] mx-auto px-1 py-5">
@@ -107,7 +131,7 @@
 </div>
 
 
-<!-- HORIZONTAL CATEGORY STRIP -->
+<!--CATEGORY STRIP -->
 <div class=" py-1 shadow-sm mb-10">
    <div class="flex items-center justify-between px-4 mb-4">
         <h3 class="text-xl font-bold text-primary">
@@ -175,53 +199,8 @@
   </div>
 </div>
 
-
-
-<!-- Product Categories Section -->
-<!-- <div class="max-w-[1500px] mx-auto mb-100">
-
-  <h3 class="text-2xl font-bold text-primary mb-6">Explore Categories</h3>
-
-  <div class="bg-white rounded-xl shadow-sm border">
-    <div class="grid grid-cols-2 md:grid-cols-6 text-center py-2"> -->
-
-      <!-- Electronics -->
-      <!-- <a href="#" class="flex flex-col items-center gap-2 border-r last:border-r-0 hover:bg-ice-blue/40 transition">
-        <span class="material-symbols-outlined text-primary text-4xl">
-          devices
-        </span>
-        <p class="font-semibold text-primary">Electronics</p>
-      </a> -->
-
-      <!-- Fashion -->
-      <!-- <a href="#" class="flex flex-col items-center gap-2 border-r last:border-r-0 hover:bg-ice-blue/40 transition">
-        <span class="material-symbols-outlined text-primary text-4xl">
-          checkroom
-        </span>
-        <p class="font-semibold text-primary">Fashion</p>
-      </a> -->
-
-      <!-- Home -->
-      <!-- <a href="#" class="flex flex-col items-center gap-2 border-r last:border-r-0 hover:bg-ice-blue/40 transition">
-        <span class="material-symbols-outlined text-primary text-4xl">
-          home
-        </span>
-        <p class="font-semibold text-primary">Home</p>
-      </a> -->
-
-      <!-- Beauty -->
-      <!-- <a href="#" class="flex flex-col items-center gap-2 hover:bg-ice-blue/40 transition">
-        <span class="material-symbols-outlined text-primary text-4xl">
-          face_5
-        </span>
-        <p class="font-semibold text-primary">Beauty</p>
-      </a>
-
-    </div>
-  </div>
-
-</div>
-</main> -->
+<!-- </main> -->
+ 
 <!-- Service Highlights -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
     <div class="flex items-center gap-4 p-6 rounded-xl border bg-ice-blue border-primary/10">

@@ -87,117 +87,123 @@
 <span class="material-symbols-outlined text-xs">chevron_right</span>
 <span class="text-charcoal font-medium">Wishlist</span>
 </nav>
+
 <div class="bg-white rounded-xl shadow-sm border border-black/5 overflow-hidden">
 <!-- Wishlist Header -->
-<div class="p-6 md:p-8 border-b border-black/5 flex flex-col md:flex-row md:items-center justify-between gap-4">
-<div>
-<h2 class="text-3xl font-black text-charcoal tracking-tight">My Wishlist</h2>
-<p class="text-charcoal/60 mt-1 font-medium">You have 4 items saved for later</p>
-</div>
-<div class="flex items-center gap-3">
-<!-- View Toggle -->
-<div class="flex bg-ice-blue rounded-lg p-1">
-<button class="p-2 bg-white rounded shadow-sm text-primary">
-<span class="material-symbols-outlined">grid_view</span>
-</button>
-<button class="p-2 text-charcoal/50 hover:text-primary transition-colors">
-<span class="material-symbols-outlined">format_list_bulleted</span>
-</button>
-</div>
-<button class="flex items-center gap-2 bg-ice-blue text-primary px-4 py-2 rounded-lg font-bold text-sm hover:bg-ice-blue/70 transition-colors">
-<span class="material-symbols-outlined text-lg">share</span>
-                        Share
-                    </button>
-</div>
-</div>
+  <div class="p-6 md:p-8 border-b border-black/5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+      <h2 class="text-3xl font-black text-charcoal tracking-tight">My Wishlist</h2>
+      <p class="text-charcoal/60 mt-1 font-medium">
+        You have {{ items|length }} item{{ items|length|pluralize }} saved for later
+      </p>
+    </div>
+    
+    <div class="flex items-center gap-3">
+    <!-- View Toggle -->
+      <div class="flex bg-ice-blue rounded-lg p-1">
+        <button class="p-2 bg-white rounded shadow-sm text-primary">
+        <span class="material-symbols-outlined">grid_view</span>
+        </button>
+        <button class="p-2 text-charcoal/50 hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">format_list_bulleted</span>
+        </button>
+      </div>
+      <button class="flex items-center gap-2 bg-ice-blue text-primary px-4 py-2 rounded-lg font-bold text-sm hover:bg-ice-blue/70 transition-colors">
+      <span class="material-symbols-outlined text-lg">share</span>Share
+      </button>
+    </div>
+  </div>
 <!-- Wishlist Grid -->
 <div class="p-6 md:p-8">
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-    <!-- Loop through wishlist items -->
+
     {% for item in items %}
-      <div class="group flex flex-col bg-white">
-        <div class="relative aspect-square rounded-xl overflow-hidden bg-background-light mb-4">
-          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-               style="background-image: url('{{ item.variant.product.image.url }}');"></div>
+      <div class="group bg-slate-100 rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col">
 
-          <!-- Remove from wishlist -->
-          <a href="{% url 'remove_wishlist' item.id %}" 
-             class="absolute top-3 right-3 size-9 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-red-500 shadow-sm hover:bg-white transition-all transform hover:scale-110">
-            <span class="material-symbols-outlined text-xl">delete</span>
-          </a>
+        <!-- Product Image -->
+          <div class="relative aspect-square overflow-hidden bg-gray-100">
+            {% with image=item.variant.images.first %}
+              {% if image %}
+              <img src="{{ image.image_url }}"
+                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+              {% endif %}
+            {% endwith %}
+          
+          <!-- Remove Wishlist -->
+            <a href="{% url 'remove_wishlist' item.id %}"
+              class="absolute top-3 right-3 w-9 h-9 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-red-500 shadow hover:bg-white transition">
+              <span class="material-symbols-outlined text-xl">delete</span>
+            </a>
 
-          <div class="absolute bottom-3 left-3 px-2 py-1 bg-green-500 text-white text-[10px] font-bold rounded uppercase tracking-wider">
-            In Stock
+          <!-- Stock Badge -->
+            <div class="absolute bottom-3 left-3 px-2 py-1 bg-green-500 text-white text-[10px] font-bold rounded uppercase tracking-wider">
+                In Stock
+            </div>
           </div>
-        </div>
 
-        <div class="flex-1 flex flex-col">
-          <h3 class="text-charcoal font-bold text-lg leading-tight mb-1">{{ item.variant.product.name }}</h3>
-          <p class="text-charcoal/60 text-sm mb-3">Matte Black / One Size</p>
-          <p class="text-primary font-black text-xl mb-4">₹ {{ item.variant.price }}</p>
+        <!-- Product Details -->
+          <div class="p-4 flex flex-col flex-1">
+            <h3 class="font-bold text-gray-800 text-sm leading-tight mb-1 line-clamp-2">
+                {{ item.variant.product.name }}
+            </h3>
 
-          <!-- Move to cart -->
-          <a href="{% url 'move_to_cart' item.id %}" 
-             class="w-full bg-primary text-white py-3 rounded-lg font-bold text-sm flex items-center justify-center gap-2 hover:bg-primary/90 transition-all active:scale-95 shadow-lg shadow-primary/10">
-            <span class="material-symbols-outlined text-lg">shopping_bag</span>
-            Move to Cart
-          </a>
-        </div>
+            <p class="text-xs text-gray-500 mb-2">
+                Matte Black / One Size
+            </p>
+
+            <p class="text-primary font-black text-lg mb-4">
+                ₹ {{ item.variant.selling_price }}
+            </p>
+
+
+        <!-- Move to Cart Button -->
+            <a href="{% url 'move_to_cart' item.id %}"
+              class="mt-auto w-full bg-primary text-white py-2.5 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 hover:bg-primary/90 transition shadow-sm">
+              <span class="material-symbols-outlined text-base">shopping_bag</span>
+                  Move to Cart
+            </a>
+          </div>
       </div>
     {% empty %}
-      <p class="text-center text-gray-500 col-span-full">Your wishlist is empty.</p>
+
+      <p class="text-center text-gray-500 col-span-full py-10">
+      Your wishlist is empty.
+      </p>
+
     {% endfor %}
+
   </div>
 
-  <!-- Bottom Actions -->
+<!-- Bottom Actions -->
   {% if items %}
-  <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-    <a href="{% url 'move_all_to_cart' %}" 
-        class="w-full sm:w-auto px-10 py-4 bg-primary ...">
+    <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="{% url 'move_all_to_cart' %}"
+        class="w-full sm:w-auto px-10 py-4 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-all">
         Move All to Cart
-        </a>
-    <a href="{% url 'customer_home' %}" 
-       class="w-full sm:w-auto px-10 py-4 border-2 border-primary text-primary rounded-lg font-bold hover:bg-ice-blue transition-all text-center">
-      Continue Shopping
-    </a>
-  </div>
+      </a>
+
+      <a href="{% url 'customer_home' %}"
+        class="w-full sm:w-auto px-10 py-4 border-2 border-primary text-primary rounded-lg font-bold hover:bg-ice-blue transition-all text-center">
+        Continue Shopping
+      </a>
+    </div>
   {% endif %}
 </div>
 </div>
-</div>
-</div>
+
 <!-- Recommendations or Footer Section -->
-<section class="mt-16 pb-16">
+<!-- <section class="mt-16 pb-16">
 <h3 class="text-2xl font-black text-charcoal mb-8">Recently Viewed</h3>
 <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-<div class="bg-white/50 p-3 rounded-xl border border-black/5 hover:bg-white transition-all cursor-pointer">
-<div class="aspect-square bg-ice-blue rounded-lg mb-3 bg-center bg-cover" data-alt="Small electronic device accessory" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBqQKEG51MqrofpWI_L7CHTmquh9-is5_MLjVZIAEWY8zh5jB9lrzXzZqElI9uHA9AXKPIMCFiG3MLSJO7pvDU8qnzVd8_68Wsn78zbj0OjRmR90Pwwt9dDTHEX8MTMPa10HlwB8YmLy_8f2weS57dtaH6sWVGMbk4YS-74zWu8soMzs4RnOtp9YJS3k94eHAG-4igaXkt75PfCbDxHDrEphDsV_wE888gsgXBwFesjHc47XoZXZ3on8_n3Lgf-9yNHYa6IgQFJAlrb')"></div>
-<p class="text-xs font-bold text-charcoal truncate">Silicone Case v2</p>
-<p class="text-xs text-charcoal/60 font-black">$24.99</p>
+  <div class="bg-white/50 p-3 rounded-xl border border-black/5 hover:bg-white transition-all cursor-pointer">
+  <div class="aspect-square bg-ice-blue rounded-lg mb-3 bg-center bg-cover" data-alt="Small electronic device accessory" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBqQKEG51MqrofpWI_L7CHTmquh9-is5_MLjVZIAEWY8zh5jB9lrzXzZqElI9uHA9AXKPIMCFiG3MLSJO7pvDU8qnzVd8_68Wsn78zbj0OjRmR90Pwwt9dDTHEX8MTMPa10HlwB8YmLy_8f2weS57dtaH6sWVGMbk4YS-74zWu8soMzs4RnOtp9YJS3k94eHAG-4igaXkt75PfCbDxHDrEphDsV_wE888gsgXBwFesjHc47XoZXZ3on8_n3Lgf-9yNHYa6IgQFJAlrb')"></div>
+  <p class="text-xs font-bold text-charcoal truncate">Silicone Case v2</p>
+  <p class="text-xs text-charcoal/60 font-black">$24.99</p>
+  </div>
 </div>
-<div class="bg-white/50 p-3 rounded-xl border border-black/5 hover:bg-white transition-all cursor-pointer">
-<div class="aspect-square bg-ice-blue rounded-lg mb-3 bg-center bg-cover" data-alt="Desktop workspace accessory" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBFBk4meGExiNsEEa26Q2e9o0mC3vxN6eIaWelQ2JxqcLjaMPWMdrFuZdaBUFcbZ27zIe27VXYn-YFoc30qTqn3SPGst3LsmAfppYA2k4vVdqCVxeZJ95bExcfX33LTIcIiINVrlvgmyFDd2No1w7Yz0kL0_fij1t5oIrbFsmZSYOQW5Kroq8AO1UYeLcs56_JDwjfwoIi-dcyB7_my3nSAzI7RNRKRKuGDyhsYK2Klayu1gzv7VyRmByEySgCdzsBc-Y4Jmrolo0L')"></div>
-<p class="text-xs font-bold text-charcoal truncate">Desk Mat Extended</p>
-<p class="text-xs text-charcoal/60 font-black">$45.00</p>
-</div>
-<div class="bg-white/50 p-3 rounded-xl border border-black/5 hover:bg-white transition-all cursor-pointer">
-<div class="aspect-square bg-ice-blue rounded-lg mb-3 bg-center bg-cover" data-alt="Minimalist coffee mug" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAifDvj_AkkaMYvUHbBhG9OmfVH3VaDHVSdDkXXIVnEx86r24TcbZPnnxLHRes3bEl4X7FOOkdhaeZFYl-mpoIKNF0vxVCYscKISe00LrM_izMqNO1eQys0hgsyx3vUzlGKBqyG0rPpQW4z0hZHUaUher55C_tp0LHLQb9mS3GdrrcK0BpLzyQMqdqVO751vD6PcYm0tbX5qZZXfwXAgWYZ3Itru8FbkJN7hg9gqDAIJjQE33hXUYOiv5PQgyBq4Vlj2NgK_UVE3rF4')"></div>
-<p class="text-xs font-bold text-charcoal truncate">Ceramic Travel Mug</p>
-<p class="text-xs text-charcoal/60 font-black">$32.00</p>
-</div>
-<div class="bg-white/50 p-3 rounded-xl border border-black/5 hover:bg-white transition-all cursor-pointer">
-<div class="aspect-square bg-ice-blue rounded-lg mb-3 bg-center bg-cover" data-alt="Handheld light device" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCIonPbB3S2AUSzcOdxz4rsv-aMUb1NAwagMzNRCXJ2fyWIG5FU9_Kb_Ju5kNeJkf1xQeq0RvNCKE7bzkuUPGGf7kA3EffT85TAo6XE248ZI-0pq5FaQYAEdTzwWJfiENht1N5AIMMMawoY9ZzlSN2AWOnV5226nBfKk8cuo5ptje0qqktJu3pOJTrcocO65OMuFyDVV6vuogZNv8Qp_e6mO8ivEiZfpyJTW9kR9qnpYO3l3ni0YpU3hOxB0p0P_NOMCqo88wLYzHJ0')"></div>
-<p class="text-xs font-bold text-charcoal truncate">Pocket LED Light</p>
-<p class="text-xs text-charcoal/60 font-black">$19.99</p>
-</div>
-<div class="bg-white/50 p-3 rounded-xl border border-black/5 hover:bg-white transition-all cursor-pointer hidden md:block">
-<div class="aspect-square bg-ice-blue rounded-lg mb-3 bg-center bg-cover" data-alt="Protective sleeve for tablet" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDf2flN0dVwkLnnKh0w-W_cnhjIfbvZ5ZVS3CbZbzANJOVU0jpShIf-KH88nOhBGq6GO5StqKJ26o8iQGTgrslYA9fRF9ShsG0nqBDsYQhFExoQv9T1hcSUERtNqtwNXf3KlgUX7h3owEZWE2EIT_ufjO1-7KHEJ1Pud-B1y2obfNCUEtw_In48NDN5wp5atkJxCD-lf_ajcEuLSPLq1UmP9gMp-IYKrtGuWb3uBAQoRh8mggx_Jlec1lFzcYKaIjQxa-irDGgCKOUr')"></div>
-<p class="text-xs font-bold text-charcoal truncate">Tablet Sleeve Pro</p>
-<p class="text-xs text-charcoal/60 font-black">$55.00</p>
-</div>
-</div>
-</section>
+</section> -->
 </main>
+
 <!-- Footer -->
 <footer class="bg-primary text-white py-12">
 <div class="max-w-[1200px] mx-auto px-10">

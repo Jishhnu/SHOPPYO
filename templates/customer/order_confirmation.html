@@ -75,14 +75,34 @@
 
 <main class="flex-grow ice-blue-gradient dark:bg-background-dark py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-3xl mx-auto">
+
         <div class="bg-white dark:bg-slate-900 rounded-xl shadow-xl overflow-hidden border border-slate-100 dark:border-slate-800">
-            <div class="pt-12 pb-8 px-8 text-center border-b border-slate-50 dark:border-slate-800">
-                <div class="mb-6 inline-flex items-center justify-center size-20 rounded-full bg-success/10 text-success">
-                    <span class="material-symbols-outlined !text-5xl">check</span>
+    <div class="pt-12 pb-8 px-8 text-center border-b border-slate-50 dark:border-slate-800">
+
+        <!-- Tick Circle -->
+        <div class="flex flex-col items-center justify-center">
+
+            <div class="flex items-center justify-center w-24 h-24 rounded-full bg-green-100 mb-6">
+                <div class="flex items-center justify-center w-14 h-14 rounded-full bg-green-500 text-white text-2xl font-bold">
+                    ✓
                 </div>
-                <h1 class="text-3xl font-extrabold text-primary dark:text-slate-100 mb-2">Thank You for Your Order!</h1>
-                <p class="text-slate-500 dark:text-slate-400 text-lg">Your order <span class="font-semibold text-primary dark:text-slate-200">#SO-12345</span> has been placed successfully.</p>
             </div>
+
+            <h1 class="text-3xl font-extrabold text-primary dark:text-slate-100 mb-2">
+                Thank You for Your Order!
+            </h1>
+
+            <p class="text-slate-500 dark:text-slate-400 text-lg">
+                Your order 
+                <span class="font-semibold text-primary dark:text-slate-200">
+                    #{{order.order_number}}
+                </span> 
+                has been placed successfully.
+            </p>
+
+        </div>
+
+    </div>
 
             <div class="p-8 space-y-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -99,65 +119,90 @@
                             <span class="material-symbols-outlined text-primary dark:text-slate-300">location_on</span>
                             <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Shipping Destination</h3>
                         </div>
-                        <p class="font-bold text-primary dark:text-slate-100">Jane Doe</p>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-snug">123 Pinecrest Avenue, Apt 4B<br/>Seattle, WA 98101</p>
+                        {% if order.address %}
+                        <p class="font-bold mt-1 text-primary">{{ order.address.full_name }}</p>
+
+                        <p class="text-xs text-slate-500 leading-tight">
+                        {{ order.address.house_info }},
+                        {{ order.address.locality }},
+                        {{ order.address.city }},
+                        {{ order.address.state }} - {{ order.address.pincode }}
+                        </p>
+
+                        <p class="text-xs text-slate-500">Phone: {{ order.address.phone_number }}</p>
+                        {% endif %}
                     </div>
                 </div>
 
                 <div>
                     <h3 class="text-lg font-bold text-primary dark:text-slate-100 mb-4 flex items-center gap-2">
-                        Order Summary
-                        <span class="text-sm font-normal text-slate-400">(2 items)</span>
+                    Order Summary
+                    <span class="text-sm font-normal text-slate-400">({{ order_item|length }} items)</span>
                     </h3>
+
                     <div class="space-y-4">
+                    
+                        {% for item in order_item %}
                         <div class="flex items-center gap-4 py-3">
-                            <div class="size-16 rounded-lg bg-slate-100 dark:bg-slate-800 flex-shrink-0 bg-cover bg-center border border-slate-200 dark:border-slate-700" style="background-image: url('https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=200&auto=format&fit=crop');"></div>
+                        
+                            <!-- <div class="size-16 rounded-lg bg-slate-100 dark:bg-slate-800 flex-shrink-0 bg-cover bg-center border border-slate-200 dark:border-slate-700"
+                            style="background-image: url('{{ item.variant.image_url }}');">
+                            </div> -->
+
+                            {% with image=item.variant.images.first %}
+                            {% if image %}
+                            <img src="{{ image.image_url }}"
+                            class="w-16 h-16 rounded-lg object-cover border border-slate-200">
+                            {% endif %}
+                            {% endwith %}
+                            
                             <div class="flex-grow">
-                                <p class="text-primary dark:text-slate-200 font-medium">Wireless Over-Ear Headphones</p>
-                                <p class="text-sm text-slate-400 dark:text-slate-500">Qty: 1</p>
+                                <p class="text-primary dark:text-slate-200 font-medium">{{ item.variant.product.name }} </p>
+                            
+                                <p class="text-sm text-slate-400 dark:text-slate-500">Qty: {{ item.quantity }}</p>
                             </div>
+
                             <div class="text-right">
-                                <p class="text-primary dark:text-slate-100 font-semibold">$129.00</p>
+                                <p class="text-primary dark:text-slate-100 font-semibold">₹ {{ item.price_at_purchase }}</p>
                             </div>
+
                         </div>
-                        <div class="flex items-center gap-4 py-3">
-                            <div class="size-16 rounded-lg bg-slate-100 dark:bg-slate-800 flex-shrink-0 bg-cover bg-center border border-slate-200 dark:border-slate-700" style="background-image: url('https://images.unsplash.com/photo-1610492317734-307dc72007e4?q=80&w=200&auto=format&fit=crop');"></div>
-                            <div class="flex-grow">
-                                <p class="text-primary dark:text-slate-200 font-medium">USB-C Fast Charging Cable</p>
-                                <p class="text-sm text-slate-400 dark:text-slate-500">Qty: 2</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-primary dark:text-slate-100 font-semibold">$30.00</p>
-                            </div>
-                        </div>
-                        <div class="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
-                            <div class="flex justify-between text-sm text-slate-500 dark:text-slate-400">
+                        {% endfor %}
+
+                    </div>
+                        <div class="pt-5 border-t border-slate-250 dark:border-slate-800 space-y-2">
+                           <div class="flex justify-between text-sm text-slate-500 dark:text-slate-400">
                                 <span>Subtotal</span>
-                                <span>$159.00</span>
+                                <span>₹ {{ order.total_amount }}</span>
                             </div>
+
                             <div class="flex justify-between text-sm text-slate-500 dark:text-slate-400">
                                 <span>Shipping</span>
                                 <span class="text-success font-medium">FREE</span>
                             </div>
+
                             <div class="flex justify-between text-lg font-bold text-primary dark:text-slate-100 pt-2">
                                 <span>Total</span>
-                                <span>$159.00</span>
+                                <span>₹ {{ order.total_amount }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                    <button class="flex-1 bg-primary hover:bg-opacity-90 text-white font-bold py-4 px-6 rounded-lg transition-all flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined">spatial_tracking</span>
-                        Track My Order
-                    </button>
-                    <button class="flex-1 bg-slate-grey hover:bg-opacity-90 text-white font-bold py-4 px-6 rounded-lg transition-all flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined">shopping_bag</span>
-                        Continue Shopping
-                    </button>
-                </div>
             </div>
+                <div class="flex flex-col sm:flex-row gap-4 pt-6 w-full">
+    <a href="#" 
+       class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.98]">
+        <span class="material-symbols-outlined text-xl">spatial_tracking</span>
+        <span>Track My Order</span>
+    </a>
+
+    <a href="{% url 'customer_home' %}" 
+       class="flex-1 bg-slate-grey hover:bg-slate-grey/90 text-white font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.98]">
+        <span class="material-symbols-outlined text-xl">shopping_bag</span>
+        <span>Continue Shopping</span>
+    </a>
+</div>
 
             <div class="bg-slate-50 dark:bg-slate-800/80 p-6 text-center text-sm text-slate-500 dark:text-slate-400">
                 <p>Need help with your order? <a class="text-primary dark:text-slate-200 font-semibold underline decoration-primary/30" href="#">Contact our support team</a></p>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShoppyO | Order History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1a2d37",
+                        "ice-blue": "#D6E8EE",
+                        "charcoal": "#333333",
+                        "background-light": "#f6f7f7",
+                        "background-dark": "#151a1d",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>body { font-family: 'Work Sans', sans-serif; color: #333333; } .bg-gradient-body { background: linear-gradient(135deg, #D6E8EE 0%, #FFFFFF 100%); }</style>
+</head>
+<body class="bg-gradient-to-br from-[#D6E8EE] via-white to-white min-h-screen">
+<!-- Top Navbar -->
+<header class="bg-primary text-white sticky top-0 z-50 shadow-md">
+<div class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-3xl">shopping_basket</span>
+<h2 class="text-xl font-bold tracking-tight">ShoppyO</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-white/80 hover:text-white transition-colors text-sm font-medium" href="{% url 'customer_home'%}">Home</a>
+<a class="text-white/80 hover:text-white transition-colors text-sm font-medium" href="{% url 'category'%}">Categories</a>
+<a class="text-white/80 hover:text-white transition-colors text-sm font-medium" href="#">Deals</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 flex-1 justify-end max-w-xl">
+<div class="relative w-full max-w-xs hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/60 text-xl">search</span>
+<input class="w-full bg-white text-charcoal rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-ice-blue border-none outline-none" placeholder="Search orders..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-white/10 rounded-lg transition-colors">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+<button class="p-2 hover:bg-white/10 rounded-lg transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-ice-blue ml-2 overflow-hidden border border-white/20">
+<img class="w-full h-full object-cover" data-alt="User profile avatar icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdCtRlzHfdmnlqMdmRjPM00Rp8wC9Ik0TXnheJ6Ml6no7cKJJo1bn1ltbChFiC3C4l9U-pDCK0_QXaavVSADWkC-4aAO5pzoPcNh2g8rFTGG4DGRqM-Iuj6K8cfv32YaRUmTQDhCVH9_hasZgfMoyL4gvIuMwzqFIK7DV9SxXEqRmhimYFYxd6AkEtLfjUBqUkm8oe4anIT8q_PX_PlYRR6P-B6wqUvrfzm5Dng01tQnHPOwyWln9qa1egTJqhzg1C20IqgmX0uvHG"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Header with Mixed Background -->
+<div class="bg-transparent pt-8 pb-12">
+<div class="max-w-[1200px] mx-auto px-6">
+<nav class="flex items-center gap-2 text-charcoal/60 text-sm mb-4">
+<a class="hover:text-primary transition-colors" href="{% url 'customer_home'%}">Home</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-charcoal font-medium">Order History</span>
+</nav>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-4xl font-black text-primary tracking-tight">My Orders</h1>
+<p class="text-charcoal/70 mt-1">Check the status of recent orders and manage your returns.</p>
+</div>
+    <div class="flex gap-2">
+
+        <a href="{% url 'order_history' %}"
+        class="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-charcoal/10 shadow-sm text-sm font-semibold text-charcoal hover:bg-gray-50 transition-colors">
+        <span class="material-symbols-outlined text-lg">filter_alt</span>
+        All Orders
+        </a>
+
+        <a href="{% url 'order_history' %}?filter=3months"
+        class="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-charcoal/10 shadow-sm text-sm font-semibold text-charcoal hover:bg-gray-50 transition-colors">
+        Past 3 Months
+        <span class="material-symbols-outlined text-lg">keyboard_arrow_down</span>
+        </a>
+
+    </div>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<main class="max-w-[1200px] mx-auto px-6 -mt-6 pb-20 relative z-10">
+<div class="flex flex-col gap-6">
+
+<!-- Order Card 1: Delivered
+<div class="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow border border-charcoal/5">
+<div class="p-6">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+<div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-8 items-center">
+<div>
+<p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Order ID</p>
+<p class="text-base font-bold text-primary">#SO-99234</p>
+</div>
+<div>
+<p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Date Placed</p>
+<p class="text-base font-medium text-charcoal">Oct 24, 2023</p>
+</div>
+<div>
+<p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Total Amount</p>
+<p class="text-base font-bold text-charcoal">$124.50</p>
+</div>
+<div>
+<p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Status</p>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold mt-1">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                    Delivered
+                                </span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex-1 lg:flex-none px-6 py-2.5 rounded-lg border-2 border-primary/10 text-primary font-bold text-sm hover:bg-primary/5 transition-colors">View Details</button>
+<button class="flex-1 lg:flex-none px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">replay</span>
+                                Reorder
+                            </button>
+</div>
+</div>
+<hr class="border-charcoal/5 mb-6"/>
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex -space-x-3 overflow-hidden">
+<img class="inline-block size-12 rounded-lg ring-2 ring-white object-cover bg-gray-100" data-alt="Product thumbnail premium wireless headphones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYse5nRCG0C64iGFd7yK8wJqwkbOHwxYlJZPS7LNu9N90AHNPWb7j3WV02w0lKPJcx6cm9QLizy32aD6InRV8EpMMLnbyRxe3j_anFXC7fZbToc_TbMueHwPWi6Uh1pCM7JXRlS1JdYAQ9WTWtXcgCKz5XbmZtXEUoVa9tT_4ZRcUAoYpaZHyiycxD-tOnygqiiHCx9omibkao5IVGLHBzna7xn_XunDuueI2mqMJZFEYRIvkQDRUydNUGlfe8y3h5M_Lmwl1ZvFRj"/>
+<img class="inline-block size-12 rounded-lg ring-2 ring-white object-cover bg-gray-100" data-alt="Product thumbnail protective laptop case" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLgx7d7aVWVfREBFK_1JhVwxI4zYyBrX1bjjUqYpyJmU-98F_thW0AcoynEE6g00WWqmJymgC19RW4uy9UumNLBoLE0qGFc4aCMGgNDxhp93yHUOSXqUiRXY-idIV_JXfRUwyJtmOXvE0hsOkg_rGNNiPuds9_XXOpYrizlybFbIe5ffYnA0WmxDz_4VxLWtUiTHU3BKJBayXnK0ZWCBiFni-pVFtqGQSZq-G5XGL454jRIKvcsQ1REvAoFGbU6e0qbdtVCyme3zqr"/>
+<div class="flex size-12 items-center justify-center rounded-lg bg-ice-blue ring-2 ring-white text-xs font-bold text-primary">
+                                +2
+                            </div>
+</div>
+<p class="text-sm text-charcoal/70">Delivered on <span class="font-bold text-charcoal">Oct 27, 2023</span> to 123 Maple St, Seattle, WA</p>
+</div>
+</div>
+</div> -->
+
+<!-- Order Card 2: Shipped
+<div class="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow border border-charcoal/5">
+<div class="p-6">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+<div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-8 items-center">
+<div>
+<p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Order ID</p>
+<p class="text-base font-bold text-primary">#SO-99451</p>
+</div>
+<div>
+<p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Date Placed</p>
+<p class="text-base font-medium text-charcoal">Nov 02, 2023</p>
+</div>
+<div>
+<p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Total Amount</p>
+<p class="text-base font-bold text-charcoal">$89.00</p>
+</div>
+<div>
+<p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Status</p>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold mt-1">
+<span class="material-symbols-outlined text-sm">local_shipping</span>
+                                    Shipped
+                                </span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex-1 lg:flex-none px-6 py-2.5 rounded-lg border-2 border-primary/10 text-primary font-bold text-sm hover:bg-primary/5 transition-colors">View Details</button>
+<button class="flex-1 lg:flex-none px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">replay</span>
+                                Reorder
+                            </button>
+</div>
+</div>
+<hr class="border-charcoal/5 mb-6"/>
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex -space-x-3 overflow-hidden">
+<img class="inline-block size-12 rounded-lg ring-2 ring-white object-cover bg-gray-100" data-alt="Product thumbnail organic cotton t-shirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQEPmZQFkbV49hE3yJd0x0jQg-MA-nFv5EdTEWGa2i490GwAjLRgVmnTtqFscX58oKLgwHhEQNmCSDIuE93e5Jem4h14xPJP8gAGnKBO6pIwZJLxDidugIrYBmxJ7zEaBmDgCc8SMi0HrfH7VCKeNmMiNYz3IM1IwH4k2BoCDeIKCyH027v5bELq4W0IuEwx4y8hnx7KyjRgFljhC4jACXFrHRb1zLmDADLntus2TrBBnF6izot0N6JK4pLEbUdpvZOibVY4GpsFyf"/>
+</div>
+<p class="text-sm text-charcoal/70">Estimated delivery: <span class="font-bold text-charcoal">Nov 06, 2023</span> via Express Mail</p>
+</div>
+</div>
+</div> -->
+
+<!-- Order Card 3: Processing -->
+{% for order in orders %}
+    <div class="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow border border-charcoal/5 mb-6">
+        <div class="p-6">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+                <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-8 items-center">
+                    <div>
+                        <p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Order ID</p>
+                        <p class="text-base font-bold text-primary">#{{ order.order_number }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Date Placed</p>
+                        <p class="text-base font-medium text-charcoal">{{ order.ordered_at|date:"M d, Y" }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Total Amount</p>
+                        <p class="text-base font-bold text-charcoal">₹ {{ order.total_amount }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Status</p>
+                        
+                        {# DYNAMIC STATUS BADGE #}
+                        {% if order.status == 'Delivered' %}
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold mt-1">
+                                <span class="material-symbols-outlined text-sm">check_circle</span> Delivered
+                            </span>
+                        {% elif order.status == 'Shipped' %}
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold mt-1">
+                                <span class="material-symbols-outlined text-sm">local_shipping</span> Shipped
+                            </span>
+                        {% else %}
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-bold mt-1">
+                                <span class="material-symbols-outlined text-sm">schedule</span> Processing
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="#"
+                    class="flex-1 lg:flex-none px-6 py-2.5 rounded-lg border-2 border-primary/10 text-primary font-bold text-sm hover:bg-primary/5 transition-colors">
+                    View Details
+                    </a>
+
+                    <a href="{% url 'reorder' order.id %}"
+                    class="flex-1 lg:flex-none px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-lg">replay</span>
+                    Reorder
+                    </a>
+                </div>
+            </div>
+
+<hr class="border-charcoal/5 mb-3"/>
+
+<div class="flex flex-col gap-2">
+
+    <div class="flex flex-wrap items-center justify-between gap-2">
+
+        <div class="flex items-center gap-3">
+
+            <div class="flex -space-x-2 overflow-hidden">
+
+                {% for item in order.items.all|slice:":3" %}
+                {% with image=item.variant.images.first %}
+                {% if image %}
+                <img class="inline-block size-11 rounded-lg ring-2 ring-white object-cover bg-gray-100"
+                     src="{{ image.image_url }}"
+                     alt="{{ item.variant.product.name }}">
+                {% endif %}
+                {% endwith %}
+                {% endfor %}
+
+                {% if order.items.count > 3 %}
+                <div class="flex size-11 items-center justify-center rounded-lg bg-ice-blue ring-2 ring-white text-xs font-bold text-primary">
+                    +{{ order.items.count|add:"-3" }}
+                </div>
+                {% endif %}
+
+            </div>
+
+            <div class="text-sm text-charcoal/80">
+
+                {% for item in order.items.all %}
+                <span class="font-medium text-charcoal">
+                    {{ item.variant.product.name }}
+                </span>
+                <span class="text-charcoal/50">
+                    x{{ item.quantity }}
+                </span>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <p class="text-sm text-charcoal/70 border-t border-charcoal/5 pt-2">
+
+        {% if order.order_status == 'DELIVERED' %}
+            Delivered to 
+            <span class="font-bold text-charcoal">{{ order.address.city }}</span>
+            on {{ order.ordered_at|date:"M d, Y" }}
+
+        {% elif order.order_status == 'SHIPPED' %}
+            Your package is in transit. Estimated delivery:
+            <span class="font-bold text-charcoal">Coming Soon</span>
+
+        {% else %}
+            Your order is being prepared and will be shipped shortly.
+        {% endif %}
+
+    </p>
+
+</div>
+
+</div>
+</div>
+{%endfor%}
+
+<!-- Pagination -->
+<div class="flex items-center justify-center gap-2 mt-4">
+<button class="size-10 flex items-center justify-center rounded-lg border border-charcoal/10 bg-white text-charcoal hover:bg-ice-blue/30 transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="size-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">1</button>
+<button class="size-10 flex items-center justify-center rounded-lg border border-charcoal/10 bg-white text-charcoal hover:bg-ice-blue/30 transition-colors">2</button>
+<button class="size-10 flex items-center justify-center rounded-lg border border-charcoal/10 bg-white text-charcoal hover:bg-ice-blue/30 transition-colors">3</button>
+<button class="size-10 flex items-center justify-center rounded-lg border border-charcoal/10 bg-white text-charcoal hover:bg-ice-blue/30 transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-white border-t border-charcoal/5 py-12">
+<div class="max-w-[1200px] mx-auto px-6 text-center">
+<div class="flex items-center justify-center gap-2 text-primary font-bold text-xl mb-4">
+<span class="material-symbols-outlined">shopping_basket</span>
+                ShoppyO
+            </div>
+<p class="text-charcoal/50 text-sm mb-8">© 2026 ShoppyO Ecommerce Inc. All rights reserved.</p>
+<div class="flex justify-center gap-6">
+<a class="text-charcoal/60 hover:text-primary transition-colors text-xs font-bold uppercase tracking-widest" href="#">Privacy Policy</a>
+<a class="text-charcoal/60 hover:text-primary transition-colors text-xs font-bold uppercase tracking-widest" href="#">Terms of Service</a>
+<a class="text-charcoal/60 hover:text-primary transition-colors text-xs font-bold uppercase tracking-widest" href="#">Support</a>
+</div>
+</div>
+</footer>
+</body></html>

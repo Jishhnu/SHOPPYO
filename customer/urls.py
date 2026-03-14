@@ -34,7 +34,9 @@ urlpatterns = [
     path("order/select-address/<int:address_id>/",views.order_select_address,name='order_select_address'),
     path("order/place/", views.place_order, name='place_order'),
     path("order/checkout/<int:cart_id>",views.checkout,name="checkout"),
-    
+    path("order/confirmation/<int:order_id>/",views.order_confirmation,name="order_confirmation"),
+    path("customer/order_history/",views.order_history,name="order_history"),
+    path("reorder/<int:order_id>/",views.reorder,name="reorder"),
 
 
 ]

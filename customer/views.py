@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from decimal import Decimal
 import uuid
+from datetime import timedelta
+from django.utils import timezone
 
 
 
@@ -14,10 +16,11 @@ import uuid
 @login_required
 def Customer_Dashboard(request):
     user = request.user
+    recent_orders = Order.objects.filter(user=request.user).order_by('-ordered_at')[:5]
     default_address = Address.objects.filter(user=user, is_default=True).first()
     if not default_address:
         default_address = Address.objects.filter(user=user).first()
-    return render(request, "customer/customer_dashboard.html", {"profile_user": user, "default_address": default_address})
+    return render(request, "customer/customer_dashboard.html", {"profile_user": user, "default_address": default_address,"recent_orders":recent_orders})
 
 
 @login_required
@@ -238,12 +241,16 @@ def remove_from_wishlist(request, item_id):
 def move_to_cart(request,item_id):
     wishlist_item = get_object_or_404(WishlistItem, id=item_id, wishlist__user=request.user)
     variant=wishlist_item.variant
-    cart= Cart.objects.get(user=request.user)
     current_price = variant.selling_price
+
+    cart, created= Cart.objects.get_or_create(user=request.user)
     cart_item, created = CartItem.objects.get_or_create(
         cart=cart,
         variant=variant,
-        defaults={"quantity": 1,"price_at_time":current_price}
+        defaults={
+            "quantity": 1,
+            "price_at_time":current_price
+            }
     )
 
     if not created:
@@ -252,19 +259,23 @@ def move_to_cart(request,item_id):
 
     wishlist_item.delete()
 
-    return redirect("cart_view")
+    return redirect("view_cart")
 
 @login_required
 def move_all_to_cart(request):
     wishlist = get_object_or_404(Wishlist, user=request.user, wishlist_name="My Wishlist")
     wishlist_items = WishlistItem.objects.filter(wishlist=wishlist)
     cart= Cart.objects.get(user=request.user)
+
     for item in wishlist_items:
         current_price=item.variant.selling_price
         cart_item, created = CartItem.objects.get_or_create(
             cart=cart,
             variant=item.variant,
-            defaults={"quantity": 1,"price_at_time":current_price}
+            defaults={
+                "quantity": 1,
+                "price_at_time":current_price
+                }
         )
         if not created:
             cart_item.quantity += 1
@@ -338,11 +349,10 @@ def order_select_address(request, address_id):
     address.is_default = True
     address.save()
     
-    # product_id = request.GET.get('product_id')
-    # print(product_id)
-    # if product_id:
-    #     return redirect('order', id=product_id)
-    # return redirect('order')
+    product_id = request.GET.get('product_id')
+    if product_id:
+        return redirect('order', id=product_id)
+    return redirect('order')
 
 #---------------Placed Order----------------------------------
 @login_required
@@ -368,7 +378,7 @@ def place_order(request):
         cart = get_object_or_404(Cart, id=cart_id, user=user)
         cart_items = CartItem.objects.filter(cart=cart)
         
-        if not cart_items:
+        if not cart_items.exists():
             messages.error(request,"Your cart is empty.")
             return redirect("view_cart")
         
@@ -396,8 +406,8 @@ def place_order(request):
         cart.total_amount = 0
         cart.save()
         
-        messages.success(request,f"ORDER Placed SuccessFully! Order Number: {order_number}")
-        return redirect("customer_home")
+        messages.success(request,f"ORDER Placed Successfully! Order Number: {order_number}")
+        return redirect("order_confirmation", order_id=order.id)
     
     #-------Single Product Checkout--------------
     if not variant_id:
@@ -413,7 +423,7 @@ def place_order(request):
         payment_method=payment_method,
         address=address
     )
-    order_item=OrderItem.objects.create(
+    OrderItem.objects.create(
         order=order,
         variant=variant,
         seller=variant.product.seller,
@@ -421,4 +431,37 @@ def place_order(request):
         price_at_purchase=variant.selling_price
     )
     messages.success(request,f"ORDER Placed SuccessFully! Order Number: {order_number}")
-    return redirect("customer_home")
+    return redirect("order_confirmation", order_id=order.id)
+
+#--------Order_confirmation/Order_history/Reorder---------------------
+@login_required
+def order_confirmation(request,order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    order_item=OrderItem.objects.filter(order=order)
+    return render(request,"customer/order_confirmation.html",{"order":order,"order_item":order_item})
+
+@login_required
+def order_history(request):
+    orders = Order.objects.filter(user=request.user).prefetch_related('items').order_by('-ordered_at')
+
+    filter_type = request.GET.get("filter")
+    if filter_type == "3months":
+        three_month_ago = timezone.now() - timedelta(days=90)
+        orders = orders.filter(ordered_at__gte=three_month_ago)
+
+    return render(request,"customer/order_history.html",{"orders":orders})
+
+@login_required
+def reorder(request,order_id):
+    order=get_object_or_404(Order,id=order_id,user=request.user)
+    cart,created=Cart.objects.get_or_create(user=request.user)
+
+    for item in order.items.all():
+        CartItem.objects.create(
+            cart=cart,
+            variant=item.variant,
+            quantity=item.quantity,
+            price_at_time=item.variant.selling_price
+        )
+    messages.success(request,"Items added to Cart Again.")
+    return redirect("view_cart")

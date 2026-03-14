@@ -344,25 +344,26 @@ Qty: 1
 </div>
 {% endif %}
 </div>
+
+<!------------------Form------------------->
 <form id="orderForm" method="POST" action="{% url 'place_order' %}">
 {% csrf_token %}
-{% if is_cart_checkout %}
-<input type="hidden" name="cart_id" id="cart_id" value="{{ cart.id }}">
-{% else %}
-<input type="hidden" name="variant_id" id="variant_id" value="{{ order.id }}">
-{% endif %}
-<input type="hidden" name="payment_method" id="payment_method" value="COD">
 
-<div class="mb-6">
-<div class="flex gap-2">
-<input class="flex-1 rounded-lg border-slate-200 dark:bg-slate-700 dark:border-slate-600 focus:ring-primary focus:border-primary text-sm" placeholder="Promo code" type="text"/>
-<button type="button" class="bg-primary/10 text-primary px-4 py-2 rounded-lg font-bold text-sm hover:bg-primary/20 transition-colors">Apply</button>
-</div>
-</div>
-<button type="submit" class="w-full bg-primary hover:bg-slate-800 text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 transition-all active:scale-[0.98]">
-                                    Place Order
-                                </button>
+{% if is_cart_checkout %}
+<input type="hidden" name="cart_id" value="{{ cart.id }}">
+{% else %}
+<input type="hidden" name="variant_id" value="{{ order.id }}">
+{% endif %}
+
+<input type="hidden" name="payment_method" value="COD">
+
+<button type="submit"
+class="block w-full text-center bg-primary hover:bg-slate-800 text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 transition-all active:scale-[0.98]">
+Place Order
+</button>
 </form>
+
+
 <p class="text-center text-xs text-slate-400 mt-4">
                                     By placing your order, you agree to ShoppyO's <a class="underline" href="#">Terms of Use</a> and <a class="underline" href="#">Privacy Policy</a>.
                                 </p>
@@ -379,7 +380,7 @@ Qty: 1
 </div>
 </main>
 <footer class="border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-background-dark/50 py-8 px-10 text-center">
-<p class="text-slate-500 text-sm">© 2024 ShoppyO Inc. All rights reserved.</p>
+<p class="text-slate-500 text-sm">© 2026 ShoppyO Inc. All rights reserved.</p>
 </footer>
 </div>
 </div>

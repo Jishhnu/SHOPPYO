@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import *
 from seller.models import *
+from customer.models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -63,7 +64,12 @@ def Customer_Home(request):
     user=request.user
     product=Product.objects.filter(is_active=True)
     category=Category.objects.filter(is_active=True)
-    return render(request,"customer/customer_home.html", {"profile_user":user,"products":product,"categories":category})
+    try:
+        cart=Cart.objects.get(user=user)
+        cart_count=cart.items.count()
+    except Cart.DoesNotExist:
+        cart_count=0
+    return render(request,"customer/customer_home.html", {"profile_user":user,"products":product,"categories":category,"cart_count":cart_count})
 
 
 @login_required
