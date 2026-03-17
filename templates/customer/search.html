@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Search Results - ShoppyO</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#1a2d37",
+                "background-light": "#f6f7f7",
+                "background-dark": "#151a1d",
+                "ice-blue": "#D6E8EE",
+                "charcoal": "#333333"
+              },
+              fontFamily: {
+                "display": ["Work Sans", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Work Sans", sans-serif;
+            color: #333333;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="bg-primary sticky top-0 z-50 w-full shadow-lg">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16 gap-8">
+<!-- Logo -->
+<div class="flex items-center gap-2 shrink-0">
+<div class="text-white">
+<svg class="size-8" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 17.4264C16.7203 18.1174 20.2244 18.5217 24 18.5217C27.7756 18.5217 31.2797 18.1174 34.1739 17.4264C36.9144 16.7722 39.9967 15.2331 41.3563 14.1648L24.8486 40.6391C24.4571 41.267 23.5429 41.267 23.1514 40.6391L6.64374 14.1648C8.00331 15.2331 11.0856 16.7722 13.8261 17.4264Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 12.236C39.9944 12.2537 39.9875 12.2845 39.9748 12.3294C39.9436 12.4399 39.8949 12.5741 39.8346 12.7175C39.8168 12.7597 39.7989 12.8007 39.7813 12.8398C38.5103 13.7113 35.9788 14.9393 33.7095 15.4811C30.9875 16.131 27.6413 16.5217 24 16.5217C20.3587 16.5217 17.0125 16.131 14.2905 15.4811C12.0012 14.9346 9.44505 13.6897 8.18538 12.8168C8.17384 12.7925 8.16216 12.767 8.15052 12.7408C8.09919 12.6249 8.05721 12.5114 8.02977 12.411C8.00356 12.3152 8.00039 12.2667 8.00004 12.2612C8.00004 12.261 8 12.2607 8.00004 12.2612C8.00004 12.2359 8.0104 11.9233 8.68485 11.3686C9.34546 10.8254 10.4222 10.2469 11.9291 9.72276C14.9242 8.68098 19.1919 8 24 8C28.8081 8 33.0758 8.68098 36.0709 9.72276C37.5778 10.2469 38.6545 10.8254 39.3151 11.3686C39.9006 11.8501 39.9857 12.1489 39.998 12.236ZM4.95178 15.2312L21.4543 41.6973C22.6288 43.5809 25.3712 43.5809 26.5457 41.6973L43.0534 15.223C43.0709 15.1948 43.0878 15.1662 43.104 15.1371L41.3563 14.1648C43.104 15.1371 43.1038 15.1374 43.104 15.1371L43.1051 15.135L43.1065 15.1325L43.1101 15.1261L43.1199 15.1082C43.1276 15.094 43.1377 15.0754 43.1497 15.0527C43.1738 15.0075 43.2062 14.9455 43.244 14.8701C43.319 14.7208 43.4196 14.511 43.5217 14.2683C43.6901 13.8679 44 13.0689 44 12.2609C44 10.5573 43.003 9.22254 41.8558 8.2791C40.6947 7.32427 39.1354 6.55361 37.385 5.94477C33.8654 4.72057 29.133 4 24 4C18.867 4 14.1346 4.72057 10.615 5.94478C8.86463 6.55361 7.30529 7.32428 6.14419 8.27911C4.99695 9.22255 3.99999 10.5573 3.99999 12.2609C3.99999 13.1275 4.29264 13.9078 4.49321 14.3607C4.60375 14.6102 4.71348 14.8196 4.79687 14.9689C4.83898 15.0444 4.87547 15.1065 4.9035 15.1529C4.91754 15.1762 4.92954 15.1957 4.93916 15.2111L4.94662 15.223L4.95178 15.2312ZM35.9868 18.996L24 38.22L12.0131 18.996C12.4661 19.1391 12.9179 19.2658 13.3617 19.3718C16.4281 20.1039 20.0901 20.5217 24 20.5217C27.9099 20.5217 31.5719 20.1039 34.6383 19.3718C35.082 19.2658 35.5339 19.1391 35.9868 18.996Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="text-white text-xl font-bold tracking-tight">ShoppyO</span>
+</div>
+<!-- Search Bar -->
+<!-- <div class="flex-1 max-w-2xl">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-primary/60">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border-none rounded-lg bg-background-light focus:ring-2 focus:ring-ice-blue focus:outline-none text-charcoal" placeholder="Search for products, brands and more..." type="text"/>
+</div>
+</div> -->
+<!-- Navigation Links & Icons -->
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-white/90 hover:text-white font-medium text-sm transition-colors" href="#">Deals</a>
+<a class="text-white/90 hover:text-white font-medium text-sm transition-colors" href="#">Categories</a>
+<div class="flex items-center gap-4 ml-4">
+<button class="text-white hover:bg-white/10 p-2 rounded-full relative">
+<span class="material-symbols-outlined">favorite</span>
+<span class="absolute top-1 right-1 bg-red-500 text-[10px] text-white w-4 h-4 rounded-full flex items-center justify-center">2</span>
+</button>
+<button class="text-white hover:bg-white/10 p-2 rounded-full relative">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1 right-1 bg-red-500 text-[10px] text-white w-4 h-4 rounded-full flex items-center justify-center">5</span>
+</button>
+<button class="text-white hover:bg-white/10 p-2 rounded-full">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</nav>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Breadcrumbs and Result Counter -->
+<div class="mb-6 flex flex-col gap-2">
+<nav aria-label="Breadcrumb" class="flex text-sm text-charcoal/60">
+<ol class="inline-flex items-center space-x-1 md:space-x-3">
+<li><a class="hover:text-primary" href="#">Home</a></li>
+<li><span class="mx-2">/</span></li>
+<li class="font-semibold text-charcoal">Search Results</li>
+</ol>
+</nav>
+<div class="flex items-baseline justify-between">
+<h1 class="text-2xl font-bold text-charcoal">Results for "Wireless Headphones"</h1>
+<span class="text-sm text-charcoal/70">150 results found</span>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Sidebar Filters -->
+<aside class="w-full lg:w-64 shrink-0">
+<div class="bg-ice-blue/30 rounded-xl p-6 sticky top-24 border border-ice-blue/50">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-bold text-lg text-charcoal">Filters</h2>
+<a href="{% url 'search' %}?search={{ search }}"
+   class="text-xs font-semibold text-primary underline underline-offset-4">
+   Clear All
+</a>
+</div>
+<!-- Category Filter -->
+
+<!-- Unified Filters Form -->
+<form action="{% url 'search' %}" method="GET" class="space-y-6">
+    <input type="hidden" name="search" value="{{ search }}">
+    
+    <!-- Brand Filter -->
+    <div>
+        <h4 class="font-semibold text-charcoal mb-3 flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">storefront</span>
+            Brand
+        </h4>
+        <div class="space-y-2 max-h-40 overflow-y-auto">
+            {% for brand_name in all_brands %}
+            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-ice-blue/30 cursor-pointer group transition-colors">
+                <input type="checkbox" 
+                       name="brand" 
+                       value="{{ brand_name }}"
+                       {% if brand_name in selected_brands %}checked{% endif %}
+                       onchange="this.form.submit()" 
+                       class="rounded text-primary focus:ring-primary h-4 w-4 flex-shrink-0">
+                <span class="font-bold uppercase text-charcoal group-hover:text-primary text-sm flex-1 min-w-0 truncate">
+                    {{ brand_name }}
+                </span>
+            </label>
+            {% empty %}
+            <p class="text-xs text-slate-400 italic p-3">No brands available</p>
+            {% endfor %}
+        </div>
+    </div>
+    </form>
+    
+    <!-- Price Range Filter -->
+<form action="{% url 'search' %}" method="GET" class="price-filter-form">
+    <input type="hidden" name="search" value="{{ search }}">
+    {% for b in selected_brands %}
+        <input type="hidden" name="brand" value="{{ b }}">
+    {% endfor %}
+
+    <h4 class="font-semibold text-charcoal mb-6 flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">payments</span>
+        Price Range
+    </h4>
+
+    <div class="relative mb-10 px-2">
+        <div id="slider-track" class="relative h-2 bg-gray-200 rounded-full cursor-pointer">
+            <div id="filled-rail" class="absolute h-full bg-primary rounded-full transition-all duration-200"></div>
+            
+            <div id="slider-min-thumb" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white border-2 border-primary rounded-full cursor-grab active:cursor-grabbing shadow-md z-30"></div>
+            <div id="slider-max-thumb" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white border-2 border-primary rounded-full cursor-grab active:cursor-grabbing shadow-md z-30"></div>
+
+            <div id="min-value-label" class="absolute -top-8 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0">₹0</div>
+            <div id="max-value-label" class="absolute -top-8 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0">₹0</div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+        <div>
+            <label class="text-[10px] uppercase font-bold text-gray-400 block mb-1">Min Price</label>
+            <input type="number" id="min-input" name="min_price" value="{{ min_price|default:0 }}" 
+                   class="w-full border border-gray-200 rounded px-3 py-2 text-sm font-mono">
+        </div>
+        <div>
+            <label class="text-[10px] uppercase font-bold text-gray-400 block mb-1">Max Price</label>
+            <input type="number" id="max-input" name="max_price" value="{{ max_price|default:100000 }}" 
+                   class="w-full border border-gray-200 rounded px-3 py-2 text-sm font-mono">
+        </div>
+    </div>
+</form>
+
+<!-- Rating Filter -->
+<div>
+<h3 class="font-semibold text-charcoal mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">star_rate</span>
+                            Customer Ratings
+                        </h3>
+<div class="space-y-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="text-primary focus:ring-primary" name="rating" type="radio"/>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-yellow-500 text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-yellow-500 text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-yellow-500 text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-yellow-500 text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-gray-300 text-sm">star</span>
+<span class="text-sm text-charcoal/70 ml-1">&amp; Up</span>
+</div>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="text-primary focus:ring-primary" name="rating" type="radio"/>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-yellow-500 text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-yellow-500 text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-yellow-500 text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-gray-300 text-sm">star</span>
+<span class="material-symbols-outlined text-gray-300 text-sm">star</span>
+<span class="text-sm text-charcoal/70 ml-1">&amp; Up</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+</aside>
+
+<!-- Product Grid Area -->
+<div class="flex-1">
+
+<!-- Sorting Header -->
+<div class="flex justify-end mb-6">
+<div class="flex items-center gap-2">
+
+<span class="text-sm text-charcoal/60">Sort by:</span>
+
+<form method="GET" action="{% url 'search' %}">
+
+<!-- keep existing search -->
+<input type="hidden" name="search" value="{{ search }}">
+
+<select name="sort"
+onchange="this.form.submit()"
+class="text-sm font-medium bg-transparent border-none focus:ring-0 cursor-pointer text-charcoal">
+
+<option value="relevance"
+{% if sort == "relevance" %}selected{% endif %}>
+Relevance
+</option>
+
+<option value="low"
+{% if sort == "low" %}selected{% endif %}>
+Price: Low to High
+</option>
+
+<option value="high"
+{% if sort == "high" %}selected{% endif %}>
+Price: High to Low
+</option>
+
+<option value="new"
+{% if sort == "new" %}selected{% endif %}>
+Newest Arrivals
+</option>
+
+</select>
+
+</form>
+
+</div>
+</div>
+<!-- Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Product Card 1 -->
+{% for product in products %}
+
+<div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow group overflow-hidden border border-transparent hover:border-ice-blue">
+
+<div class="relative aspect-square overflow-hidden bg-background-light">
+
+{% with variant=product.variants.first %}
+{% if variant and variant.images.first %}
+<img src="{{ variant.images.first.image_url }}"
+     alt="{{ product.name }}"
+     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+{% endif %}
+{% endwith %}
+
+<button class="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur rounded-full text-charcoal hover:text-red-500 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+
+<div class="absolute bottom-3 left-3 bg-primary text-white text-[10px] font-bold uppercase px-2 py-1 rounded">
+Best Seller
+</div>
+
+</div>
+
+<div class="p-5">
+
+<p class="text-[11px] font-bold text-primary/60 uppercase tracking-widest mb-1">
+{{ product.brand }}
+</p>
+
+<h3 class="font-semibold text-charcoal mb-2 line-clamp-2 min-h-[3rem]">
+{{ product.name }}
+</h3>
+
+<div class="flex items-center gap-1 mb-3">
+<span class="text-xs text-charcoal/50">(2.4k reviews)</span>
+</div>
+
+<div class="flex items-center justify-between mt-auto">
+
+<div class="flex flex-col">
+
+<span class="text-2xl font-bold text-primary">
+₹{{ product.variants.first.selling_price }}
+</span>
+
+<span class="text-xs text-green-600 font-semibold">
+Free Shipping
+</span>
+
+</div>
+
+<a href="{% url 'single_product_variant' product.slug %}"
+class="bg-primary text-white p-2.5 rounded-lg hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 flex items-center gap-2">
+
+<span class="material-symbols-outlined text-xl">shopping_cart</span>
+<span class="text-sm font-bold">View</span>
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+<!-- Pagination -->
+<div class="mt-12 flex items-center justify-center gap-2">
+<button class="w-10 h-10 rounded-lg border border-ice-blue flex items-center justify-center text-charcoal hover:bg-ice-blue/30 transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-primary text-white font-bold text-sm">1</button>
+<button class="w-10 h-10 rounded-lg border border-ice-blue flex items-center justify-center text-charcoal hover:bg-ice-blue/30 transition-colors text-sm font-semibold">2</button>
+<button class="w-10 h-10 rounded-lg border border-ice-blue flex items-center justify-center text-charcoal hover:bg-ice-blue/30 transition-colors text-sm font-semibold">3</button>
+<span class="px-2 text-charcoal/40">...</span>
+<button class="w-10 h-10 rounded-lg border border-ice-blue flex items-center justify-center text-charcoal hover:bg-ice-blue/30 transition-colors text-sm font-semibold">12</button>
+<button class="w-10 h-10 rounded-lg border border-ice-blue flex items-center justify-center text-charcoal hover:bg-ice-blue/30 transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-primary text-white/70 py-12 mt-20 border-t border-white/10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+<div class="col-span-2 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<div class="text-white">
+<svg class="size-6" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 17.4264C16.7203 18.1174 20.2244 18.5217 24 18.5217C27.7756 18.5217 31.2797 18.1174 34.1739 17.4264C36.9144 16.7722 39.9967 15.2331 41.3563 14.1648L24.8486 40.6391C24.4571 41.267 23.5429 41.267 23.1514 40.6391L6.64374 14.1648C8.00331 15.2331 11.0856 16.7722 13.8261 17.4264Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="text-white text-lg font-bold">ShoppyO</span>
+</div>
+<p class="text-sm leading-relaxed mb-6">Premium audio gear and lifestyle electronics at your fingertips. Experience the best in tech with ShoppyO.</p>
+<div class="flex gap-4">
+<a class="hover:text-white" href="#"><span class="material-symbols-outlined">social_leaderboard</span></a>
+<a class="hover:text-white" href="#"><span class="material-symbols-outlined">terminal</span></a>
+<a class="hover:text-white" href="#"><span class="material-symbols-outlined">language</span></a>
+</div>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Shop</h4>
+<ul class="space-y-4 text-sm">
+<li><a class="hover:text-white transition-colors" href="#">Headphones</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Speakers</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Accessories</a></li>
+<li><a class="hover:text-white transition-colors" href="#">New Releases</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Support</h4>
+<ul class="space-y-4 text-sm">
+<li><a class="hover:text-white transition-colors" href="#">Help Center</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Track Order</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Returns</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Newsletter</h4>
+<p class="text-sm mb-4">Subscribe for exclusive deals and updates.</p>
+<div class="flex flex-col gap-2">
+<input class="bg-white/10 border-none rounded-lg text-sm px-4 py-2 focus:ring-1 focus:ring-ice-blue placeholder:text-white/30 text-white" placeholder="Your email address" type="email"/>
+<button class="bg-white text-primary font-bold py-2 rounded-lg text-sm hover:bg-ice-blue transition-colors">Join Now</button>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+<p>© 2026 ShoppyO Inc. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-white" href="#">Privacy Policy</a>
+<a class="hover:text-white" href="#">Terms of Service</a>
+<a class="hover:text-white" href="#">Cookie Settings</a>
+</div>
+</div>
+</div>
+</footer>
+
+<script>
+let isDragging = false;
+let currentSlider = null;
+let submitTimeout = null;
+
+function initDraggableSliders() {
+    const track = document.getElementById('slider-track');
+    const minThumb = document.getElementById('slider-min-thumb');
+    const maxThumb = document.getElementById('slider-max-thumb');
+    const minInput = document.getElementById('min-input');
+    const maxInput = document.getElementById('max-input');
+    const minLabel = document.getElementById('min-value-label');
+    const maxLabel = document.getElementById('max-value-label');
+    const filledRail = document.getElementById('filled-rail');
+
+    const MIN_VAL = 0;
+    const MAX_VAL = 100000;
+    const STEP = 100;
+
+    // Get initial values from inputs (which Django/URL populated)
+    let minVal = parseInt(minInput.value) || MIN_VAL;
+    let maxVal = parseInt(maxInput.value) || MAX_VAL;
+
+    function updateUI(min, max) {
+        const minPercent = (min / MAX_VAL) * 100;
+        const maxPercent = (max / MAX_VAL) * 100;
+
+        // Instant visual feedback
+        minThumb.style.left = `${minPercent}%`;
+        maxThumb.style.left = `${maxPercent}%`;
+        
+        filledRail.style.left = `${minPercent}%`;
+        filledRail.style.width = `${maxPercent - minPercent}%`;
+
+        minLabel.textContent = `₹${min.toLocaleString()}`;
+        minLabel.style.left = `${minPercent}%`;
+        minLabel.style.opacity = '1';
+
+        maxLabel.textContent = `₹${max.toLocaleString()}`;
+        maxLabel.style.left = `${maxPercent}%`;
+        maxLabel.style.opacity = '1';
+
+        minInput.value = min;
+        maxInput.value = max;
+    }
+
+    function handleMove(e) {
+        if (!isDragging) return;
+        
+        // Use requestAnimationFrame for buttery smooth 60fps movement
+        requestAnimationFrame(() => {
+            const rect = track.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            let pos = (clientX - rect.left) / rect.width;
+            
+            let val = Math.round((pos * MAX_VAL) / STEP) * STEP;
+            val = Math.max(MIN_VAL, Math.min(val, MAX_VAL));
+
+            let currentMin = parseInt(minInput.value);
+            let currentMax = parseInt(maxInput.value);
+
+            if (currentSlider === 'min') {
+                if (val >= currentMax) val = currentMax - STEP;
+                updateUI(val, currentMax);
+            } else {
+                if (val <= currentMin) val = currentMin + STEP;
+                updateUI(currentMin, val);
+            }
+        });
+    }
+
+    function startDrag(e, type) {
+        isDragging = true;
+        currentSlider = type;
+        document.body.style.userSelect = 'none'; // Prevent text selection
+        
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchmove', handleMove, { passive: false });
+        document.addEventListener('touchend', stopDrag);
+    }
+
+    function stopDrag() {
+        if (!isDragging) return;
+        isDragging = false;
+        document.body.style.userSelect = '';
+
+        document.removeEventListener('mousemove', handleMove);
+        document.removeEventListener('mouseup', stopDrag);
+        document.removeEventListener('touchmove', handleMove);
+        document.removeEventListener('touchend', stopDrag);
+
+        // ONLY submit when the user lets go of the mouse/finger
+        clearTimeout(submitTimeout);
+        submitTimeout = setTimeout(submitForm, 200);
+    }
+
+    minThumb.addEventListener('mousedown', (e) => startDrag(e, 'min'));
+    maxThumb.addEventListener('mousedown', (e) => startDrag(e, 'max'));
+    minThumb.addEventListener('touchstart', (e) => startDrag(e, 'min'), { passive: false });
+    maxThumb.addEventListener('touchstart', (e) => startDrag(e, 'max'), { passive: false });
+
+    // Initial positioning
+    updateUI(minVal, maxVal);
+}
+
+function submitForm() {
+    const form = document.querySelector('.price-filter-form');
+    if (form) form.submit();
+}
+
+document.addEventListener('DOMContentLoaded', initDraggableSliders);
+</script>
+
+</body></html>

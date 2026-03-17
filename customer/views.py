@@ -9,7 +9,8 @@ from decimal import Decimal
 import uuid
 from datetime import timedelta
 from django.utils import timezone
-
+from django.db.models import Q
+from django.http import JsonResponse
 
 
 
@@ -286,14 +287,24 @@ def move_all_to_cart(request):
     return redirect("view_cart")
 
 
-#-------------Product_variant---------------------------
+#-------------Single_Product_variant---------------------------
 
-@login_required
 def single_product_variant(request,slug):
     product=get_object_or_404(Product, slug=slug)
-    product_variant = ProductVariant.objects.get(product=product)
+    product_variant = get_object_or_404(ProductVariant, product=product)
     product_image=ProductImage.objects.filter(variant=product_variant)
-    return render(request,'customer/Single_variant.html',{'items':product_variant,'image':product_image})
+    if request.user.is_authenticated:
+        review = Review.objects.filter(
+            product=product_variant.product,
+            user=request.user
+        ).order_by('-created_at')
+    else:
+        review = Review.objects.filter(
+            product=product_variant.product
+        ).order_by('-created_at')
+
+    return render(request,'customer/Single_variant.html',{'items':product_variant,'image':product_image,'review':review})
+
 
 #------------------Order---------------------------
 @login_required
@@ -312,6 +323,7 @@ def order(request, id):
         'addresses': addresses,
         'default_address': default_address
     })
+
 @login_required
 def checkout(request, cart_id):
     user = request.user
@@ -371,7 +383,7 @@ def place_order(request):
         messages.error(request,"Please Add a Delivery Address.")
         return redirect("customer_address_add")
     
-    order_number="ORD-" + uuid.uuid4().hex[:10].upper()
+    order_number="SpyO-" + uuid.uuid4().hex[:10].upper()
     
     #-----------Cart checkout-----------------------------
     if cart_id:
@@ -465,3 +477,91 @@ def reorder(request,order_id):
         )
     messages.success(request,"Items added to Cart Again.")
     return redirect("view_cart")
+
+#----------------Search---------------------
+# def search(request):
+#     search=request.GET.get("search")
+#     if search:
+#         products=Product.objects.filter(
+#             Q(name__icontains=search) |
+#             Q(brand__icontains=search) |
+#             Q(subcategory__name__icontains=search) |
+#             Q(subcategory__category__name__icontains=search),
+#             is_active=True).distinct()
+#     return render(request,"customer/search.html",{"products":products,"search":search})
+
+def search(request):
+    search=request.GET.get("search")
+
+    brand=request.GET.getlist('brand')
+    min_price = request.GET.get("min_price")
+    max_price = request.GET.get("max_price")
+    sort = request.GET.get("sort")
+
+    products = Product.objects.filter(is_active=True)
+    if search:
+        words=search.split()
+        q_object=Q()
+
+        for searchs in words:
+            q_object |= Q(name__icontains=searchs)
+            q_object |= Q(brand__icontains=searchs)
+            q_object |= Q(subcategory__name__icontains=searchs)
+            q_object |= Q(subcategory__category__name__icontains=searchs)
+            q_object |= Q(model_number__icontains=searchs)
+        products=Product.objects.filter(q_object).distinct()
+
+        if brand:
+            products=products.filter(brand__in=brand)
+
+        if min_price and min_price.isdigit():
+            products=products.filter(variants__selling_price__gte=int(min_price))
+
+        if max_price and max_price.isdigit():
+            products=products.filter(variants__selling_price__lte=int(max_price))
+
+        if sort == "low":
+            products = products.order_by("variants__selling_price")
+
+        elif sort == "high":
+            products = products.order_by("-variants__selling_price")
+
+        elif sort == "new":
+            products = products.order_by("-created_at")
+
+        all_brands = Product.objects.values_list("brand", flat=True).distinct()
+
+    return render(request,"customer/search.html",{"products":products,"search":search,'all_brands': all_brands,
+                                                  'min_price': min_price,'max_price': max_price,"sort":sort})
+
+def live_search(request):
+    search=request.GET.get("search")
+    results = []
+    if search:
+        products=Product.objects.filter(Q(name__icontains=search) | Q(brand__icontains=search),is_active=True)[:5]
+        results=list(products.values("name","slug"))
+    return JsonResponse(results, safe=False)
+
+#---------------------Review--------------------------------
+
+
+def add_review(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    user = request.user
+    
+    if request.method == "POST":
+        rating = request.POST.get("rating")
+        review = request.POST.get("review", "")
+        
+        Review.objects.create(
+            user=user,
+            product=product,
+            rating=rating,
+            comment=review
+        )
+        messages.success(request, "Thank you for your review!")
+        return redirect('single_product_variant', slug=product.slug)
+    
+    return render(request, "customer/add_Review.html", {"product": product})
+
+

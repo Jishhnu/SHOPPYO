@@ -232,18 +232,34 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <a href="#"
-                    class="flex-1 lg:flex-none px-6 py-2.5 rounded-lg border-2 border-primary/10 text-primary font-bold text-sm hover:bg-primary/5 transition-colors">
-                    View Details
-                    </a>
 
-                    <a href="{% url 'reorder' order.id %}"
-                    class="flex-1 lg:flex-none px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
-                    <span class="material-symbols-outlined text-lg">replay</span>
-                    Reorder
-                    </a>
-                </div>
+<div class="flex flex-wrap items-center gap-2 sm:gap-3">
+    <a href="#"
+       class="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-lg border-2 border-primary/20 bg-white text-primary font-semibold text-xs sm:text-sm hover:bg-primary/5 hover:border-primary transition-all shadow-sm whitespace-nowrap">
+       View Details
+    </a>
+
+    <!-- {% if order.order_status == 'DELIVERED' %}
+    <a href="{% url 'add_review' order.items.first.variant.product.id %}"
+       class="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-amber-200/50 transition-all whitespace-nowrap flex items-center justify-center gap-1.5">
+       <span class="material-symbols-outlined text-lg">rate_review</span>
+       Review
+    </a>
+    {% endif %} -->
+
+    <a href="{% url 'add_review' order.items.first.variant.product.id %}"
+       class="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-amber-200/50 transition-all whitespace-nowrap flex items-center justify-center gap-1.5">
+       <span class="material-symbols-outlined text-lg">rate_review</span>
+       Review
+    </a>
+
+    <a href="{% url 'reorder' order.id %}"
+       class="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-xs sm:text-sm hover:opacity-90 transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-1.5 whitespace-nowrap">
+       <span class="material-symbols-outlined text-lg">replay</span>
+       Reorder
+    </a>
+</div>
+
             </div>
 
 <hr class="border-charcoal/5 mb-3"/>

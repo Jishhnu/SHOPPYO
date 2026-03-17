@@ -53,16 +53,27 @@
 
     <!-- CENTER : SEARCH -->
     <div class="flex-1 max-w-xl hidden md:block">
-        <form action="#" method="GET" class="relative group">
+        <form action="{% url 'search' %}" method="GET" class="relative group">
+
             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+                <span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">
+                    search
+                </span>
             </div>
-            <input type="text" name="q" 
-                   class="w-full bg-white text-charcoal rounded-2xl pl-12 pr-4 py-2.5 border-none focus:ring-4 focus:ring-ice-blue/30 transition-all placeholder:text-slate-400 font-medium" 
-                   placeholder="Find your next favorite thing...">
-            <button type="submit" class="absolute right-2 top-1.5 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-xl hover:bg-opacity-90 transition-opacity">
+        
+            <input id="search-input" type="text" name="search"
+                class="w-full bg-white text-charcoal rounded-2xl pl-12 pr-4 py-2.5 border-none focus:ring-4 focus:ring-ice-blue/30 transition-all placeholder:text-slate-400 font-medium"
+                placeholder="Find your next favorite thing...">
+        
+            <button type="submit"
+                class="absolute right-2 top-1.5 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-xl hover:bg-opacity-90 transition-opacity">
                 Search
             </button>
+        
+            <!-- Live suggestions -->
+            <ul id="suggestions" class="hidden absolute left-0 right-0 top-full bg-white mt-2 shadow-lg rounded-lg z-50 overflow-hidden">
+            </ul>
+
         </form>
     </div>
 
@@ -243,64 +254,57 @@
                 {% with product.variants.all.0 as variant %}
                 <div class="relative rounded-xl border border-[#F1EDE7] bg-white shadow-sm hover:shadow-md transition-all duration-300 group overflow-hidden flex flex-col h-full">
                     
-                    <div onclick="window.location.href='/single_product_variant/{{product.slug}}'"  class="block flex-1 cursor-pointer">
-                        <div class="relative aspect-[4/3] bg-white overflow-hidden border-b border-[#F5F1EA]">
-                            {% if variant.discount_percentage > 0 %}
-                            <div class="absolute top-2 left-2 z-10 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded shadow-sm uppercase">
-                            {{ variant.discount_percentage }}% Off
-                            </div>
-                            {% endif %}
+                    <div onclick="window.location.href='{% url 'single_product_variant' product.slug %}'"
+     class="block flex-1 group cursor-pointer">
+    
+    <div class="relative aspect-[4/3] bg-white overflow-hidden border-b border-[#F5F1EA]">
+        
+        {% if variant.discount_percentage > 0 %}
+        <div class="absolute top-2 left-2 z-10 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded shadow-sm uppercase">
+            {{ variant.discount_percentage }}% Off
+        </div>
+        {% endif %}
 
-                            <a href="{% url 'add_to_wishlist' variant.id %}" 
-                                class="absolute top-2 right-2 z-10 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow hover:bg-red-50 transition">
-                                 <span class="material-symbols-outlined text-red-500 text-lg">
-                                     favorite
-                                 </span>
-                            </a>
+        <a href="{% url 'add_to_wishlist' variant.id %}" 
+           onclick="event.stopPropagation();"
+           class="absolute top-2 right-2 z-20 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow hover:bg-red-50 transition">
+            <span class="material-symbols-outlined text-red-500 text-lg">
+                favorite
+            </span>
+        </a>
 
+        <div class="w-full h-full flex items-center justify-center p-1">
+            {% with variant.images.all.0 as img %}
+                <img src="{{ img.image_url|default:'https://via.placeholder.com/300' }}" 
+                     alt="{{ product.name }}"
+                     class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500">
+            {% endwith %}
+        </div>
+    </div>
 
-                            <div class="w-full h-full flex items-center justify-center p-1">
-                                {% with variant.images.all.0 as img %}
-                                    <img src="{{ img.image_url|default:'https://via.placeholder.com/300' }}" 
-                                         class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500">
-                                {% endwith %}
-                            </div>
-                        </div>
+    <div class="p-3 bg-[#FCFAF7] flex-1">
+        <p class="text-[9px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">{{ product.brand }}</p>
+        <h4 class="font-bold text-primary text-xs mb-1 truncate group-hover:text-blue-600">{{ product.name }}</h4>
 
-                        <div class="p-3 bg-[#FCFAF7] flex-1">
-                            <p class="text-[9px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">{{ product.brand }}</p>
-                            <h4 class="font-bold text-primary text-xs mb-1 truncate group-hover:text-blue-600">{{ product.name}}</h4>
+        <div class="flex items-center gap-1 text-sm mb-1">
+            <span class="bg-green-600 text-white text-xs px-2 py-0.5 rounded">4.3 ★</span>
+            <span class="text-gray-500 text-xs">(120)</span>
+        </div>
 
-                        <div class="flex items-center gap-1 text-sm">
-                            <span class="bg-green-600 text-white text-xs px-2 py-0.5 rounded">4.3 ★</span>
-                            <span class="text-gray-500 text-xs">(120)</span>
-                        </div>
+        <div class="flex items-baseline gap-1.5 mb-2">
+            <span class="text-sm font-black text-primary">₹{{ variant.selling_price }}</span>
+            <span class="text-[10px] text-slate-400 line-through">₹{{ variant.mrp }}</span>
+        </div>
 
-                        <!-- <div class="flex items-center gap-1 mb-2">
-                            <div class="flex items-center text-amber-400">
-                                <span class="material-symbols-outlined text-[12px] fill-gold">star</span>
-                                <span class="material-symbols-outlined text-[12px] fill-gold">star</span>
-                                <span class="material-symbols-outlined text-[12px] fill-gold">star</span>
-                                <span class="material-symbols-outlined text-[12px] fill-gold">star</span>
-                                <span class="material-symbols-outlined text-[12px]">star</span>
-                            </div>
-                            <span class="text-[10px] font-medium text-slate-400">(42)</span>
-                        </div> -->
-
-                            <div class="flex items-baseline gap-1.5 mb-2">
-                                <span class="text-sm font-black text-primary">₹{{ variant.selling_price }}</span>
-                                <span class="text-[10px] text-slate-400 line-through">₹{{ variant.mrp }}</span>
-                            </div>
-
-                            <div class="flex items-center gap-1 text-[10px] text-slate-600">
-                                <span class="material-symbols-outlined text-slate-400 text-[14px]">local_shipping</span>
-                                <p class="tracking-tight">
-                                    <span class="italic font-bold uppercase text-[9px]">EXPRESS</span> 
-                                    <span class="font-medium">Delivery</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+        <div class="flex items-center gap-1 text-[10px] text-slate-600">
+            <span class="material-symbols-outlined text-slate-400 text-[14px]">local_shipping</span>
+            <p class="tracking-tight">
+                <span class="italic font-bold uppercase text-[9px]">EXPRESS</span> 
+                <span class="font-medium">Delivery</span>
+            </p>
+        </div>
+    </div>
+</div>
                     <div class="px-3 pb-3">
                         <a href="{% url 'add_to_cart' variant.id %}" class="block w-full">
                             <button type="button" class="w-full bg-primary text-white py-1.5 rounded-lg text-[11px] font-bold hover:bg-slate-800 transition-all">
@@ -398,4 +402,76 @@
 </footer>
 <!-- Back to Top Button -->
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+const searchInput = document.getElementById("search-input");
+const suggestions = document.getElementById("suggestions");
+let debounceTimer;
+
+if (!searchInput || !suggestions) return;
+
+searchInput.addEventListener("input", function () {
+
+const query = this.value.trim();
+clearTimeout(debounceTimer);
+
+if (query.length < 2) {
+    suggestions.innerHTML = "";
+    suggestions.classList.add("hidden");
+    return;
+}
+
+debounceTimer = setTimeout(() => {
+
+fetch(`/live-search/?search=${encodeURIComponent(query)}`)
+.then(response => {
+    if (!response.ok) throw new Error("Network error");
+    return response.json();
+})
+.then(data => {
+
+suggestions.innerHTML = "";
+
+if (data.length === 0) {
+    suggestions.innerHTML = `
+        <li class="p-3 text-slate-500 text-sm">
+            No products found
+        </li>`;
+    suggestions.classList.remove("hidden");
+    return;
+}
+
+let html = "";
+
+data.forEach(item => {
+html += `
+<li class="border-b border-slate-50 last:border-none">
+<a href="/search/?search=${encodeURIComponent(item.name)}"
+   class="block p-3 hover:bg-slate-50 transition-colors">
+   <span class="text-charcoal font-medium">${item.name}</span>
+</a>
+</li>`;
+});
+
+suggestions.innerHTML = html;
+suggestions.classList.remove("hidden");
+
+})
+.catch(error => {
+console.error("Live search error:", error);
+});
+
+}, 300);
+
+});
+
+document.addEventListener("click", function (e) {
+if (!searchInput.contains(e.target) && !suggestions.contains(e.target)) {
+    suggestions.classList.add("hidden");
+}
+});
+
+});
+</script>
 </body></html>

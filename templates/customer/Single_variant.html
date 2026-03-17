@@ -187,7 +187,7 @@ hover:border-ice-blue bg-mist-white overflow-hidden cursor-pointer transition-al
                         Add to Cart
 </a>
 <a href="{% url 'order' items.id %}"
-class="w-full bg-white border-2 border-primary text-primary py-4 rounded-lg font-bold hover:bg-primary/5 transition-colors">
+class="w-full bg-white border-2 border-primary text-primary py-4 rounded-lg font-bold hover:bg-primary/5 transition-colors flex items-center justify-center gap-2">
 Buy Now
 </a>
 <div class="flex items-center justify-center gap-6 mt-4 text-[10px] text-charcoal/60 font-medium uppercase tracking-widest">
@@ -337,6 +337,116 @@ Buy Now
 </div>
 </div>
 </main>
+
+<!----------------Review------------------>
+<div class="max-w-4xl mx-auto mt-20 px-4">
+    
+    {% if user.is_authenticated %}
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12 border-b border-slate-100 pb-8">
+            <div>
+                <h3 class="text-3xl font-black text-slate-900 tracking-tight">Customer Experiences</h3>
+                <p class="text-slate-500 mt-1">Honest feedback from our community</p>
+            </div>
+            <div class="flex items-center gap-2 px-4 py-2 bg-indigo-50 rounded-2xl">
+                <span class="text-indigo-600 font-bold text-sm">Community Pulse</span>
+                <span class="size-1.5 rounded-full bg-indigo-600 animate-pulse"></span>
+            </div>
+        </div>
+
+        <div class="space-y-10">
+            {% for r in review %}
+                <div class="group relative grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">
+                    
+                    <div class="md:col-span-3 flex flex-row md:flex-col items-center md:items-start gap-4">
+                        <div class="relative">
+                            <div class="size-14 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-600 flex items-center justify-center font-black text-xl shadow-inner group-hover:from-indigo-500 group-hover:to-purple-600 group-hover:text-white transition-all duration-500">
+                                {{ r.user.username|slice:":1"|upper }}
+                            </div>
+                            <div class="absolute -bottom-1 -right-1 size-5 bg-emerald-500 border-2 border-white rounded-full flex items-center justify-center" title="Verified Buyer">
+                                <span class="material-symbols-outlined text-white text-[10px] font-bold">check</span>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="text-sm font-black text-slate-900 leading-tight">{{ r.user.username }}</h5>
+                            <p class="text-[10px] text-indigo-500 font-bold uppercase tracking-widest mt-1">Verified Buyer</p>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-9 relative">
+                        <span class="absolute top-0 right-0 text-[10px] font-bold text-slate-300 uppercase tracking-tighter">
+                            {{ r.created_at|date:"M d, Y" }}
+                        </span>
+
+                        <div class="flex text-amber-400 mb-3 gap-0.5">
+                            {% for i in "12345" %}
+                                <span class="material-symbols-outlined text-lg {% if forloop.counter <= r.rating %}fill-1{% else %}opacity-20{% endif %}">star</span>
+                            {% endfor %}
+                        </div>
+
+                        <div class="relative">
+                            <span class="absolute -left-6 -top-2 text-4xl text-slate-100 font-serif">“</span>
+                            <p class="text-slate-600 text-base leading-relaxed font-medium">
+                                {{ r.comment }}
+                            </p>
+                        </div>
+
+                        <div class="mt-6 flex items-center gap-6">
+                            <button class="flex items-center gap-1.5 text-[11px] font-bold text-slate-400 hover:text-indigo-600 transition-colors uppercase tracking-widest">
+                                <span class="material-symbols-outlined text-sm">thumb_up</span>
+                                Helpful
+                            </button>
+                            <button class="flex items-center gap-1.5 text-[11px] font-bold text-slate-400 hover:text-red-500 transition-colors uppercase tracking-widest">
+                                <span class="material-symbols-outlined text-sm">flag</span>
+                                Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                {% if not forloop.last %}
+                <hr class="border-slate-50">
+                {% endif %}
+
+            {% empty %}
+                <div class="py-20 text-center bg-slate-50 rounded-[40px] border-2 border-dashed border-slate-100">
+                    <div class="size-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                        <span class="material-symbols-outlined text-slate-300">chat_bubble</span>
+                    </div>
+                    <h4 class="text-slate-900 font-bold">No stories yet</h4>
+                    <p class="text-slate-400 text-sm">Be the first to leave a review for this product.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <div class="relative overflow-hidden p-10 text-center bg-slate-900 rounded-[40px] shadow-2xl shadow-slate-200">
+            <div class="relative z-10">
+                <h3 class="text-white text-xl font-bold mb-2">Member Exclusive Content</h3>
+                <p class="text-slate-400 text-sm mb-6 max-w-xs mx-auto">Join our community to see verified reviews and owner experiences.</p>
+                <a href="{% url 'login' %}" class="inline-flex items-center gap-2 bg-indigo-500 hover:bg-indigo-400 text-white px-8 py-3 rounded-2xl font-bold text-sm transition-all active:scale-95">
+                    Sign In to View
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </div>
+            <div class="absolute -top-10 -right-10 size-40 bg-indigo-500/10 rounded-full blur-3xl"></div>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    /* Professional Google Symbols Configuration */
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    .fill-1 { 
+        font-variation-settings: 'FILL' 1; 
+        color: #fbbf24; 
+    }
+    
+    /* Custom spacing for the quote marks */
+    .font-serif { font-family: Georgia, serif; }
+</style>
+
 <!-- Footer -->
 <footer class="bg-primary text-white mt-20 py-16 px-6 md:px-20 border-t border-white/5">
 <div class="max-w-[1400px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Review Product - ShoppyO</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1a2d37", // Deep Navy
+                        "background-light": "#f6f7f7",
+                        "ice-blue": "#D6E8EE",
+                        "charcoal": "#333333",
+                        "slate-grey": "#708090",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>body {
+            font-family: 'Work Sans', sans-serif;
+        }
+        .bg-mixed {
+            background: linear-gradient(180deg, #D6E8EE 0%, #FFFFFF 100%);
+        }</style>
+</head>
+<body class="bg-mixed min-h-screen text-charcoal font-display">
+<!-- Top Navigation Bar -->
+<header class="bg-primary text-white sticky top-0 z-50 shadow-md">
+<div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="size-8 text-ice-blue">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 17.4264C16.7203 18.1174 20.2244 18.5217 24 18.5217C27.7756 18.5217 31.2797 18.1174 34.1739 17.4264C36.9144 16.7722 39.9967 15.2331 41.3563 14.1648L24.8486 40.6391C24.4571 41.267 23.5429 41.267 23.1514 40.6391L6.64374 14.1648C8.00331 15.2331 11.0856 16.7722 13.8261 17.4264Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 12.236C39.9944 12.2537 39.9875 12.2845 39.9748 12.3294C39.9436 12.4399 39.8949 12.5741 39.8346 12.7175C39.8168 12.7597 39.7989 12.8007 39.7813 12.8398C38.5103 13.7113 35.9788 14.9393 33.7095 15.4811C30.9875 16.131 27.6413 16.5217 24 16.5217C20.3587 16.5217 17.0125 16.131 14.2905 15.4811C12.0012 14.9346 9.44505 13.6897 8.18538 12.8168C8.17384 12.7925 8.16216 12.767 8.15052 12.7408C8.09919 12.6249 8.05721 12.5114 8.02977 12.411C8.00356 12.3152 8.00039 12.2667 8.00004 12.2612C8.00004 12.261 8 12.2607 8.00004 12.2612C8.00004 12.2359 8.0104 11.9233 8.68485 11.3686C9.34546 10.8254 10.4222 10.2469 11.9291 9.72276C14.9242 8.68098 19.1919 8 24 8C28.8081 8 33.0758 8.68098 36.0709 9.72276C37.5778 10.2469 38.6545 10.8254 39.3151 11.3686C39.9006 11.8501 39.9857 12.1489 39.998 12.236ZM4.95178 15.2312L21.4543 41.6973C22.6288 43.5809 25.3712 43.5809 26.5457 41.6973L43.0534 15.223C43.0709 15.1948 43.0878 15.1662 43.104 15.1371L41.3563 14.1648C43.104 15.1371 43.1038 15.1374 43.104 15.1371L43.1051 15.135L43.1065 15.1325L43.1101 15.1261L43.1199 15.1082C43.1276 15.094 43.1377 15.0754 43.1497 15.0527C43.1738 15.0075 43.2062 14.9455 43.244 14.8701C43.319 14.7208 43.4196 14.511 43.5217 14.2683C43.6901 13.8679 44 13.0689 44 12.2609C44 10.5573 43.003 9.22254 41.8558 8.2791C40.6947 7.32427 39.1354 6.55361 37.385 5.94477C33.8654 4.72057 29.133 4 24 4C18.867 4 14.1346 4.72057 10.615 5.94478C8.86463 6.55361 7.30529 7.32428 6.14419 8.27911C4.99695 9.22255 3.99999 10.5573 3.99999 12.2609C3.99999 13.1275 4.29264 13.9078 4.49321 14.3607C4.60375 14.6102 4.71348 14.8196 4.79687 14.9689C4.83898 15.0444 4.87547 15.1065 4.9035 15.1529C4.91754 15.1762 4.92954 15.1957 4.93916 15.2111L4.94662 15.223L4.95178 15.2312ZM35.9868 18.996L24 38.22L12.0131 18.996C12.4661 19.1391 12.9179 19.2658 13.3617 19.3718C16.4281 20.1039 20.0901 20.5217 24 20.5217C27.9099 20.5217 31.5719 20.1039 34.6383 19.3718C35.082 19.2658 35.5339 19.1391 35.9868 18.996Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h1 class="text-xl font-bold tracking-tight">ShoppyO</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Home</a>
+<a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Shop</a>
+<a class="text-sm font-medium hover:text-ice-blue transition-colors underline underline-offset-4" href="#">My Orders</a>
+<a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Profile</a>
+</nav>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-ice-blue">shopping_cart</span>
+<div class="size-8 rounded-full bg-ice-blue/20 flex items-center justify-center border border-ice-blue/30 overflow-hidden">
+<img alt="User" class="object-cover w-full h-full" data-alt="Portrait of a user for profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMFVxgzjpBaPK2cHgn50z5QdxePFQ_MaUz3umLmAXQG7nPMSConQn5UxMKtO8Dl2XNjpXhXRGirGBMwp_e6b7Cy-46AoOxVSbUHD4k2_2hvf-FUC3MW05bDAU_zgPdSPkNNFD3rw2ASpkrdimiF7c8E4363BgHAsbekboAFW3b51_kJTT9hgdfJsbLYPr8icVvexYcDJw8rjMOJ3elylu--Rv9bgFTklnHqMAuzEWZgY4AItyCfwmg2NL3AOfgoIe9PSrwb3jAEn7p"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 py-10">
+    
+
+<!-- Dynamic Product Summary Header -->
+<div class="flex flex-col md:flex-row items-center gap-8 mb-10 p-8 rounded-2xl border border-white/60 bg-white/40 shadow-sm">
+<div class="w-full md:w-48 aspect-square rounded-lg overflow-hidden shadow-sm bg-white p-2">
+    {% with variant=product.variants.first %}
+    {% if variant.images.first %}
+    <img src="{{ variant.images.first.image_url }}" 
+         alt="{{ product.name }}" 
+         class="w-full h-full object-cover rounded-md">
+    {% else %}
+    <div class="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
+        <span class="material-symbols-outlined text-4xl text-slate-400">inventory_2</span>
+    </div>
+    {% endif %}
+    {% endwith %}
+</div>
+<div class="flex-1 text-center md:text-left">
+    <span class="text-xs font-bold uppercase tracking-widest text-primary/60 mb-1 block">Reviewing {{ product.brand }}</span>
+    <h2 class="text-2xl md:text-3xl font-bold text-primary mb-2 line-clamp-2">{{ product.name }}</h2>
+    <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 text-sm">
+        <div class="flex items-center text-amber-500 gap-0.5">
+            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-lg">star_half</span>
+            <span class="ml-2 text-slate-grey font-medium">
+
+                4.5 average rating ({{ product.reviews.count }} reviews)
+
+            </span>
+        </div>
+        <span class="h-4 w-[1px] bg-primary/20 hidden sm:block"></span>
+        <p class="text-slate-grey">Ready to review your purchase</p>
+    </div>
+</div>
+</div>
+
+
+<!-- Main Review Form Card -->
+<div class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-xl shadow-slate-200/40">
+<div class="p-8 md:p-12">
+<div class="mb-8 border-b border-slate-100 pb-8">
+<h3 class="text-xl font-bold text-primary mb-1">Share Your Experience</h3>
+<p class="text-slate-grey text-sm">Help others make a better choice by telling us about this product.</p>
+</div>
+
+<form method="POST" action="{% url 'add_review' product.id %}" class="space-y-8">
+{% csrf_token %}
+
+
+<!-- Rating Section -->
+<div class="space-y-4">
+<label class="block text-sm font-semibold text-primary mb-3">Overall Rating <span class="text-xs text-slate-500">(Click to rate)</span></label>
+<div class="flex items-center gap-1">
+<button type="button" class="rating-star p-1 focus:outline-none focus:ring-2 focus:ring-primary rounded-full" data-rating="1">
+<span class="material-symbols-outlined text-4xl text-slate-200 hover:text-amber-400 transition-all duration-200 cursor-pointer" style="font-variation-settings: 'FILL' 0">star</span>
+</button>
+<button type="button" class="rating-star p-1 focus:outline-none focus:ring-2 focus:ring-primary rounded-full" data-rating="2">
+<span class="material-symbols-outlined text-4xl text-slate-200 hover:text-amber-400 transition-all duration-200 cursor-pointer" style="font-variation-settings: 'FILL' 0">star</span>
+</button>
+<button type="button" class="rating-star p-1 focus:outline-none focus:ring-2 focus:ring-primary rounded-full" data-rating="3">
+<span class="material-symbols-outlined text-4xl text-slate-200 hover:text-amber-400 transition-all duration-200 cursor-pointer" style="font-variation-settings: 'FILL' 0">star</span>
+</button>
+<button type="button" class="rating-star p-1 focus:outline-none focus:ring-2 focus:ring-primary rounded-full" data-rating="4">
+<span class="material-symbols-outlined text-4xl text-slate-200 hover:text-amber-400 transition-all duration-200 cursor-pointer" style="font-variation-settings: 'FILL' 0">star</span>
+</button>
+<button type="button" class="rating-star p-1 focus:outline-none focus:ring-2 focus:ring-primary rounded-full" data-rating="5">
+<span class="material-symbols-outlined text-4xl text-slate-200 hover:text-amber-400 transition-all duration-200 cursor-pointer" style="font-variation-settings: 'FILL' 0">star</span>
+</button>
+<input type="hidden" name="rating" id="rating-value" value="0">
+<div class="ml-4 text-sm font-medium text-slate-grey">
+    <span id="rating-text">Click to rate</span>
+</div>
+</div>
+</div>
+
+<!-- Review Headline
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-primary" for="headline">Summarize your experience</label>
+<input class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none placeholder:text-slate-400 bg-slate-50/50" id="headline" name="headline" placeholder="E.g., Amazing sound quality, but slightly heavy" type="text"/>
+</div> -->
+<!-- Review Body -->
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-primary" for="review">What did you like or dislike?</label>
+<textarea class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none placeholder:text-slate-400 bg-slate-50/50" id="review" name="review" placeholder="Tell us more about the battery life, sound depth, and comfort..." rows="5"></textarea>
+</div>
+<!-- Photo Upload Area -->
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-primary">Add photos (Optional)</label>
+<div class="border-2 border-dashed border-slate-200 rounded-xl p-10 flex flex-col items-center justify-center hover:bg-ice-blue/20 hover:border-primary/30 transition-all cursor-pointer group bg-slate-50/50" style="background-color: #F5F9FA;">
+<span class="material-symbols-outlined text-4xl text-slate-400 group-hover:text-primary mb-2">add_a_photo</span>
+<p class="text-sm font-medium text-slate-grey group-hover:text-primary">Click to upload or drag and drop</p>
+<p class="text-xs text-slate-400 mt-1">PNG, JPG up to 10MB</p>
+</div>
+</div>
+<!-- Checkbox -->
+<div class="flex items-start gap-3">
+<div class="flex items-center h-5">
+<input class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" id="anon" name="anon" type="checkbox"/>
+</div>
+<!-- <div class="text-sm leading-5">
+<label class="font-medium text-slate-grey" for="anon">Keep my identity anonymous for this review</label>
+</div> -->
+</div>
+<!-- Submit Button -->
+<div class="pt-4">
+<button class="w-full bg-primary hover:bg-primary/95 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2" type="submit">
+                            Submit My Review
+                            <span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</form>
+</div>
+<div class="bg-slate-50 border-t border-slate-100 p-6 flex justify-between items-center text-xs text-slate-500 font-medium">
+<p>By submitting, you agree to ShoppyO's Review Guidelines.</p>
+<div class="flex gap-4">
+<a class="hover:text-primary" href="#">Review Policy</a>
+<a class="hover:text-primary" href="#">Contact Support</a>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-20 py-12 border-t border-slate-100 bg-white">
+<div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 opacity-60">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 17.4264C16.7203 18.1174 20.2244 18.5217 24 18.5217C27.7756 18.5217 31.2797 18.1174 34.1739 17.4264C36.9144 16.7722 39.9967 15.2331 41.3563 14.1648L24.8486 40.6391C24.4571 41.267 23.5429 41.267 23.1514 40.6391L6.64374 14.1648C8.00331 15.2331 11.0856 16.7722 13.8261 17.4264Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="font-bold text-sm tracking-tight text-primary">ShoppyO</span>
+</div>
+<p class="text-xs text-slate-grey">© 2026 ShoppyO Ecommerce Inc. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-slate-grey hover:text-primary text-xs" href="#">Privacy</a>
+<a class="text-slate-grey hover:text-primary text-xs" href="#">Terms</a>
+<a class="text-slate-grey hover:text-primary text-xs" href="#">Cookies</a>
+</div>
+</div>
+</footer>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const stars = document.querySelectorAll('.rating-star');
+    const ratingInput = document.getElementById('rating-value');
+    const ratingText = document.getElementById('rating-text');
+    
+    const ratingLabels = ['Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+    
+    stars.forEach((star, index) => {
+        star.addEventListener('click', function() {
+            const rating = parseInt(this.dataset.rating);
+            ratingInput.value = rating;
+            
+            // Update visual state
+            stars.forEach((s, i) => {
+                const starIcon = s.querySelector('.material-symbols-outlined');
+                if (i < rating) {
+                    starIcon.style.fontVariationSettings = "'FILL' 1";
+                    starIcon.classList.add('text-amber-400');
+                } else {
+                    starIcon.style.fontVariationSettings = "'FILL' 0";
+                    starIcon.classList.remove('text-amber-400');
+                }
+            });
+            
+            // Update text label
+            ratingText.textContent = ratingLabels[rating - 1];
+            
+            // Visual feedback
+            this.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+        
+        // Hover effects
+        star.addEventListener('mouseenter', function() {
+            const rating = parseInt(this.dataset.rating);
+            stars.forEach((s, i) => {
+                const starIcon = s.querySelector('.material-symbols-outlined');
+                if (i < rating) {
+                    starIcon.style.fontVariationSettings = "'FILL' 1";
+                    starIcon.classList.add('text-amber-400');
+                }
+            });
+        });
+        
+        star.addEventListener('mouseleave', function() {
+            const currentRating = parseInt(ratingInput.value);
+            stars.forEach((s, i) => {
+                const starIcon = s.querySelector('.material-symbols-outlined');
+                if (i < currentRating) {
+                    starIcon.style.fontVariationSettings = "'FILL' 1";
+                    starIcon.classList.add('text-amber-400');
+                } else {
+                    starIcon.style.fontVariationSettings = "'FILL' 0";
+                    starIcon.classList.remove('text-amber-400');
+                }
+            });
+        });
+    });
+});
+</script>
+
+
+</body></html>

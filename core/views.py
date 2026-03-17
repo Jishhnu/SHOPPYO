@@ -59,17 +59,20 @@ def Login_view(request):
             return render(request,"customer/login.html")
     return render(request,"core/login.html")
 
-@login_required
+
 def Customer_Home(request):
     user=request.user
     product=Product.objects.filter(is_active=True)
     category=Category.objects.filter(is_active=True)
-    try:
-        cart=Cart.objects.get(user=user)
-        cart_count=cart.items.count()
-    except Cart.DoesNotExist:
-        cart_count=0
-    return render(request,"customer/customer_home.html", {"profile_user":user,"products":product,"categories":category,"cart_count":cart_count})
+    if user.is_authenticated:
+        try:
+            cart=Cart.objects.get(user=user)
+            cart_count=cart.items.count()
+            print(cart_count,"hehe")
+        except Cart.DoesNotExist:
+            cart_count=0
+    cart_count=0
+    return render(request,"customer/customer_home.html", {"profile_user":user,"products":product,"categories":category,"cart_count":cart_count,})
 
 
 @login_required

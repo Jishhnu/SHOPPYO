@@ -126,3 +126,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGIN_URL = 'login'  # Or whatever the 'name' of your login path is
+LOGIN_REDIRECT_URL = '/' # Where to go after success
