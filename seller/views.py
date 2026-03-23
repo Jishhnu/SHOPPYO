@@ -43,4 +43,5 @@ def Seller_Dashboard(request):
     seller_profile=SellerProfile.objects.all()
     return render(request, "seller/Seller_dashboard.html", {"seller_profile": seller_profile})
 
-
+def seller_home(request):
+    return render(request, "seller/seller_home.html")

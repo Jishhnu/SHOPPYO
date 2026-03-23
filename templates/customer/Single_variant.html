@@ -48,41 +48,53 @@
 <!-- Navbar -->
 <header class="bg-primary text-white px-6 md:px-20 py-4 sticky top-0 z-50 shadow-md">
 <div class="max-w-[1400px] mx-auto flex items-center justify-between gap-8">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-3xl">shopping_bag</span>
-<h1 class="text-2xl font-black tracking-tight">ShoppyO</h1>
-</div>
-<div class="hidden lg:flex items-center gap-8 flex-1 justify-center">
-<a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Electronics</a>
-<a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Home &amp; Garden</a>
-<a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Fashion</a>
-<a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Beauty</a>
-</div>
+<a href="{% url 'customer_home' %}" class="flex items-center gap-2 text-white group">
+      <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+      
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-extrabold tracking-tighter leading-none">
+          Shoppy<span class="text-blue-300">O</span>
+        </h1>
+        <span class="text-xs font-medium text-slate-300 tracking-wider text-right -mt-0.5">
+          Style Now
+        </span>
+      </div>
+    </a>
+
 <div class="flex items-center gap-6">
-<div class="relative hidden sm:block">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/60">search</span>
-<input class="bg-mist-white text-primary pl-10 pr-4 py-2 rounded-lg border-none focus:ring-2 focus:ring-ice-blue w-64 text-sm" placeholder="Search products..." type="text"/>
-</div>
-<div class="flex gap-4">
-<button class="hover:text-ice-blue"><span class="material-symbols-outlined">person</span></button>
-<button class="hover:text-ice-blue relative">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span class="absolute -top-2 -right-2 bg-red-500 text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
-</button>
-</div>
+
+        <a href="{% url 'view_cart' %}" class="flex flex-col items-center p-1 transition-colors group relative">
+            <span class="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-xl">
+                shopping_cart
+            </span>
+            <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">
+                Cart
+            </span>
+        </a>
+
+        <a href="{% url 'customer_dashboard' %}" class="flex flex-col items-center p-1 transition-colors group">
+            <span class="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-xl">
+                person
+            </span>
+            <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">
+                Profile
+            </span>
+        </a>
 </div>
 </div>
 </header>
 <main class="max-w-[1200px] mx-auto px-4 py-8">
 <!-- Breadcrumbs -->
 <nav class="flex items-center gap-2 text-sm mb-6 text-charcoal/70">
-<a class="hover:text-primary transition-colors" href="#">Home</a>
+<a class="hover:text-primary transition-colors" href="{% url 'customer_home' %}">Home</a>
 <span class="material-symbols-outlined text-xs">chevron_right</span>
-<a class="hover:text-primary transition-colors" href="#">Electronics</a>
+<a class="hover:text-primary transition-colors" href="{% url 'category' %}">{{ items.product.subcategory.category.name }}</a>
 <span class="material-symbols-outlined text-xs">chevron_right</span>
-<a class="hover:text-primary transition-colors" href="#">Audio</a>
+<a class="hover:text-primary transition-colors" href="{% url 'subcategory_product' items.product.subcategory.slug %}">{{ items.product.subcategory.name }}</a>
 <span class="material-symbols-outlined text-xs">chevron_right</span>
-<span class="text-primary font-semibold">Pro Wireless Headphones</span>
+<span class="text-primary font-semibold">{{ items.product.name }}</span>
 </nav>
 <!-- Main Product Card -->
 <div class="bg-white rounded-lg shadow-xl shadow-primary/5 overflow-hidden flex flex-col md:grid md:grid-cols-2 gap-0">
@@ -101,9 +113,13 @@
     {% endif %}
 {% endfor %}
 
-<button class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-sm hover:text-red-500 transition-colors">
-<span class="material-symbols-outlined">favorite</span>
-</button>
+<a href="{% url 'add_to_wishlist' items.id %}" 
+           onclick="event.stopPropagation();"
+           class="absolute top-2 right-2 z-20 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow hover:bg-red-50 transition">
+            <span class="material-symbols-outlined text-red-500 text-lg">
+                favorite
+            </span>
+        </a>
 
 </div>
 
@@ -276,64 +292,42 @@ Buy Now
 <div class="mt-16">
 <div class="flex items-center justify-between mb-8">
 <h3 class="text-2xl font-bold text-primary">You May Also Like</h3>
-<div class="flex gap-2">
+<!-- <div class="flex gap-2">
 <button class="size-10 rounded-full border border-primary/10 bg-white flex items-center justify-center hover:bg-ice-blue transition-colors">
 <span class="material-symbols-outlined text-sm">arrow_back</span>
 </button>
 <button class="size-10 rounded-full border border-primary/10 bg-white flex items-center justify-center hover:bg-ice-blue transition-colors">
 <span class="material-symbols-outlined text-sm">arrow_forward</span>
 </button>
-</div>
+</div> -->
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-<!-- Product Card 1 -->
+<!-- Related_Product Card -->
+{% for related in related_products %}
 <div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
 <div class="aspect-square bg-mist-white rounded-lg mb-4 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Over-ear silver wireless headphones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBLCByWoKVyUW3GuNnxiI4XpyHVYcKvm_bAJusOjxI_jida5tuZY1SoUqZ5U9hzYpu28RM2RJtgLHJ_JpBgepgpdwslRwGezPzhlBpvAmXg9rH39LrsLMPCPEZcP4rRjnplymXnM-scXjvQShYKYEejcNXwceuIjklmxNXhS9XnKjFVbXSMk6yHMPbjZywQf--W-mzhsxLwTyUQw2pDXoUx8lkrwu6YAuGBrJNtPftWAP5rP5Sr59GNmxkuqHDq3uT6iZY-Ry46-GR"/>
+        {% with related.variants.first.images.first as img %}
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ img.image_url|default:'/static/images/placeholder.jpg' }}" alt="{{ related.name }}">
+        {% endwith %}
 </div>
-<h4 class="font-bold text-primary truncate">Aria S1 Headphones</h4>
-<p class="text-sm text-charcoal/60 mb-2">Essential Audio</p>
+<h4 class="font-bold text-primary truncate">{{ related.name }}</h4>
+<p class="text-sm text-charcoal/60 mb-2">{{ related.brand }}</p>
 <div class="flex items-center justify-between">
-<span class="font-bold text-primary">$189.00</span>
-<button class="text-primary hover:text-charcoal"><span class="material-symbols-outlined">add_circle</span></button>
+        {% with related.variants.all|first as first_variant %}
+        <span class="font-bold text-primary">₹{{ first_variant.selling_price|floatformat:0 }}</span>
+        {% endwith %}
+        {% with related.variants.first as first_variant %}
+        {% if first_variant %}
+        <a href="{% url 'add_to_cart' first_variant.id %}" class="text-primary hover:text-charcoal">
+<span class="material-symbols-outlined">add_circle</span>
+        </a>
+        {% endif %}
+        {% endwith %}
 </div>
 </div>
-<!-- Product Card 2 -->
-<div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
-<div class="aspect-square bg-mist-white rounded-lg mb-4 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High-fidelity desktop speakers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA12c6G3iu2q6FKFvvEVIcb6nTBBMR16ITZujeXh0osvmjuWfQcy6Q20BbdcBOOibgy1mIQsIGc5kKkDW6O_tl90PrkTzduX8wBVVbRzHCbv-hzIJ07hc49DpH5MuHLK1KDcyjCF7MahSkhecEZtLal71P5onE8cvd3KXZ36F96WumWKj9yuEqiwr1joinkK6xIrDaMYQWWdH6Z9JpTXQVytvUrWKsmrM8sNnDcINMXhQ90sbVFraNlBPmiZngcZvrXSALtpPoHNrjt"/>
-</div>
-<h4 class="font-bold text-primary truncate">Studio Pro Speakers</h4>
-<p class="text-sm text-charcoal/60 mb-2">Home Studio</p>
-<div class="flex items-center justify-between">
-<span class="font-bold text-primary">$499.00</span>
-<button class="text-primary hover:text-charcoal"><span class="material-symbols-outlined">add_circle</span></button>
-</div>
-</div>
-<!-- Product Card 3 -->
-<div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
-<div class="aspect-square bg-mist-white rounded-lg mb-4 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Wireless earbuds with charging case" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2o2FjwMmb4xT0OAPfsb4OcGcK-fapWMwtzLRhhOogyV5ldkEJ2F6LfLjzZn3FDMU1vzQHsZnZIDMuD82pXKvVrt4IAR7YBIaIkqwAG1ET69plNeSznxdjowIh7AwvmPTBGYk8UZXtItYepiP2QsXsFx0G5Fnkg6PEd8q2OjGUx5SxpgdhWiIc7iuEE6vKHdSOyQDGps3sKdF-S9l_ElrW5hyKXEVfcYvm_XfX9HHZbVEgGQ9Rx1Z_OrcYRptxjwVzuLTTG8zlyjzt"/>
-</div>
-<h4 class="font-bold text-primary truncate">Mini Buds ANC</h4>
-<p class="text-sm text-charcoal/60 mb-2">Truly Wireless</p>
-<div class="flex items-center justify-between">
-<span class="font-bold text-primary">$129.00</span>
-<button class="text-primary hover:text-charcoal"><span class="material-symbols-outlined">add_circle</span></button>
-</div>
-</div>
-<!-- Product Card 4 -->
-<div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
-<div class="aspect-square bg-mist-white rounded-lg mb-4 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Minimalist headset stand" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATKQJa2UVrWs5rpSgKs1xjKC84hYsait6j89wTOmoIiUdMvs8JR1ZG6d9wCp87lmDnC7D9O9S_IXGrUNp1_agfq6i9xxotwRH5G8JB40wBKmK1PM0Q1eFCk9anoHuUf9SmgFJoB1gD0RJgVygATE-DYr7DP7TzIFgwawEy2Qh6VqAVMr98ifNY5HFurPw1tpV68Nc-z2SjjOvuBexTVPbKITQFv62RzZ_jyUpWUfyB2lumL-XUh6eprNbKGmKo4H9W1MsgBnS7De5K"/>
-</div>
-<h4 class="font-bold text-primary truncate">Aluminum Headset Stand</h4>
-<p class="text-sm text-charcoal/60 mb-2">Accessories</p>
-<div class="flex items-center justify-between">
-<span class="font-bold text-primary">$45.00</span>
-<button class="text-primary hover:text-charcoal"><span class="material-symbols-outlined">add_circle</span></button>
-</div>
-</div>
+{% endfor %}
+
+
 </div>
 </div>
 </main>
@@ -497,7 +491,7 @@ Buy Now
 </div>
 </div>
 <div class="max-w-[1400px] mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/40">
-<p>© 2024 ShoppyO Premium E-commerce. All rights reserved.</p>
+<p>© 2026 ShoppyO Premium E-commerce. All rights reserved.</p>
 <div class="flex gap-6">
 <a class="hover:text-white" href="#">Privacy Policy</a>
 <a class="hover:text-white" href="#">Terms of Service</a>

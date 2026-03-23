@@ -43,40 +43,69 @@
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
 <!-- Navbar -->
 <header class="bg-primary sticky top-0 z-50 w-full shadow-lg">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex items-center justify-between h-16">
-<!-- Logo & Brand -->
-<div class="flex items-center gap-8">
-<div class="flex items-center gap-2 text-white">
-<span class="material-symbols-outlined text-3xl">shopping_bag</span>
-<h1 class="text-xl font-black tracking-tight">ShoppyO</h1>
-</div>
-<!-- Navigation Links -->
-<nav class="hidden md:flex items-center gap-6">
-<a class="text-slate-300 hover:text-white text-sm font-medium transition-colors" href="{% url 'customer_home'%}">Home</a>
-<a class="text-white text-sm font-semibold border-b-2 border-white pb-1" href="#">Categories</a>
-<a class="text-slate-300 hover:text-white text-sm font-medium transition-colors" href="#">Deals</a>
-<a class="text-slate-300 hover:text-white text-sm font-medium transition-colors" href="#">Contact</a>
-</nav>
-</div>
-<!-- Search & Actions -->
-<div class="flex items-center gap-4 flex-1 justify-end">
-<div class="hidden sm:block w-full max-w-xs relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
-<input class="w-full bg-slate-800/50 border-none rounded-lg py-2 pl-10 pr-4 text-sm text-white placeholder-slate-400 focus:ring-2 focus:ring-white/20" placeholder="Search products..." type="text"/>
-</div>
-<div class="flex items-center gap-2">
-<button class="p-2 text-slate-300 hover:text-white transition-colors relative">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span class="absolute top-1 right-1 bg-blue-500 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center">3</span>
-</button>
-<button class="p-2 text-slate-300 hover:text-white transition-colors">
-<span class="material-symbols-outlined">person</span>
-</button>
-</div>
-</div>
-</div>
-</div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="flex items-center justify-between h-16">
+
+      <!-- LEFT: Logo + Nav -->
+      <div class="flex items-center gap-10">
+
+        <!-- Logo -->
+        <a href="{% url 'customer_home' %}" class="flex items-center gap-2 text-white group">
+      <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+      
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-extrabold tracking-tighter leading-none">
+          Shoppy<span class="text-blue-300">O</span>
+        </h1>
+        <span class="text-xs font-medium text-slate-300 tracking-wider text-right -mt-0.5">
+          Style Now
+        </span>
+      </div>
+    </a>
+
+        <!-- Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="{% url 'customer_home'%}" 
+             class="text-slate-300 hover:text-white text-sm font-medium transition-colors">
+             Home
+          </a>
+
+          <a href="{% url 'category'%}" 
+             class="text-white text-sm font-semibold border-b-2 border-white pb-1">
+             Categories
+          </a>
+        </nav>
+
+      </div>
+
+      <!-- RIGHT: Actions -->
+    <div class="flex items-center gap-4">
+
+        <!-- Cart -->
+        <a href="{% url 'view_cart' %}" class="flex flex-col items-center p-1 transition-colors group relative">
+            <span class="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-xl">
+                shopping_cart
+            </span>
+            <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">
+                Cart
+            </span>
+        </a>
+
+        <a href="{% url 'customer_dashboard' %}" class="flex flex-col items-center p-1 transition-colors group">
+            <span class="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-xl">
+                person
+            </span>
+            <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">
+                Profile
+            </span>
+        </a>
+    </div>
+
+    </div>
+  </div>
 </header>
 <main class="flex-grow">
 <!-- Hero Header Section -->

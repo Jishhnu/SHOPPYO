@@ -167,7 +167,7 @@ def Add_to_cart(request, variant_id):
 
 @login_required
 def View_cart(request):
-    cart=Cart.objects.filter(user=request.user).first()
+    cart, created = Cart.objects.get_or_create(user=request.user)
     cart_item=CartItem.objects.filter(cart=cart)
 
     subtotal=0
@@ -228,8 +228,12 @@ def add_to_wishlist(request,variant_id):
 
 @login_required
 def wishlist_view(request):
-    wishlist=Wishlist.objects.get(user=request.user, wishlist_name="My Wishlist")
+    try:
+        wishlist=Wishlist.objects.get(user=request.user, wishlist_name="My Wishlist")
+    except Wishlist.DoesNotExist:
+        wishlist=Wishlist.objects.create(user=request.user, wishlist_name="My Wishlist")
     wishlist_item=WishlistItem.objects.filter(wishlist=wishlist)
+
     return render(request, "customer/wishlist.html", {"items": wishlist_item})
 
 @login_required
@@ -291,26 +295,23 @@ def move_all_to_cart(request):
 
 def single_product_variant(request,slug):
     product=get_object_or_404(Product, slug=slug)
-    product_variant = get_object_or_404(ProductVariant, product=product)
+    product_variant = ProductVariant.objects.filter(product=product).first()
     product_image=ProductImage.objects.filter(variant=product_variant)
-    if request.user.is_authenticated:
-        review = Review.objects.filter(
-            product=product_variant.product,
-            user=request.user
-        ).order_by('-created_at')
-    else:
-        review = Review.objects.filter(
-            product=product_variant.product
-        ).order_by('-created_at')
+    related_products=Product.objects.filter(subcategory=product.subcategory).exclude(id=product.id)
 
-    return render(request,'customer/Single_variant.html',{'items':product_variant,'image':product_image,'review':review})
+    if request.user.is_authenticated:
+        review = Review.objects.filter(product=product,user=request.user).order_by('-created_at')
+    else:
+        review = Review.objects.filter(product=product).order_by('-created_at')
+
+    return render(request,'customer/Single_variant.html',{'items':product_variant,'image':product_image,'review':review,"related_products":related_products})
 
 
 #------------------Order---------------------------
 @login_required
 def order(request, id):
     product = get_object_or_404(Product, id=id)
-    product_variant = ProductVariant.objects.get(product=product)
+    product_variant = ProductVariant.objects.filter(product=product).first()
     
     addresses = Address.objects.filter(user=request.user).order_by('-is_default', '-updated_at')
     

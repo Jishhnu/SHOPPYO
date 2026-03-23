@@ -47,7 +47,9 @@
 <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-xl mb-4 shadow-lg">
 <span class="material-icons text-white text-3xl">shopping_bag</span>
 </div>
-<h1 class="text-3xl font-bold text-primary dark:text-slate-100">ShoppyO</h1>
+<h1 class="text-3xl font-black tracking-tighter leading-none italic uppercase">
+            Shoppy<span class="text-blue-300">O</span>
+        </h1>
 <p class="text-charcoal/70 dark:text-slate-400 mt-2">Manage your shopping effortlessly</p>
 </div>
 <!-- Login Card -->
@@ -56,7 +58,7 @@
 <h2 class="text-xl font-semibold text-charcoal dark:text-slate-100 mb-6">Login to your account</h2>
 
 <!-- Messages Alert -->
-{% if messages %}
+<!-- {% if messages %}
     <div class="mb-4">
         {% for message in messages %}
             {% if 'error' in message.tags %}
@@ -64,16 +66,38 @@
             {% elif 'success' in message.tags %}
                 <div class="px-4 py-3 rounded-lg text-sm font-medium bg-green-100 text-green-700 border border-green-300">
             {% else %}
-                <div class="px-4 py-3 rounded-lg text-sm font-medium">
+                <div class="px-4 py-3 rounded-lg text-sm font-medium bg-blue-100 text-blue-700 border border-blue-300">
             {% endif %}
                     {{ message }}
                 </div>
         {% endfor %}
     </div>
+{% endif %} -->
+{% if messages %}
+<div class="mb-4 space-y-3">
+    {% for message in messages %}
+    <div role="alert"
+         class="animate-fade-in flex items-center justify-between px-4 py-3 rounded-lg shadow-md text-sm font-medium
+        {% if 'error' in message.tags %} bg-red-50 text-red-700 border border-red-300
+        {% elif 'success' in message.tags %} bg-green-50 text-green-700 border border-green-300
+        {% elif 'warning' in message.tags %} bg-yellow-50 text-yellow-700 border border-yellow-300
+        {% else %} bg-blue-50 text-blue-700 border border-blue-300
+        {% endif %}">
+        
+        <!-- Message Text -->
+        <span>{{ message }}</span>
+
+        <!-- Close Button -->
+        <button class="ml-4 font-bold text-lg opacity-60 hover:opacity-100">
+            &times;
+        </button>
+    </div>
+    {% endfor %}
+</div>
 {% endif %}
 
-{# error variable not provided by view, remove or handle differently #}
 
+<!------------------Form------------------------>
 <form method="POST" class="space-y-5">
     {% csrf_token %}
 <!-- Email Field -->
@@ -119,10 +143,17 @@
 </div>
 <!-- Social Logins -->
 <div class="grid grid-cols-2 gap-4">
-<button class="flex items-center justify-center px-4 py-2 border border-primary/10 rounded-lg bg-white hover:bg-slate-50 transition-colors dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700">
-<img alt="" class="w-5 h-5 mr-2" data-alt="Google colorful letter G logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABLrRihB9PNeuYWt02Nz9mnRfFSytV6gXholWvhyZlncnQh0L6HiYWEXZiOLu8G2r480jVSZun04vkj8N5HYfZYXh-6_6ED_1obDlLOtWGvIxEOdbyMiVsK1vEpJizNKwAw8GOZBkZGzKxgcbSc2RW-nmGKaEKONFI6WPRNSb9UnihenGE7bM9YKv3rjKiDjb_3nfg5kuq7q1H-t4_ZIxT236-3cEU-aVrUfNlTnFqFLDMzxuNs3LsWoUBLJ4gBO03wgK-JJS8uFsu"/>
-<span class="text-sm font-medium text-charcoal dark:text-slate-200">Google</span>
-</button>
+<a href="/accounts/google/login/"
+   class="flex items-center justify-center gap-1 px-4 py-2  border rounded-lg shadow-sm hover:shadow-md transition bg-white">
+
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+    <span class="text-sm font-semibold text-slate-700">Google</span>
+</a>
 <button class="flex items-center justify-center px-4 py-2 border border-primary/10 rounded-lg bg-white hover:bg-slate-50 transition-colors dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700">
 <span class="material-icons text-charcoal dark:text-white mr-2 text-xl">apple</span>
 <span class="text-sm font-medium text-charcoal dark:text-slate-200">Apple</span>
@@ -144,4 +175,54 @@
 <a class="text-xs text-charcoal/50 hover:text-primary transition-colors uppercase tracking-widest font-medium" href="#">Terms</a>
 </div>
 </div>
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const alerts = document.querySelectorAll('[role="alert"]');
+
+    alerts.forEach((el) => {
+        let timeout;
+
+        const removeAlert = () => {
+            el.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+            el.style.opacity = "0";
+            el.style.transform = "translateY(-6px)";
+            setTimeout(() => el.remove(), 400);
+        };
+
+        const startTimer = () => {
+            timeout = setTimeout(removeAlert, 3000);
+        };
+
+        const stopTimer = () => {
+            clearTimeout(timeout);
+        };
+
+        // Start auto hide
+        startTimer();
+
+        // Pause on hover
+        el.addEventListener("mouseenter", stopTimer);
+        el.addEventListener("mouseleave", startTimer);
+
+        // Close button
+        const closeBtn = el.querySelector("button");
+        if (closeBtn) {
+            closeBtn.addEventListener("click", () => {
+                stopTimer();
+                removeAlert();
+            });
+        }
+    });
+});
+</script>
 </body></html>

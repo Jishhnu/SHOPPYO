@@ -40,10 +40,20 @@
 <header class="bg-primary text-white sticky top-0 z-50 shadow-md">
 <div class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
 <div class="flex items-center gap-8">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-3xl">shopping_basket</span>
-<h2 class="text-xl font-bold tracking-tight">ShoppyO</h2>
-</div>
+        <a href="{% url 'customer_home' %}" class="flex items-center gap-2 text-white group">
+      <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+      
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-extrabold tracking-tighter leading-none">
+          Shoppy<span class="text-blue-300">O</span>
+        </h1>
+        <span class="text-xs font-medium text-slate-300 tracking-wider text-right -mt-0.5">
+          Style Now
+        </span>
+      </div>
+    </a>
 <nav class="hidden md:flex items-center gap-6">
 <a class="text-white/80 hover:text-white transition-colors text-sm font-medium" href="{% url 'customer_home'%}">Home</a>
 <a class="text-white/80 hover:text-white transition-colors text-sm font-medium" href="{% url 'category'%}">Categories</a>
@@ -55,16 +65,25 @@
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/60 text-xl">search</span>
 <input class="w-full bg-white text-charcoal rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-ice-blue border-none outline-none" placeholder="Search orders..." type="text"/>
 </div>
+
 <div class="flex items-center gap-2">
-<button class="p-2 hover:bg-white/10 rounded-lg transition-colors">
-<span class="material-symbols-outlined">shopping_cart</span>
-</button>
-<button class="p-2 hover:bg-white/10 rounded-lg transition-colors">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<div class="w-8 h-8 rounded-full bg-ice-blue ml-2 overflow-hidden border border-white/20">
-<img class="w-full h-full object-cover" data-alt="User profile avatar icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdCtRlzHfdmnlqMdmRjPM00Rp8wC9Ik0TXnheJ6Ml6no7cKJJo1bn1ltbChFiC3C4l9U-pDCK0_QXaavVSADWkC-4aAO5pzoPcNh2g8rFTGG4DGRqM-Iuj6K8cfv32YaRUmTQDhCVH9_hasZgfMoyL4gvIuMwzqFIK7DV9SxXEqRmhimYFYxd6AkEtLfjUBqUkm8oe4anIT8q_PX_PlYRR6P-B6wqUvrfzm5Dng01tQnHPOwyWln9qa1egTJqhzg1C20IqgmX0uvHG"/>
-</div>
+<a href="{% url 'view_cart' %}" class="flex flex-col items-center p-1 transition-colors group relative">
+            <span class="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-xl">
+                shopping_cart
+            </span>
+            <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">
+                Cart
+            </span>
+        </a>
+
+        <a href="{% url 'customer_dashboard' %}" class="flex flex-col items-center p-1 transition-colors group">
+            <span class="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-xl">
+                person
+            </span>
+            <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">
+                Profile
+            </span>
+        </a>
 </div>
 </div>
 </div>

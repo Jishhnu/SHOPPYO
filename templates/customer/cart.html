@@ -49,26 +49,43 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex items-center justify-between h-16">
 <!-- Logo -->
-<div class="flex items-center gap-2 cursor-pointer">
-<span class="material-symbols-outlined text-3xl">shopping_bag</span>
-<h1 class="text-xl font-bold tracking-tight">ShoppyO</h1>
-</div>
+<a href="{% url 'customer_home' %}" class="flex items-center gap-2 text-white group">
+      <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+      
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-extrabold tracking-tighter leading-none">
+          Shoppy<span class="text-blue-300">O</span>
+        </h1>
+        <span class="text-xs font-medium text-slate-300 tracking-wider text-right -mt-0.5">
+          Style Now
+        </span>
+      </div>
+    </a>
 <!-- Search Bar -->
-<div class="hidden md:flex flex-1 max-w-md mx-8">
+<!-- <div class="hidden md:flex flex-1 max-w-md mx-8">
 <div class="relative w-full">
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
 <input class="w-full bg-white/10 border-none rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-white/30 placeholder-white/60" placeholder="Search products..." type="text"/>
 </div>
-</div>
+</div> -->
 <!-- Nav Links -->
 <nav class="flex items-center gap-6">
-<a class="hidden lg:block text-sm font-medium hover:text-ice-blue transition-colors" href="#">Shop</a>
-<a class="hidden lg:block text-sm font-medium hover:text-ice-blue transition-colors" href="#">New Arrivals</a>
-<div class="flex items-center gap-4">
-<button class="p-2 hover:bg-white/10 rounded-full transition-colors">
-<span class="material-symbols-outlined">account_circle</span>
-</button>
-</div>
+    <div class="relative hidden sm:block">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-white/50">search</span>
+        <input class="bg-white/10 border-none rounded-lg pl-10 pr-4 py-1.5 text-sm text-white placeholder:text-white/50 focus:ring-1 focus:ring-white/30 w-48 lg:w-64" placeholder="Search..." type="text"/>
+    </div>
+<!-- <a class="hidden lg:block text-sm font-medium hover:text-ice-blue transition-colors" href="#">Shop</a>
+<a class="hidden lg:block text-sm font-medium hover:text-ice-blue transition-colors" href="#">New Arrivals</a> -->
+    <a href="{% url 'customer_dashboard' %}" class="flex flex-col items-center p-1 transition-colors group">
+        <span class="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-xl">
+            person
+        </span>
+        <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">
+            Profile
+        </span>
+    </a>
 </nav>
 </div>
 </div>

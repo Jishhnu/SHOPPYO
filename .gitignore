@@ -1,11 +1,10 @@
 # Python
-_pycache_/
+__pycache__/
 *.py[cod]
 *$py.class
 
 # Virtual Environment
-venv/
-env/
+myvenv/
 
 # Django
 *.log

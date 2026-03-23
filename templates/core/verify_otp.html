@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Verify Your Email - ShoppyO</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error": "#ffffff",
+              "tertiary-container": "#262b2c",
+              "secondary-container": "#d4e6ec",
+              "inverse-on-surface": "#f3f0f0",
+              "on-primary-fixed": "#0a1e27",
+              "error-container": "#ffdad6",
+              "tertiary-fixed-dim": "#c3c7c8",
+              "secondary-fixed-dim": "#b8c9cf",
+              "surface-container-lowest": "#ffffff",
+              "on-surface": "#1b1c1c",
+              "primary": "#041822",
+              "on-tertiary-fixed": "#181c1d",
+              "on-background": "#1b1c1c",
+              "on-secondary-fixed": "#0d1e22",
+              "on-error-container": "#93000a",
+              "surface-container": "#f0eded",
+              "outline": "#73787b",
+              "outline-variant": "#c3c7cb",
+              "on-primary": "#ffffff",
+              "on-secondary": "#ffffff",
+              "secondary": "#506166",
+              "on-tertiary": "#ffffff",
+              "inverse-surface": "#303030",
+              "on-primary-container": "#8195a1",
+              "surface-container-highest": "#e4e2e1",
+              "surface": "#fbf9f8",
+              "tertiary": "#121718",
+              "surface-container-high": "#eae8e7",
+              "primary-fixed-dim": "#b5c9d6",
+              "primary-container": "#1a2d37",
+              "surface-container-low": "#f6f3f2",
+              "on-surface-variant": "#43474b",
+              "on-tertiary-container": "#8e9293",
+              "on-tertiary-fixed-variant": "#434849",
+              "on-secondary-container": "#56676c",
+              "surface-dim": "#dcd9d9",
+              "surface-tint": "#4e616c",
+              "on-primary-fixed-variant": "#364954",
+              "tertiary-fixed": "#dfe3e4",
+              "background": "#fbf9f8",
+              "error": "#ba1a1a",
+              "on-secondary-fixed-variant": "#39494e",
+              "surface-bright": "#fbf9f8",
+              "secondary-fixed": "#d4e6ec",
+              "primary-fixed": "#d1e5f3",
+              "inverse-primary": "#b5c9d6",
+              "surface-variant": "#e4e2e1"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .bg-mesh-gradient {
+            background: linear-gradient(135deg, #d4e6ec 0%, #fbf9f8 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-background min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<nav class="bg-slate-950 fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 w-full shadow-2xl shadow-slate-900/20">
+<div class="text-2xl font-extrabold text-white tracking-tighter font-headline">ShoppyO</div>
+<div class="hidden md:flex gap-8 items-center">
+<!-- No active state for verification screen as it's transactional -->
+<a class="text-slate-400 font-manrope font-bold tracking-tight hover:opacity-80 transition-opacity" href="#">Shop</a>
+<a class="text-slate-400 font-manrope font-bold tracking-tight hover:opacity-80 transition-opacity" href="#">Collections</a>
+<a class="text-slate-400 font-manrope font-bold tracking-tight hover:opacity-80 transition-opacity" href="#">New Arrivals</a>
+</div>
+<div class="flex items-center gap-4 text-white">
+<button class="hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex items-center justify-center pt-24 pb-12 px-4 bg-mesh-gradient relative overflow-hidden">
+<!-- Atmospheric Background Element -->
+<div class="absolute top-1/4 -right-20 w-96 h-96 bg-primary-fixed opacity-20 blur-3xl rounded-full"></div>
+<div class="absolute bottom-1/4 -left-20 w-80 h-80 bg-secondary-fixed opacity-30 blur-3xl rounded-full"></div>
+<!-- Verification Card -->
+<div class="relative z-10 w-full max-w-md bg-surface-container-lowest rounded-xl p-8 md:p-12 shadow-[0px_20px_40px_rgba(26,45,55,0.06)]">
+<div class="text-center mb-10">
+<div class="inline-flex items-center justify-center w-16 h-16 bg-secondary-container rounded-full mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">mail</span>
+</div>
+<h1 class="text-3xl font-headline font-extrabold tracking-tight text-primary mb-3">Verify your email</h1>
+Please enter the 6-digit code we sent to your email address.</p>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="p-4 mb-4 rounded-xl shadow-sm border-l-4 {% if message.tags == 'error' %}bg-error-container border-error text-on-error-container{% else %}bg-secondary-container border-primary text-on-secondary-container{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+</div>
+<form method="POST" class="space-y-8">
+{% csrf_token %}
+    <input type="hidden" id="otp-hidden" name="otp" value="">
+<!-- Verification Code Inputs -->
+<div class="flex justify-between gap-2 md:gap-3">
+<input class="w-12 h-14 md:w-14 md:h-16 text-center text-xl font-bold bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-primary-fixed-dim focus:bg-white transition-all text-primary" maxlength="1" placeholder="•" type="text"/>
+<input class="w-12 h-14 md:w-14 md:h-16 text-center text-xl font-bold bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-primary-fixed-dim focus:bg-white transition-all text-primary" maxlength="1" placeholder="•" type="text"/>
+<input class="w-12 h-14 md:w-14 md:h-16 text-center text-xl font-bold bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-primary-fixed-dim focus:bg-white transition-all text-primary" maxlength="1" placeholder="•" type="text"/>
+<input class="w-12 h-14 md:w-14 md:h-16 text-center text-xl font-bold bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-primary-fixed-dim focus:bg-white transition-all text-primary" maxlength="1" placeholder="•" type="text"/>
+<input class="w-12 h-14 md:w-14 md:h-16 text-center text-xl font-bold bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-primary-fixed-dim focus:bg-white transition-all text-primary" maxlength="1" placeholder="•" type="text"/>
+<input class="w-12 h-14 md:w-14 md:h-16 text-center text-xl font-bold bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-primary-fixed-dim focus:bg-white transition-all text-primary" maxlength="1" placeholder="•" type="text"/>
+</div>
+<div class="space-y-4">
+<button class="w-full py-4 bg-primary text-on-primary font-semibold rounded-lg hover:opacity-90 active:scale-95 transition-all duration-200 shadow-lg shadow-primary/10" type="submit">
+                        Verify
+                    </button>
+<div class="text-center pt-2">
+<p class="text-sm text-on-surface-variant mb-1">Didn't receive a code?</p>
+<button id="resend-btn"
+    class="text-primary font-semibold hover:underline disabled:opacity-50 disabled:cursor-not-allowed">
+    Resend Code
+</button>
+<p id="timer-text" class="text-sm text-gray-500 mt-2"></p>
+
+</div>
+</div>
+</form>
+<!-- Back link -->
+<div class="mt-8 pt-8 border-t border-outline-variant/15 text-center">
+href="{% url 'login' %}">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+                    Back to login
+                </a>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-50 border-t border-slate-200/10 py-12">
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="font-manrope font-bold text-slate-900 text-lg">ShoppyO</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-slate-500 font-inter text-sm hover:text-slate-900 underline-offset-4 hover:underline transition-colors duration-200" href="#">Terms of Service</a>
+<a class="text-slate-500 font-inter text-sm hover:text-slate-900 underline-offset-4 hover:underline transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="text-slate-500 font-inter text-sm hover:text-slate-900 underline-offset-4 hover:underline transition-colors duration-200" href="#">Contact Support</a>
+</div>
+<div class="text-slate-500 font-inter text-sm leading-6">
+                © 2026 ShoppyO. All rights reserved.
+            </div>
+</div>
+        </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = document.querySelectorAll('input[maxlength="1"]');
+      const otpHidden = document.getElementById('otp-hidden');
+      const form = document.querySelector('form');
+      const resendBtn = document.getElementById('resend-btn');
+
+      // Focus first input
+      if (inputs.length > 0) inputs[0].focus();
+
+      // Handle input
+      inputs.forEach((input, index) => {
+        input.addEventListener('input', function(e) {
+          this.value = this.value.replace(/\D/g, '');
+          if (this.value.length === 1) {
+            if (index < inputs.length - 1) {
+              inputs[index + 1].focus();
+            }
+          }
+          updateOTP();
+        });
+
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && !this.value && index > 0) {
+            inputs[index - 1].focus();
+          }
+          if (e.key === 'Enter') {
+            form.submit();
+          }
+        });
+
+        // Paste handling
+        input.addEventListener('paste', function(e) {
+          e.preventDefault();
+          setTimeout(() => {
+            const pasteData = e.clipboardData || window.clipboardData;
+            const paste = pasteData.getData('text');
+            const code = paste.slice(0, 6).replace(/\D/g, '');
+            for (let i = 0; i < Math.min(code.length, inputs.length); i++) {
+              inputs[i].value = code[i];
+            }
+            if (code.length === 6) {
+              inputs[5].blur();
+            }
+            updateOTP();
+          }, 0);
+        });
+      });
+
+      function updateOTP() {
+        const otp = Array.from(inputs).map(i => i.value).join('');
+        if (otpHidden) otpHidden.value = otp;
+      }
+
+      // Resend OTP
+      if (resendBtn) {
+        resendBtn.addEventListener('click', async function() {
+          resendBtn.disabled = true;
+          resendBtn.textContent = 'Sending...';
+          const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          try {
+            const response = await fetch("{% url 'resend_otp' %}", {
+              body: '',
+              method: 'POST',
+              headers: {
+                'X-CSRFToken': csrfToken,
+              },
+            });
+            if (response.ok) {
+              location.reload();
+            } else {
+              throw new Error('Failed to resend');
+            }
+          } catch (error) {
+            console.error('Resend error:', error);
+            alert('Failed to resend OTP. Please try again.');
+          } finally {
+            resendBtn.disabled = false;
+            resendBtn.textContent = 'Resend Code';
+          }
+        });
+      }
+    });
+
+// Button becomes disabled and Timer starts
+const resendBtn = document.getElementById("resend-btn");
+const timerText = document.getElementById("timer-text");
+
+let countdown = 30;
+
+function startTimer() {
+    resendBtn.disabled = true;
+
+    let interval = setInterval(() => {
+        timerText.innerText = `Resend available in ${countdown}s`;
+        countdown--;
+
+        if (countdown < 0) {
+            clearInterval(interval);
+            resendBtn.disabled = false;
+            timerText.innerText = "";
+            countdown = 30;
+        }
+    }, 1000);
+}
+
+// 👉 Click event
+resendBtn.addEventListener("click", function() {
+    startTimer();
+
+    // 🔁 Call backend (resend OTP)
+    fetch("{% url 'resend_otp' %}")
+        .then(response => {
+            console.log("OTP Resent");
+        });
+});
+  </script>
+</body></html>

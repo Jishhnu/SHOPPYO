@@ -3,7 +3,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ShoppyO - Smartphones Sub-category</title>
+<title>ShoppyO - {{ productvariant.0.product.subcategory.name|title }} Category</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -38,32 +38,54 @@
 <!-- Dark Deep Navy Navbar -->
 <header class="bg-primary text-white px-6 md:px-20 py-4 flex items-center justify-between sticky top-0 z-50">
 <div class="flex items-center gap-8">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-3xl">shopping_bag</span>
-<h1 class="text-xl font-black tracking-tight uppercase">ShoppyO</h1>
-</div>
+<a href="{% url 'customer_home' %}" class="flex items-center gap-2 text-white group">
+      <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+      
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-extrabold tracking-tighter leading-none">
+          Shoppy<span class="text-blue-300">O</span>
+        </h1>
+        <span class="text-xs font-medium text-slate-300 tracking-wider text-right -mt-0.5">
+          Style Now
+        </span>
+      </div>
+    </a>
 <nav class="hidden md:flex items-center gap-6">
-<a class="text-sm font-medium hover:text-ice-blue" href="#">Home</a>
-<a class="text-sm font-medium hover:text-ice-blue" href="#">Categories</a>
-<a class="text-sm font-medium hover:text-ice-blue" href="#">Deals</a>
-<a class="text-sm font-medium hover:text-ice-blue" href="#">Support</a>
+<a class="text-sm font-medium hover:text-ice-blue" href="{% url 'customer_home' %}">Home</a>
+<a class="text-sm font-medium hover:text-ice-blue" href="{% url 'category' %}">Categories</a>
+<!-- <a class="text-sm font-medium hover:text-ice-blue" href="#">Deals</a>
+<a class="text-sm font-medium hover:text-ice-blue" href="#">Support</a> -->
 </nav>
 </div>
 <div class="flex flex-1 justify-end items-center gap-6">
-<div class="relative max-w-xs w-full hidden sm:block">
+<!-- <div class="relative max-w-xs w-full hidden sm:block">
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
 <input class="w-full bg-white/10 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-ice-blue/50 placeholder:text-slate-400" placeholder="Search tech..." type="text"/>
-</div>
+</div> -->
 <div class="flex items-center gap-4">
-<button class="flex items-center justify-center p-2 hover:bg-white/10 rounded-full">
-<span class="material-symbols-outlined">shopping_cart</span>
-</button>
-<button class="flex items-center justify-center p-2 hover:bg-white/10 rounded-full">
-<span class="material-symbols-outlined">account_circle</span>
-</button>
-<div class="h-8 w-8 rounded-full bg-primary-20 border border-white/20 flex items-center justify-center overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="User profile avatar showing a smiling person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7vaj6uTsbwhUtGlHXJpOUkMnJLHNsPf9oPu3EZXE-8YdfqAI893ZiEnC7QQKZAuvI3pPf8Vri9nx3TI6jY1YtjkWJuGmwui-pRhynWGJLhr7PitYIUCpd6fjBB60Bp2Q6zCc2bM8IDA0F3MetVAasctJZMek2dUWQrwA71OKlGpZqL6TQrUQcA_yLcLjE284-s_ttHYJHlO3z01ZOriULkzmoBWi7P2btud6dZlw8tZlbnwE3WVfm51C4v0q6i35ZQ0Akil_zM94V"/>
-</div>
+<a href="{% url 'view_cart' %}" class="flex flex-col items-center p-1 hover:bg-white/10 rounded-full transition-colors group relative">
+    <span class="material-symbols-outlined group-hover:scale-110 transition-transform text-xl">shopping_cart</span>
+    <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">Cart</span></a>
+</a>
+
+<a href="{% url 'customer_dashboard' %}" class="group cursor-pointer hover:border-blue-400 transition-all relative">
+    <div class="h-10 w-10 rounded-full bg-slate-800 border-2 border-white/20 flex items-center justify-center overflow-hidden group-hover:border-blue-400 transition-colors">
+        {% if user.is_authenticated and user.profile_image %}
+            <img class="w-full h-full object-cover rounded-full" 
+                 src="{{ user.profile_image.url }}" 
+                 alt="{{ user.username }}'s profile picture" />
+        {% else %}
+            <span class="material-symbols-outlined text-white/70 text-xl">person</span>
+        {% endif %}
+    </div>
+
+    <span class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1 text-xs text-white/80 font-medium pointer-events-none opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 bg-slate-800 px-3 py-2 rounded-md shadow-lg">
+        Profile
+    </span>
+
+</a>
 </div>
 </div>
 </header>
@@ -86,9 +108,9 @@ Filters
 
 <!-- Category Breadcrumb -->
 <div class="text-sm text-slate-500">
-    <span class="hover:text-primary cursor-pointer">Electronics</span>
+    <a class="hover:text-primary cursor-pointer" href="{% url 'category' %}">{{ productvariant.0.product.subcategory.category.name }}</a>
     <span class="mx-1">/</span>
-    <span class="text-primary font-semibold">Smartphones</span>
+    <span class="text-primary font-semibold">{{ productvariant.0.product.subcategory.name }}</span>
 </div>
 
 <!-- Brand Filter -->
@@ -196,18 +218,6 @@ onclick="clearFilters()">
 Clear All
 </button>
 
-<script>
-function clearFilters() {
-    // Reset form fields
-    document.querySelector('form').reset();
-    
-    // Get the current base URL without query parameters
-    const baseUrl = window.location.pathname;
-    
-    // Redirect to the base URL to show all products without filters
-    window.location.href = baseUrl;
-}
-</script>
 
 </div>
 
@@ -219,18 +229,18 @@ function clearFilters() {
 <!-- Header Actions -->
 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
 <div>
-<h2 class="text-3xl font-black text-primary">Premium {{productvariant.product.subcategory.name}}</h2>
-<p class="text-slate-500">Showing 24 of 152 results</p>
+<h1 class="text-xl font-bold text-primary">{{ productvariant.0.product.subcategory.name }}</h1>
+<p class="text-sm text-slate-500">Showing 1-{{ productvariant|length }} of {{ productvariant|length }} results</p>
 </div>
-<div class="flex items-center gap-3">
-<span class="text-sm text-slate-500 whitespace-nowrap">Sort by:</span>
-<select class="border-slate-200 rounded-lg text-sm font-medium focus:ring-primary focus:border-primary">
-<option>Popularity</option>
-<option>Newest Arrivals</option>
-<option>Price: Low to High</option>
-<option>Price: High to Low</option>
-</select>
-</div>
+    <!-- <div class="flex items-center gap-3">
+    <span class="text-sm text-slate-500 whitespace-nowrap">Sort by:</span>
+    <select class="border-slate-200 rounded-lg text-sm font-medium focus:ring-primary focus:border-primary">
+    <option>Popularity</option>
+    <option>Newest Arrivals</option>
+    <option>Price: Low to High</option>
+    <option>Price: High to Low</option>
+    </select>
+    </div> -->
 </div>
 <!-- Grid -->
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -244,7 +254,7 @@ function clearFilters() {
 <!-- ------productImage---------- -->
             <!-- {% with variant.images.all as all_images %}
                 {% if all_images %}
-                    <img class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" 
+                <img class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" 
                          src="{% for img in all_images %}
                                 {% if img.is_primary %}
                                     {{ img.image_url }}
@@ -252,7 +262,7 @@ function clearFilters() {
                                 {% if forloop.last and not img.is_primary %}
                                     {{ all_images.0.image_url }}
                                 {% endif %}
-                            {% endfor %}" 
+                                {% endfor %}" 
                          alt="{{ variant.product.name }} - {{ variant.alt_text|default:'Product Image' }}"/>
                         {% else %}
                             <img class="w-full h-full object-contain opacity-40" src="https://via.placeholder.com/400x400?text=No+Image" alt="Placeholder"/>
@@ -307,9 +317,9 @@ function clearFilters() {
                     <p class="text-xl font-black text-primary">${{ variant.selling_price }}</p>
                 </div>
 
-                <button type="button" class="relative z-20 bg-primary text-white p-2.5 rounded-lg flex items-center justify-center hover:bg-slate-800 transition-colors">
+                <a href="{% url 'add_to_cart' variant.id %}" class="relative z-20 bg-primary text-white p-2.5 rounded-lg flex items-center justify-center hover:bg-slate-800 transition-colors block">
                     <span class="material-symbols-outlined">add_shopping_cart</span>
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -377,4 +387,16 @@ function clearFilters() {
             </div>
 </footer>
 </div>
+    <script>
+    function clearFilters() {
+        // Reset form fields
+        document.querySelector('form').reset();
+        
+        // Get the current base URL without query parameters
+        const baseUrl = window.location.pathname;
+        
+        // Redirect to the base URL to show all products without filters
+        window.location.href = baseUrl;
+    }
+    </script>
 </body></html>

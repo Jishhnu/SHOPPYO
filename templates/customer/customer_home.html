@@ -46,9 +46,17 @@
 <div class="max-w-[1380px] mx-auto flex items-center justify-between px-1 py-4">
 
     <!-- LEFT : LOGO -->
-    <div class="flex items-center gap-2">
-        <span class="material-symbols-outlined text-2xl">shopping_bag</span>
-        <h1 class="text-3xl font-black tracking-tight">ShoppyO</h1>
+    <div class="flex items-center gap-1 text-white group">
+      <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+    
+    <!-- Text Container: Stacked Brand & Tagline -->
+    <div class="flex flex-col justify-center">
+        <h1 class="text-3xl font-black tracking-tighter leading-none italic uppercase">
+            Shoppy<span class="text-blue-300">O</span>
+        </h1>
+    </div>
     </div>
 
     <!-- CENTER : SEARCH -->
@@ -242,15 +250,15 @@
 <section class="py-12 bg-white"> 
     <div class="max-w-[1400px] mx-auto px-6">
         
-        <div class="flex items-center justify-between mb-8 border-b border-[#F5F1EA] pb-4">
-            <h3 class="text-xl font-bold text-primary">Featured Deals</h3>
+        <div class="flex items-center justify-between mb-8 border-b-2 border-[#F5F1EA] pb-4">
+            <h3 class="text-2xl font-bold tracking-tight text-slate-700 sm:text-3xl">Featured Deals</h3>
             <a href="#" class="text-xs font-bold text-primary/70 hover:text-primary transition-colors">
                 View All →
             </a>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
-            {% for product in products %}
+            {% for product in page_obj %}
                 {% with product.variants.all.0 as variant %}
                 <div class="relative rounded-xl border border-[#F1EDE7] bg-white shadow-sm hover:shadow-md transition-all duration-300 group overflow-hidden flex flex-col h-full">
                     
@@ -316,6 +324,45 @@
                 {% endwith %}
             {% endfor %}
         </div>
+
+        <!-- Pagination -->
+        <div class="mt-12 flex justify-center items-center gap-2">
+  
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" class="w-10 h-10 rounded-lg border border-slate-200 flex items-center justify-center hover:bg-white text-slate-600 transition-colors">
+      <span class="material-symbols-outlined text-lg">chevron_left</span>
+    </a>
+  {% else %}
+    <span class="w-10 h-10 rounded-lg border border-slate-100 flex items-center justify-center text-slate-400 cursor-not-allowed">
+      <span class="material-symbols-outlined text-lg">chevron_left</span>
+    </span>
+  {% endif %}
+
+  {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+      <span class="w-10 h-10 rounded-lg bg-primary text-white font-bold flex items-center justify-center">
+        {{ num }}
+      </span>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' or num == 1 or num == page_obj.paginator.num_pages %}
+      <a href="?page={{ num }}" class="w-10 h-10 rounded-lg hover:bg-white text-slate-600 font-medium flex items-center justify-center">
+        {{ num }}
+      </a>
+    {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
+      <span class="px-2 text-slate-400">...</span>
+    {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="w-10 h-10 rounded-lg border border-slate-200 flex items-center justify-center hover:bg-white text-slate-600 transition-colors">
+      <span class="material-symbols-outlined text-lg">chevron_right</span>
+    </a>
+  {% else %}
+    <span class="w-10 h-10 rounded-lg border border-slate-100 flex items-center justify-center text-slate-400 cursor-not-allowed">
+      <span class="material-symbols-outlined text-lg">chevron_right</span>
+    </span>
+  {% endif %}
+
+</div>
         
     </div>
 </section>
@@ -347,7 +394,7 @@
 <div class="space-y-6">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-2xl">shopping_bag</span>
-<h2 class="text-xl font-black tracking-tight">ShoppyO</h2>
+<h2 class="text-xl font-black tracking-tight">Shoppy<span class="text-blue-300">O</span></h2>
 </div>
 <p class="text-ice-blue/60 text-sm leading-relaxed">
                     Your premium destination for high-quality electronics, fashion, and home essentials. Experience shopping redefined.
@@ -392,6 +439,11 @@
 </div>
 </div>
 <div class="max-w-[1280px] mx-auto px-6 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-ice-blue/40">
+    
+<a href="{% url 'seller_home'%}" class="bg-yellow-50 text-primary px-5 py-2 rounded-xl text-sm font-bold hover:bg-white transition-colors">
+                Become a Seller
+</a>
+
 <p>© 2026 ShoppyO E-commerce. All rights reserved.</p>
 <div class="flex gap-6">
 <a class="hover:text-white" href="#">Privacy Policy</a>

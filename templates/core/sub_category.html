@@ -47,35 +47,44 @@
 <header class="sticky top-0 z-50 bg-primary text-white shadow-lg">
 <div class="max-w-[1440px] mx-auto flex items-center justify-between px-6 py-4">
 <!-- Logo -->
-<div class="flex items-center gap-3">
-<div class="bg-white/10 p-2 rounded-lg">
-<span class="material-symbols-outlined text-white text-3xl">diamond</span>
-</div>
-<h2 class="text-2xl font-bold tracking-tight">ShoppyO</h2>
-</div>
-<!-- Search Bar -->
+<a href="{% url 'customer_home' %}" class="flex items-center gap-2 text-white group">
+      <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+      
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-extrabold tracking-tighter leading-none">
+          Shoppy<span class="text-blue-300">O</span>
+        </h1>
+        <span class="text-xs font-medium text-slate-300 tracking-wider text-right -mt-0.5">
+          Style Now
+        </span>
+      </div>
+    </a>
+<!-- Search Bar
 <div class="flex-1 max-w-xl px-12">
 <div class="relative group">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary">search</span>
 <input class="w-full bg-slate-800/50 border-none rounded-full py-2.5 pl-12 pr-4 focus:ring-2 focus:ring-white/20 text-white placeholder:text-slate-400 transition-all" placeholder="Search premium products..." type="text"/>
 </div>
-</div>
+</div> -->
 <!-- Nav Links & Icons -->
 <div class="flex items-center gap-8">
-<nav class="hidden lg:flex items-center gap-6 font-medium text-sm uppercase tracking-wider">
+<!-- <nav class="hidden lg:flex items-center gap-6 font-medium text-sm uppercase tracking-wider">
 <a class="hover:text-ice-blue transition-colors" href="#">Home</a>
 <a class="text-ice-blue border-b-2 border-ice-blue pb-1" href="#">Shop</a>
 <a class="hover:text-ice-blue transition-colors" href="#">Deals</a>
 <a class="hover:text-ice-blue transition-colors" href="#">Support</a>
-</nav>
+</nav> -->
 <div class="flex items-center gap-4">
-<button class="relative p-2 hover:bg-white/10 rounded-full transition-colors">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span class="absolute top-0 right-0 bg-red-500 text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
-</button>
-<button class="p-2 hover:bg-white/10 rounded-full transition-colors">
-<span class="material-symbols-outlined">person</span>
-</button>
+<a href="{% url 'view_cart' %}" class="flex flex-col items-center p-1 hover:bg-white/10 rounded-full transition-colors group relative" title="Cart">
+    <span class="material-symbols-outlined group-hover:scale-110 transition-transform text-xl">shopping_cart</span>
+    <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">Cart</span></a>
+</a>
+<a href="{% url 'customer_dashboard' %}" class="flex flex-col items-center p-1 hover:bg-white/10 rounded-full transition-colors group" title="Dashboard">
+    <span class="material-symbols-outlined group-hover:scale-110 transition-transform text-xl">person</span>
+    <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">Profile</span>
+</a>
 </div>
 </div>
 </div>
@@ -111,49 +120,6 @@
     </div>
 </div>
 
-<!-- Price Range
-<div>
-<h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
-<span class="material-symbols-outlined text-xl">payments</span>
-                            Price Range
-                        </h3>
-<div class="px-2">
-<input class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary" max="5000" min="0" type="range"/>
-<div class="flex justify-between mt-3 text-sm font-medium text-slate-600">
-<span>$0</span>
-<span>$5,000+</span>
-</div>
-</div>
-</div> -->
-<!-- Brand Checkboxes
-<div>
-<h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
-<span class="material-symbols-outlined text-xl">verified</span>
-                            Top Brands
-                        </h3>
-<div class="space-y-3 px-1">
-<label class="flex items-center gap-3 cursor-pointer group">
-<input class="rounded border-slate-300 text-primary focus:ring-primary w-5 h-5" type="checkbox"/>
-<span class="text-slate-700 group-hover:text-primary transition-colors">Apple</span>
-<span class="ml-auto text-xs text-slate-400">45</span>
-</label>
-<label class="flex items-center gap-3 cursor-pointer group">
-<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary w-5 h-5" type="checkbox"/>
-<span class="text-slate-700 group-hover:text-primary transition-colors">Samsung</span>
-<span class="ml-auto text-xs text-slate-400">32</span>
-</label>
-<label class="flex items-center gap-3 cursor-pointer group">
-<input class="rounded border-slate-300 text-primary focus:ring-primary w-5 h-5" type="checkbox"/>
-<span class="text-slate-700 group-hover:text-primary transition-colors">Sony</span>
-<span class="ml-auto text-xs text-slate-400">28</span>
-</label>
-<label class="flex items-center gap-3 cursor-pointer group">
-<input class="rounded border-slate-300 text-primary focus:ring-primary w-5 h-5" type="checkbox"/>
-<span class="text-slate-700 group-hover:text-primary transition-colors">Dell</span>
-<span class="ml-auto text-xs text-slate-400">15</span>
-</label>
-</div>
-</div> -->
 </div>
 </aside>
 <!-- Product Display Area -->
@@ -161,8 +127,10 @@
 <!-- Grid Header -->
 <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 bg-white/50 p-4 rounded-xl border border-white backdrop-blur-sm">
 <div>
-<h1 class="text-xl font-bold text-primary">Electronics &amp; Gadgets</h1>
-<p class="text-sm text-slate-500">Showing 1-12 of 124 results</p>
+<!-- <h1 class="text-xl font-bold text-primary">Electronics &amp; Gadgets</h1>
+<p class="text-sm text-slate-500">Showing 1-12 of 124 results</p> -->
+<h1 class="text-xl font-bold text-primary">{{ category.name }}</h1>
+<p class="text-sm text-slate-500">Showing 1-{{ sub_category|length }} of {{ sub_category|length }} results</p>
 </div>
 <!-- <div class="flex items-center gap-3">
 <span class="text-sm font-medium text-slate-600">Sort by:</span>

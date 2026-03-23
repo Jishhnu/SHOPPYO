@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShoppyO Admin Dashboard</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D6E8EE",
+                        "background-light": "#f8fafd", // Subtle ice-blue tint
+                        "background-dark": "#1A2D37", // Deep Navy for header/sidebar
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light text-slate-900 font-display">
+<!-- Main Layout -->
+<div class="flex min-h-screen">
+<!-- Sidebar Navigation (Deep Navy) -->
+<aside class="w-64 bg-background-dark text-white flex flex-col fixed h-full z-20">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-background-dark">
+<span class="material-symbols-outlined text-white">shopping_bag</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">ShoppyO</h1>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 bg-primary/20 text-primary border-l-4 border-primary rounded-r-lg font-semibold transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+                    Users
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+                    Seller Verification
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">campaign</span>
+                    Announcements
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">payments</span>
+                    Revenue
+                </a>
+<div class="pt-4 border-t border-white/10 mt-4">
+<p class="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">System</p>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+                        Settings
+                    </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">security</span>
+                        Audit Logs
+                    </a>
+</div>
+</nav>
+<div class="p-4 bg-white/5 m-4 rounded-xl">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-500 overflow-hidden" data-alt="Admin user profile picture">
+<img alt="Admin Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdHonfxsF1PkF7Qrj547BSYlBRPz02m4QMlvQjSZRqg3VngFcn6ZhC9OBYvcJGvczZdsTn9NwP2yoJlonrNARHVuuE4h-v5Ef6kF5tq8--8aApO-K65nRmTZ8_Cr9Jui6SiP7Mkst4Y2b_xooZP_sf77fds_iB4WTLnC72agtgHUj3lv4-uFM148hbGbv21t2JBhWdPV-0rLHGfTt8bWY-nzKc4a5gGAGVkvHlc0SUQwVCuwmr-wjaXYZD2hVf6OqF7tWN3iSj5thA"/>
+</div>
+<div>
+<p class="text-sm font-bold">Alexander Wright</p>
+<p class="text-xs text-slate-400">Super Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 flex flex-col min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="bg-background-dark text-white px-8 py-4 flex items-center justify-between sticky top-0 z-10 shadow-lg">
+<div class="flex items-center gap-4 flex-1">
+<label class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full bg-white/10 border-none rounded-xl py-2 pl-10 pr-4 focus:ring-2 focus:ring-primary placeholder:text-slate-400 text-sm" placeholder="Search for users, transactions, or sellers..." type="text"/>
+</label>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative p-2 hover:bg-white/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-primary rounded-full border-2 border-background-dark text-background-dark"></span>
+</button>
+<button class="p-2 hover:bg-white/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-6 w-px bg-white/20"></div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium">System Status:</span>
+<span class="flex items-center gap-1.5 text-xs font-bold text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-full">
+<span class="size-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
+                            Operational
+                        </span>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 space-y-8">
+<!-- Welcome Section -->
+<div>
+<h2 class="text-2xl font-bold text-slate-800">Dashboard Overview</h2>
+<p class="text-slate-500">Welcome back, Administrator. Here's what's happening with ShoppyO today.</p>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/10 text-primary rounded-lg">
+<span class="material-symbols-outlined">group</span>
+</div>
+<span class="text-emerald-500 text-xs font-bold bg-emerald-50 px-2 py-1 rounded-full">+12.5%</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Total Users</p>
+<h3 class="text-2xl font-bold text-slate-900 mt-1">12,840</h3>
+<div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 65%;"></div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-emerald-100 text-emerald-600 rounded-lg">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-emerald-500 text-xs font-bold bg-emerald-50 px-2 py-1 rounded-full">+8.2%</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Total Revenue</p>
+<h3 class="text-2xl font-bold text-slate-900 mt-1">$425,000.00</h3>
+<div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full rounded-full" style="width: 48%;"></div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-blue-100 text-blue-600 rounded-lg">
+<span class="material-symbols-outlined">storefront</span>
+</div>
+<span class="text-blue-500 text-xs font-bold bg-blue-50 px-2 py-1 rounded-full">+5.4%</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Active Sellers</p>
+<h3 class="text-2xl font-bold text-slate-900 mt-1">850</h3>
+<div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-blue-500 h-full rounded-full" style="width: 72%;"></div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 rounded-lg bg-primary/30">
+<span class="material-symbols-outlined">pending_actions</span>
+</div>
+<span class="text-xs font-bold px-2 py-1 rounded-full">Requires Action</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Pending Approvals</p>
+<h3 class="text-2xl font-bold text-slate-900 mt-1">42</h3>
+<div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="h-full rounded-full" style="width: 30%;"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- User Management Table (Large Module) -->
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
+<h3 class="font-bold text-slate-800">User Management</h3>
+<button class="text-sm font-semibold text-[#1A2D37] hover:underline flex items-center gap-1">View All <span class="material-symbols-outlined text-xs">arrow_forward</span></button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 text-slate-500 text-xs uppercase font-bold tracking-wider">
+<tr>
+<th class="px-6 py-4">User</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4">Role</th>
+<th class="px-6 py-4">Join Date</th>
+<th class="px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 text-sm">
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 overflow-hidden" data-alt="User avatar">
+<img alt="User" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8aY8I211Df5DXB0b9OnzTjMkgd0sQSeKoCgDcbmXWrp0ECQN1AQLQLZf_7jpmx5glZ_ftZduf3REW-xd2k5k6wylSCZo5qMGY-AIh4Sua-Rp5G_-lO4Omh1hAOv04o64Yep1jGLJyOwymQEdIOx15YP6LXcKgo-RGOCpArIGtvJ0SkkESXx6yUF3s0zKWUH0Qw-0fNzrWPuhfhhRNJd2O63jj_XtCgKGC-s3JK39lmFs5W3QAENndEEtNGQjy1btm8rPrnPji8oX0"/>
+</div>
+<div>
+<p class="font-bold text-slate-900">Sarah Jenkins</p>
+<p class="text-xs text-slate-500">sarah.j@example.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-bold uppercase">Active</span>
+</td>
+<td class="px-6 py-4 text-slate-600 font-medium">Customer</td>
+<td class="px-6 py-4 text-slate-500">Oct 12, 2023</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-slate-100 rounded-lg text-slate-400">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 overflow-hidden" data-alt="User avatar">
+<img alt="User" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz99hf2NiUeWKDFjjhEJnUunjI4gEiYhYiGlC3_mEQHKDz7h0MsD0qNlpW3qpCBXm7TKj60lIvcOlc4ty15IXSgbO1SN6Ed5OSmlWUpm9sjKgTh_rh5FFFtLJulIO4ArPKoLz4VtyfxjjYbDc_MTOwBn3NeYPWL_4NBFlLMtnXp94GjRtcJcAYz-yzFDtlE08U6nKQ6qlDxmDlmW9sYf10VCOnq92LL7kISfbRysk756qHKqyrMEkJIQBCcO9qoIJnPn3E0pnk2Rm2"/>
+</div>
+<div>
+<p class="font-bold text-slate-900">Marcus Thorne</p>
+<p class="text-xs text-slate-500">m.thorne@urbanstyle.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-bold uppercase">Active</span>
+</td>
+<td class="px-6 py-4 text-slate-600 font-medium">Seller</td>
+<td class="px-6 py-4 text-slate-500">Oct 05, 2023</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-slate-100 rounded-lg text-slate-400">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 overflow-hidden" data-alt="User avatar">
+<img alt="User" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA31zY5ySo2TuQtgM7ItLcCgk1a8IZC-Zbvk4A9O6RcnmkCFykzjoWiVcq9rbQmY_mlatFybEb-3bq3tTTlj06SW0pAtJj92VAmifnME8gJmhh7N-yh9V41fHg1yvB6ooKEMYlbUskPClz1KG967t3vR56rk8wJvnwbp83ct0VLmrYFRnwmUAH84WgPLA9pf7aG5eZ2W0q6ooVk9aSbhg8GZSQwDyCFwRfQglNhJj4fLMbi8avtA2ObF7Dxn0x-5jlm3uD53TBAuhd"/>
+</div>
+<div>
+<p class="font-bold text-slate-900">David Miller</p>
+<p class="text-xs text-slate-500">davidm@outlook.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-red-100 text-red-700 rounded-full text-[10px] font-bold uppercase">Banned</span>
+</td>
+<td class="px-6 py-4 text-slate-600 font-medium">Customer</td>
+<td class="px-6 py-4 text-slate-500">Sep 28, 2023</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-slate-100 rounded-lg text-slate-400">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Site-wide Announcements Control -->
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+<h3 class="font-bold text-slate-800 mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">campaign</span>
+                                Announcements Control Center
+                            </h3>
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Title</label>
+<input class="w-full rounded-lg border-slate-200 focus:ring-primary focus:border-primary" placeholder="e.g. Black Friday Special Launch" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Message Body</label>
+<textarea class="w-full rounded-lg border-slate-200 focus:ring-primary focus:border-primary" placeholder="Enter the announcement text for all users..." rows="3"></textarea>
+</div>
+<div class="flex items-center justify-between pt-2">
+<div class="flex gap-4">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded text-background-dark focus:ring-primary" type="checkbox"/>
+<span class="text-sm text-slate-600">Push to Mobile</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded text-background-dark focus:ring-primary" type="checkbox"/>
+<span class="text-sm text-slate-600">Site-wide Banner</span>
+</label>
+</div>
+<button class="bg-primary px-6 py-2 rounded-lg font-bold hover:bg-primary/90 transition-colors text-background-dark">Post Announcement</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Verification & System -->
+<div class="space-y-8">
+<!-- Seller Verification Queue -->
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+<h3 class="font-bold text-slate-800">Verification Queue</h3>
+<span class="bg-primary text-[10px] font-bold px-2 py-0.5 rounded-full text-background-dark">3 New</span>
+</div>
+<div class="p-4 space-y-4">
+<!-- Queue Item -->
+<div class="p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-start gap-3">
+<div class="size-10 rounded-lg bg-slate-300 overflow-hidden flex-shrink-0" data-alt="Store logo">
+<img alt="Store" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIGxdSsq2EUO_nXs8TdwzDIyVSj81uFIU1iW7H2RVGx9_b1lajF7cVxURy897HrFdpTZz-xFnhkG3CtSPU8bH2DCXIfV_aSDn1AGnyb757NQd3e9PTKLeym9xzb75Ihyy74DkMBAUHDgJSJcrUDlLh4lgnSA9FmlUdRQ2doxs47FYQSRKelgOf9l51RahVLj7BmBkeYKEdP7sZNNiRbz_m0MPPvdvTP-0F9uBPkW4wsv-52lnY0_I_Zo8q7dKSigKIiGRl1seMhnjY"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-slate-900 text-sm truncate">Eco-Friendly Living</p>
+<p class="text-xs text-slate-500 mb-2">Sustainable Home Goods</p>
+<div class="flex gap-2">
+<button class="flex-1 bg-[#1A2D37] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#1A2D37]/90 transition-colors border border-[#D6E8EE]/30">Review</button>
+<button class="flex-1 bg-[#607D8B] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#607D8B]/90 transition-colors">Dismiss</button>
+</div>
+</div>
+</div>
+<!-- Queue Item -->
+<div class="p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-start gap-3">
+<div class="size-10 rounded-lg bg-slate-300 overflow-hidden flex-shrink-0" data-alt="Store logo">
+<img alt="Store" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNZnxm80_-W18P1P--fXgwObvWsdLqc7j7OydSZwEiG5YZDAydvkT7VBlcZPS1deTQqIUdjBBuoZQFOuO4u6sYX40Xan0ft7jJNoFiFYreLgt2H7o8Zp-9Y185Bvr3xBM0AmB5k7cMQY55AVFx77OcTu6d-LCdkiM4i4HSBFsRzKaUxflRcHKLapg8doyZy697CFm7sOK607FXVsIkGYApEye330gE02EM1rR1iF5zt_PiGkJhJffMhU6SXiYwVosMWtK0bg2woS4k"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-slate-900 text-sm truncate">TechNest Global</p>
+<p class="text-xs text-slate-500 mb-2">Electronics &amp; Gadgets</p>
+<div class="flex gap-2">
+<button class="flex-1 bg-[#1A2D37] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#1A2D37]/90 transition-colors border border-[#D6E8EE]/30">Review</button>
+<button class="flex-1 bg-[#607D8B] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#607D8B]/90 transition-colors">Dismiss</button>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 py-3 bg-slate-50 border-t border-slate-100">
+<button class="w-full text-xs font-bold hover:text-slate-800 transition-colors text-[#1A2D37]">View All Requests</button>
+</div>
+</div>
+<!-- System Quick Controls -->
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+<h3 class="font-bold text-slate-800 mb-4">System Controls</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-xl">construction</span>
+<span class="text-sm font-medium text-slate-700">Maintenance Mode</span>
+</div>
+<button class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-200 transition-colors duration-200 focus:outline-none ring-0">
+<span class="translate-x-0 pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-xl">mail</span>
+<span class="text-sm font-medium text-slate-700">Registration Email</span>
+</div>
+<button class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-primary transition-colors duration-200 focus:outline-none ring-0 text-background-dark">
+<span class="translate-x-5 pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-xl">shield</span>
+<span class="text-sm font-medium text-slate-700">2FA Required</span>
+</div>
+<button class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-primary transition-colors duration-200 focus:outline-none ring-0 text-background-dark">
+<span class="translate-x-5 pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</div>
+</div>
+</div>
+<!-- Site Health Card -->
+<div class="bg-slate-900 rounded-xl p-6 text-white overflow-hidden relative">
+<div class="relative z-10">
+<h3 class="font-bold text-lg mb-2">Platform Health</h3>
+<div class="flex items-end gap-2 mb-4">
+<span class="text-3xl font-bold">99.8%</span>
+<span class="text-emerald-400 text-sm font-bold mb-1">Uptime</span>
+</div>
+<p class="text-slate-400 text-xs leading-relaxed mb-6">Database response time is optimal. No critical errors detected in the last 24 hours.</p>
+<button class="w-full bg-[#607D8B] hover:bg-[#607D8B]/90 text-white font-bold py-2 rounded-lg transition-all text-sm">View Full Logs</button>
+</div>
+<!-- Subtle abstract pattern background -->
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Dashboard Footer -->
+<footer class="mt-auto bg-background-dark text-slate-400 px-8 py-6 flex flex-col md:flex-row items-center justify-between border-t border-white/5">
+<p class="text-xs font-medium">© 2026 ShoppyO E-commerce Platform. All Administrative Rights Reserved.</p>
+<div class="flex items-center gap-6 mt-4 md:mt-0">
+<a class="text-xs hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="text-xs hover:text-white transition-colors" href="#">System Security</a>
+<a class="text-xs hover:text-white transition-colors" href="#">Contact Engineering</a>
+<span class="text-xs bg-white/5 px-2 py-1 rounded text-slate-500">v4.2.1-stable</span>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

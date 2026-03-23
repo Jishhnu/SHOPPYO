@@ -36,22 +36,24 @@
 <body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col">
 <!-- Navbar: Deep Navy (#1A2D37) -->
 <header class="bg-primary text-slate-100 px-6 lg:px-20 py-4 flex items-center justify-between sticky top-0 z-50">
-<div class="flex items-center gap-2">
-<div class="size-8 bg-ice-blue rounded-lg flex items-center justify-center text-primary">
-<span class="material-symbols-outlined font-bold">shopping_bag</span>
-</div>
-<h1 class="text-xl font-bold tracking-tight">ShoppyO</h1>
-</div>
-<nav class="hidden md:flex items-center gap-8">
-<a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Shop</a>
-<a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Categories</a>
-<a class="text-sm font-medium hover:text-ice-blue transition-colors" href="#">Deals</a>
-</nav>
+<!-- LEFT : LOGO -->
+    <div class="flex items-center gap-1 text-white group">
+      <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+    
+    <!-- Text Container: Stacked Brand & Tagline -->
+    <div class="flex flex-col justify-center">
+        <h1 class="text-3xl font-black tracking-tighter leading-none italic uppercase">
+            Shoppy<span class="text-blue-300">O</span>
+        </h1>
+    </div>
+    </div>
+
 <div class="flex items-center gap-4">
-<button class="text-sm font-medium hover:text-ice-blue">Sign In</button>
-<button class="bg-ice-blue text-primary px-5 py-2 rounded-lg text-sm font-bold hover:bg-white transition-colors">
+<a href="{% url 'login' %}" class="bg-ice-blue text-primary px-5 py-2 rounded-lg text-sm font-bold hover:bg-white transition-colors">
                 Join Now
-            </button>
+</a>
 </div>
 </header>
 <!-- Main Content with Mixed Gradient Background -->
@@ -161,19 +163,21 @@
 </div>
 <!-- Social Options -->
 <div class="grid grid-cols-2 gap-4">
-<button class="flex items-center justify-center gap-2 py-3 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors" type="button">
+<a href="/accounts/google/login/"
+   class="flex items-center justify-center gap-1 px-4 py-2  border rounded-lg shadow-sm hover:shadow-md transition bg-white">
+
 <svg class="w-5 h-5" viewbox="0 0 24 24">
-<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
-<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
-<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
-<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
 </svg>
-<span class="text-sm font-semibold text-slate-700">Google</span>
-</button>
+    <span class="text-sm font-semibold text-slate-700">Google</span>
+</a>
 <button class="flex items-center justify-center gap-2 py-3.5 px-4 bg-white/40 border border-white/60 rounded-xl hover:bg-white/80 transition-all duration-200 shadow-sm" type="button">
 <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
-<path d="M17.05 20.28c-.96.95-2.12 1.72-3.41 1.72-1.3 0-1.87-.81-3.41-.81-1.56 0-2.19.78-3.41.81-1.28.04-2.43-.75-3.41-1.72-2-1.98-3.05-5.18-3.05-8.23 0-3.05 1.05-6.25 3.05-8.23.98-.97 2.13-1.76 3.41-1.72 1.22.03 1.85.81 3.41.81s2.19-.78 3.41-.81c1.28-.04 2.43.75 3.41 1.72 1.05 1.03 1.83 2.37 2.11 3.84-.14.04-.28.08-.41.13-1.48.56-2.52 1.96-2.52 3.6 0 1.63 1.04 3.04 2.52 3.6.13.05.27.09.41.13-.28 1.47-1.06 2.81-2.11 3.84zm-3.41-18.28c0-1.06-.86-1.92-1.92-1.92s-1.92.86-1.92 1.92.86 1.92 1.92 1.92 1.92-.86 1.92-1.92z" style="display:none;"></path>
-<path d="M12.182 4.22c.154-1.853 1.734-3.328 3.551-3.22.184 1.912-1.545 3.543-3.42 3.42-.047-.07-.091-.137-.131-.2zm5.071 8.283c-.024-2.592 2.111-3.837 2.21-3.896-1.201-1.756-3.067-1.996-3.729-2.022-1.584-.161-3.09 1.157-3.892 1.157-.803 0-2.035-1.134-3.39-1.107-1.782.027-3.424 1.039-4.341 2.631-1.848 3.208-.473 7.954 1.326 10.553.88 1.272 1.926 2.701 3.303 2.649 1.325-.05 1.825-.853 3.427-.853 1.602 0 2.052.853 3.454.827 1.427-.027 2.336-1.289 3.212-2.564.498-.718.783-1.523.822-2.353-3.13-.64-2.684-4.881.02-6.021z"></path>
+    <path d="M17.05 20.28c-.96.95-2.12 1.72-3.41 1.72-1.3 0-1.87-.81-3.41-.81-1.56 0-2.19.78-3.41.81-1.28.04-2.43-.75-3.41-1.72-2-1.98-3.05-5.18-3.05-8.23 0-3.05 1.05-6.25 3.05-8.23.98-.97 2.13-1.76 3.41-1.72 1.22.03 1.85.81 3.41.81s2.19-.78 3.41-.81c1.28-.04 2.43.75 3.41 1.72 1.05 1.03 1.83 2.37 2.11 3.84-.14.04-.28.08-.41.13-1.48.56-2.52 1.96-2.52 3.6 0 1.63 1.04 3.04 2.52 3.6.13.05.27.09.41.13-.28 1.47-1.06 2.81-2.11 3.84zm-3.41-18.28c0-1.06-.86-1.92-1.92-1.92s-1.92.86-1.92 1.92.86 1.92 1.92 1.92 1.92-.86 1.92-1.92z" style="display:none;"></path>
+    <path d="M12.182 4.22c.154-1.853 1.734-3.328 3.551-3.22.184 1.912-1.545 3.543-3.42 3.42-.047-.07-.091-.137-.131-.2zm5.071 8.283c-.024-2.592 2.111-3.837 2.21-3.896-1.201-1.756-3.067-1.996-3.729-2.022-1.584-.161-3.09 1.157-3.892 1.157-.803 0-2.035-1.134-3.39-1.107-1.782.027-3.424 1.039-4.341 2.631-1.848 3.208-.473 7.954 1.326 10.553.88 1.272 1.926 2.701 3.303 2.649 1.325-.05 1.825-.853 3.427-.853 1.602 0 2.052.853 3.454.827 1.427-.027 2.336-1.289 3.212-2.564.498-.718.783-1.523.822-2.353-3.13-.64-2.684-4.881.02-6.021z"></path>
 </svg>
 <span class="text-sm font-semibold text-charcoal">Apple</span>
 </button>
@@ -181,7 +185,7 @@
 </form>
 <div class="mt-8 text-center">
 <p class="text-sm text-slate-500">
-                        Already have an account? <a class="text-primary font-bold hover:underline" href="#">Sign In</a>
+                        Already have an account? <a class="text-primary font-bold hover:underline" href="{% url 'login' %}">Sign In</a>
 </p>
 </div>
 </div>
@@ -190,7 +194,7 @@
 <!-- Footer -->
 <footer class="bg-primary py-8 px-6 text-center text-slate-400 border-t border-slate-800">
 <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-<p class="text-xs">© 2024 ShoppyO Inc. All rights reserved.</p>
+<p class="text-xs">© 2026 ShoppyO Inc. All rights reserved.</p>
 <div class="flex gap-6">
 <a class="text-xs hover:text-white transition-colors" href="#">Help Center</a>
 <a class="text-xs hover:text-white transition-colors" href="#">Contact Support</a>
