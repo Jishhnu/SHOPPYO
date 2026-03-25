@@ -48,7 +48,7 @@ def Customer_Register(request):
         user.is_active= False
 
         otp=generate_otp()
-        user.otp= make_password(otp) # otp hash cheyuthu vechu
+        # user.otp= make_password(otp) # otp hash cheyuthu vechu
         user.otp_created_at= timezone.now() #ippozhathe Timezone set akki vech user table lle
         user.save()
         print(otp)
@@ -82,7 +82,8 @@ def verify_otp(request):
             messages.error(request,"OTP is not valid")
             return redirect('verify_otp')
         
-        if check_password(entered_otp, user.otp):
+        # if check_password(entered_otp, user.otp):
+        if entered_otp == user.otp:
             user.is_active= True    # OTP verify cheyuthu ennit Active True akki
             user.otp= None
             user.otp_created_at= None

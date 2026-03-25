@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Category Management | ShoppyO Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-container": "#d4e6ec",
+              "primary": "#041822",
+              "surface-variant": "#e4e2e1",
+              "surface-tint": "#4e616c",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#f0eded",
+              "on-primary-fixed": "#0a1e27",
+              "on-secondary-fixed": "#0d1e22",
+              "on-tertiary-container": "#8e9293",
+              "on-tertiary-fixed": "#181c1d",
+              "on-secondary": "#ffffff",
+              "on-surface-variant": "#43474b",
+              "on-primary-container": "#8195a1",
+              "on-surface": "#1b1c1c",
+              "surface-dim": "#dcd9d9",
+              "on-error": "#ffffff",
+              "primary-fixed": "#d1e5f3",
+              "inverse-surface": "#303030",
+              "surface-bright": "#fbf9f8",
+              "primary-container": "#1a2d37",
+              "secondary-fixed-dim": "#b8c9cf",
+              "on-secondary-container": "#56676c",
+              "outline": "#73787b",
+              "on-tertiary": "#ffffff",
+              "on-primary": "#ffffff",
+              "error-container": "#ffdad6",
+              "background": "#fbf9f8",
+              "on-tertiary-fixed-variant": "#434849",
+              "primary-fixed-dim": "#b5c9d6",
+              "tertiary-container": "#262b2c",
+              "on-secondary-fixed-variant": "#39494e",
+              "on-error-container": "#93000a",
+              "tertiary-fixed-dim": "#c3c7c8",
+              "tertiary-fixed": "#dfe3e4",
+              "on-primary-fixed-variant": "#364954",
+              "on-background": "#1b1c1c",
+              "inverse-on-surface": "#f3f0f0",
+              "error": "#ba1a1a",
+              "surface-container-high": "#eae8e7",
+              "surface-container-low": "#f6f3f2",
+              "secondary-fixed": "#d4e6ec",
+              "outline-variant": "#c3c7cb",
+              "tertiary": "#121718",
+              "surface": "#fbf9f8",
+              "surface-container-highest": "#e4e2e1",
+              "secondary": "#506166",
+              "inverse-primary": "#b5c9d6"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-nav { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .custom-shadow { shadow: 0px 20px 40px rgba(26, 45, 55, 0.06); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-16 bg-[#041822] dark:bg-slate-950 shadow-[0px_20px_40px_rgba(26,45,55,0.06)]">
+<div class="text-2xl font-bold tracking-tighter text-white">ShoppyO Admin</div>
+<nav class="hidden md:flex items-center gap-8 font-manrope text-sm tracking-tight">
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Dashboard</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Orders</a>
+<a class="text-white border-b-2 border-[#d1e5f3] pb-1" href="#">Catalog</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Customers</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-[#d1e5f3] hover:bg-white/10 transition-all scale-95 active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 rounded-full text-[#d1e5f3] hover:bg-white/10 transition-all scale-95 active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<img alt="Admin Profile" class="w-8 h-8 rounded-full border border-white/20" data-alt="Close-up portrait of a professional male administrator in a modern office environment with soft morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBypCmZzHQn6hOUeluvEIBPh1A9n4R_1xl_L1KJlbWHnr1ea7rufSZs8MaoRInKOllpC4p6ExzZ3zjHuxJhaQwr5qWtLc_YDndXTIUrM0L1Jj0aNEls4RGd7PNYODuyPwwjDBjfA8STccLmzOtfNsJCUBEbFB0qq9hqpN4qD_hhA6GlNQh1lXojKko0diuuv-Kk2TBKfD9VVf6BH8neYKjjKi9j6j08mwVbvdsuJX55jx8_gd40lFDOWMQEAwH0RBi8Noix4nOIyB-9"/>
+</div>
+</header>
+<main class="mt-16 flex-grow flex flex-col">
+<!-- Hero / Header Section -->
+<section class="bg-gradient-to-br from-primary-fixed to-secondary-fixed py-12 px-8">
+<div class="max-w-7xl mx-auto">
+<h1 class="text-display-lg font-headline font-extrabold text-primary tracking-tighter mb-2">Category Management</h1>
+<p class="text-body-lg text-on-secondary-container max-w-2xl">Organize your product hierarchy with editorial precision. Add, edit, and curate how customers discover your boutique offerings.</p>
+</div>
+</section>
+<!-- Main Content Area -->
+<!-- <div class="max-w-7xl mx-auto w-full px-8 py-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start"> -->
+<!-- Section 1: Add New Category Form (Asymmetric Sidebar Layout) -->
+
+<!-- Section 2: Category List (Data Table) -->
+<div class="lg:col-span-8 bg-surface-container-low rounded-xl p-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+<h2 class="text-headline-sm font-headline font-bold text-primary">All Categories</h2>
+<div class="flex items-center gap-2 bg-surface-container-lowest rounded-full px-4 py-2 border border-outline-variant/10">
+<span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+<input class="bg-transparent border-none text-sm focus:ring-0 w-48" placeholder="Search categories..." type="text"/>
+</div>
+<button id="openModal" class="bg-primary text-white px-5 py-2 rounded-lg font-bold">
+  + Add Category
+</button>
+</div>
+<!-- Table Row -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-separate border-spacing-y-4">
+<thead>
+<tr class="text-on-surface-variant text-label-md uppercase tracking-widest opacity-60">
+  <th class="px-4 pb-2">Name</th>
+  <th class="px-4 pb-2">Slug</th>
+  <th class="px-4 pb-2">SubCategory</th>
+  <th class="px-4 pb-2">Active/Not</th>
+  <th class="px-4 pb-2 text-right">Actions</th>
+  <th class="px-4 pb-2">Status</th>
+</tr>
+</thead>
+<tbody class="text-body-lg">
+{% for category in all_category %}
+
+<tr onclick="window.location.href='{% url 'admin_subcategory' category.slug %}'"
+    class="group hover:bg-surface-container-highest transition-colors cursor-pointer">
+
+  <!-- Image + Name -->
+  <td class="px-4 py-6 bg-surface-container-lowest">
+    <div class="flex items-center gap-4">
+      <div class="w-12 h-12 rounded-lg overflow-hidden">
+        <img src="{{ category.image_url }}" class="w-full h-full object-cover">
+      </div>
+      <span class="font-bold text-primary">{{ category.name }}</span>
+    </div>
+  </td>
+
+  <!-- Slug -->
+  <td class="px-4 py-6 bg-surface-container-lowest">
+    <span class="text-sm font-mono">{{ category.slug }}</span>
+  </td>
+
+  <!-- SubCategory -->
+  <td class="px-4 py-6 bg-surface-container-lowest">
+    <span class="px-3 py-1 bg-secondary-container rounded-full text-xs font-bold">
+      {{ category.subcategory_count }} Items
+    </span>
+  </td>
+
+  <!-- Toggle -->
+  <td class="px-4 py-6 bg-surface-container-lowest text-center">
+    <div class="flex justify-center gap-4">
+      <span 
+        onclick="event.stopPropagation(); toggleStatus({{ category.id }}, true)"
+        class="cursor-pointer text-2xl
+        {% if category.is_active %}text-green-600{% else %}text-gray-300{% endif %}">
+        ✔
+      </span>
+
+      <span 
+        onclick="event.stopPropagation(); toggleStatus({{ category.id }}, false)"
+        class="cursor-pointer text-2xl
+        {% if not category.is_active %}text-red-500{% else %}text-gray-300{% endif %}">
+        ✖
+      </span>
+    </div>
+  </td>
+
+  <!-- Actions -->
+  <td class="px-4 py-6 bg-surface-container-lowest text-right">
+    <div class="flex justify-end gap-2">
+      <button onclick="event.stopPropagation()" class="p-2 hover:bg-gray-200 rounded-full">✏️</button>
+      <button onclick="event.stopPropagation()" class="p-2 hover:bg-red-200 rounded-full">🗑️</button>
+    </div>
+  </td>
+
+  <!-- Status -->
+  <td class="px-4 py-6 bg-surface-container-lowest text-center">
+    <div class="flex items-center justify-center gap-2">
+      {% if category.is_active %}
+        <span class="w-3 h-3 rounded-full bg-green-500"></span>
+        <span class="text-green-600 text-sm font-semibold">Active</span>
+      {% else %}
+        <span class="w-3 h-3 rounded-full bg-red-500"></span>
+        <span class="text-red-500 text-sm font-semibold">Inactive</span>
+      {% endif %}
+    </div>
+  </td>
+
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+
+<!-- Pagination -->
+<div class="mt-8 flex justify-between items-center px-4">
+<p class="text-xs text-on-surface-variant">Showing 1 to 3 of 42 categories</p>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-lowest text-outline hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="chevron_left" style="font-size: 18px;">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-lowest text-on-surface-variant font-medium text-xs hover:bg-primary-fixed-dim">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-lowest text-on-surface-variant font-medium text-xs hover:bg-primary-fixed-dim">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-lowest text-outline hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="chevron_right" style="font-size: 18px;">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-8 mt-auto bg-[#fbf9f8] dark:bg-slate-900 full-width py-6 border-t border-slate-200/15 tonal-shift-bg-surface-container-low font-inter text-xs line-height-1.6 text-[#1a2d37] dark:text-slate-300">
+<div class="flex items-center gap-6 mb-4 md:mb-0">
+<div class="text-lg font-semibold text-[#1a2d37]">ShoppyO</div>
+<p>© 2026 ShoppyO Admin Portal. All rights reserved.</p>
+</div>
+<div class="flex gap-6">
+<a class="text-[#43474b] dark:text-slate-400 hover:text-[#041822] underline decoration-dotted transition-opacity opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-[#43474b] dark:text-slate-400 hover:text-[#041822] underline decoration-dotted transition-opacity opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-[#43474b] dark:text-slate-400 hover:text-[#041822] underline decoration-dotted transition-opacity opacity-80 hover:opacity-100" href="#">Help Center</a>
+</div>
+</footer>
+
+<!-- add_category -->
+<div id="categoryModal" class="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm hidden p-4">
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+        
+        <div class="flex justify-between items-center p-6 border-b border-gray-100">
+            <h2 class="text-xl font-bold text-gray-800">Add New Category</h2>
+            <button id="closeModal" class="text-gray-400 hover:text-gray-600 text-3xl line-height-1">&times;</button>
+        </div>
+
+        <form method="POST" action="{% url 'admin_category' %}" enctype="multipart/form-data" class="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+            {% csrf_token %}
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Name</label>
+                <input id="catName" class="w-full bg-gray-100 border-none rounded-xl p-3 text-gray-600 focus:ring-2 focus:ring-primary/20 transition-all" name="name" placeholder="e.g. Summer Collection" type="text" required/>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Slug</label>
+                <input id="catSlug" class="w-full bg-gray-100 border-none rounded-xl p-3 text-gray-600 focus:ring-2 focus:ring-primary/20 transition-all" name="slug" placeholder="summer-collection" type="text" required/>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Description</label>
+                <textarea class="w-full bg-gray-100 border-none rounded-xl p-3 text-gray-600 focus:ring-2 focus:ring-primary/20 transition-all" name="description" placeholder="Brief editorial summary..." rows="2"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Category Image 1</label>
+                <input id="imageInput1" name="image_url" type="text" placeholder="Paste URL here..." class="w-full mb-2 p-2 border border-gray-300 rounded-lg text-sm">
+                <div class="w-full h-24 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center bg-gray-50 overflow-hidden relative">
+                    <span id="label1" class="text-gray-400 text-xs px-4 text-center">Preview 1</span>
+                    <img id="preview1" class="absolute inset-0 w-full h-full object-cover hidden">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Category Image 2</label>
+                <input id="imageInput2" name="image_url2" type="text" placeholder="Paste URL here..." class="w-full mb-2 p-2 border border-gray-300 rounded-lg text-sm">
+                <div class="w-full h-24 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center bg-gray-50 overflow-hidden relative">
+                    <span id="label2" class="text-gray-400 text-xs px-4 text-center">Preview 2</span>
+                    <img id="preview2" class="absolute inset-0 w-full h-full object-cover hidden">
+                </div>
+            </div>
+
+            <button class="w-full bg-[#041822] text-white font-bold py-4 rounded-xl hover:opacity-90 transition-all active:scale-95 shadow-lg" type="submit">
+                Create Category
+            </button>
+        </form>
+    </div>
+</div>
+<script>
+    const modal = document.getElementById('categoryModal');
+    const openBtn = document.getElementById('openModal');
+    const closeBtn = document.getElementById('closeModal');
+
+    // 1. Modal Logic
+    openBtn.onclick = () => modal.classList.remove('hidden');
+    closeBtn.onclick = () => modal.classList.add('hidden');
+    window.onclick = (e) => { if (e.target === modal) modal.classList.add('hidden'); }
+
+    // 2. Slug Auto-Generator
+    const nameInput = document.getElementById('catName');
+    const slugInput = document.getElementById('catSlug');
+
+    nameInput.addEventListener('input', () => {
+        slugInput.value = nameInput.value
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric with hyphens
+            .replace(/(^-|-$)/g, '');    // Remove leading/trailing hyphens
+    });
+
+    // 3. Image URL Preview Logic
+    function setupURLPreview(inputId, previewId, labelId) {
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(previewId);
+        const label = document.getElementById(labelId);
+
+        input.addEventListener('input', function () {
+            if (input.value.trim() !== "") {
+                preview.src = input.value;
+                preview.classList.remove('hidden');
+                label.classList.add('hidden');
+            } else {
+                preview.classList.add('hidden');
+                label.classList.remove('hidden');
+            }
+        });
+    }
+
+    setupURLPreview('imageInput1', 'preview1', 'label1');
+    setupURLPreview('imageInput2', 'preview2', 'label2');
+
+    // 4. CSRF & Toggle Status Logic
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+
+    function toggleStatus(id, value) {
+        fetch(`/toggle-category/${id}/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCSRFToken()
+            },
+            body: JSON.stringify({ is_active: value })
+        })
+        .then(response => response.json())
+        .then(data => { location.reload(); })
+        .catch(error => { console.error("Error:", error); });
+    }
+</script>
+
+
+<!-- image JS -->
+<!-- <script>
+function setupPreview(inputId, previewId, textId) {
+  const input = document.getElementById(inputId);
+  const preview = document.getElementById(previewId);
+  const text = document.getElementById(textId);
+
+  input.addEventListener('change', function () {
+    const file = this.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.classList.remove('hidden');
+        text.classList.add('hidden');
+      };
+
+      reader.readAsDataURL(file);
+    }
+  });
+}
+
+// 🔥 Apply for both
+setupPreview('imageInput1', 'preview1', 'uploadText1');
+setupPreview('imageInput2', 'preview2', 'uploadText2');
+</script> -->
+
+<!-- Image_Url JS -->
+<!-- <script>
+function setupURLPreview(inputId, previewId) {
+  const input = document.getElementById(inputId);
+  const preview = document.getElementById(previewId);
+
+  input.addEventListener('input', function () {
+    if (input.value) {
+      preview.src = input.value;
+      preview.classList.remove('hidden');
+    } else {
+      preview.classList.add('hidden');
+    }
+  });
+}
+
+setupURLPreview('imageInput1', 'preview1');
+setupURLPreview('imageInput2', 'preview2');
+</script> -->
+
+
+
+<script>
+function getCSRFToken() {
+  return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
+
+function toggleStatus(id, value) {
+  fetch(`/toggle-category/${id}/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": getCSRFToken()
+    },
+    body: JSON.stringify({
+      is_active: value
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    location.reload();
+  })
+  .catch(error => {
+    console.error("Error:", error);
+  });
+}
+</script>
+
+
+</body></html>
