@@ -50,25 +50,50 @@
 <h1 class="text-xl font-bold tracking-tight">ShoppyO</h1>
 </div>
 <nav class="flex-1 px-4 space-y-2 mt-4">
-<a class="flex items-center gap-3 px-4 py-3 bg-primary/20 text-primary border-l-4 border-primary rounded-r-lg font-semibold transition-all" href="#">
+<a href="{% url 'admin_dashboard' %}" class="flex items-center gap-3 px-4 py-3 bg-primary/20 text-primary border-l-4 border-primary rounded-r-lg font-semibold transition-all" href="#">
 <span class="material-symbols-outlined">dashboard</span>
                     Dashboard
                 </a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<a href="{% url 'admin_users' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
 <span class="material-symbols-outlined">group</span>
                     Users
                 </a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
-<span class="material-symbols-outlined">verified_user</span>
-                    Seller Verification
-                </a>
-<a href="{% url 'admin_category' %}" 
-   class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
-
+<a href="{% url 'admin_orders' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
+    <span class="material-symbols-outlined">shopping_cart</span> Orders
+                    </a>
+<a href="{% url 'admin_category' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
     <span class="material-symbols-outlined">category</span>
-    
     Category
 </a>
+<a href="{% url 'admin_sellerverification' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+                    Seller Verification
+                </a>
+<a href="{% url 'admin_approvedsellers' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+                    Approved Sellers
+                </a>
+<a href="{% url 'admin_rejectsellers' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">close</span>
+                    Rejected Sellers
+                </a>
+<a href="{% url 'admin_suspendedsellers' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">schedule</span>
+                    Suspended Sellers
+                </a>
+<a href="{% url 'admin_productverification' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+                    Product-Verification
+                </a>
+<a href="{% url 'admin_approvedproduct' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+                    Approved-Products
+                </a>
+<a href="{% url 'admin_rejectproduct' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">close</span>
+                    Rejected-Products
+                </a>
+
 <a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
 <span class="material-symbols-outlined">campaign</span>
                     Announcements
@@ -138,152 +163,139 @@
 </div>
 <!-- Stats Grid -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-<div class="flex justify-between items-start mb-4">
-<div class="p-3 bg-primary/10 text-primary rounded-lg">
-<span class="material-symbols-outlined">group</span>
+    <a href="{% url 'admin_users' %}">
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+        <div class="flex justify-between items-start mb-4">
+        <div class="p-3 bg-primary/10 text-primary rounded-lg">
+        <span class="material-symbols-outlined">group</span>
+        </div>
+        <span class="text-emerald-500 text-xs font-bold bg-emerald-50 px-2 py-1 rounded-full">+12.5%</span>
+        </div>
+        <p class="text-slate-500 text-sm font-medium">Total Users</p>
+        <h3 class="text-2xl font-bold text-slate-900 mt-1">{{ users.count }}</h3>
+        <div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+        <div class="bg-primary h-full rounded-full" style="width: 65%;"></div>
+        </div>
+    </div></a>
+
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+        <div class="flex justify-between items-start mb-4">
+        <div class="p-3 bg-emerald-100 text-emerald-600 rounded-lg">
+        <span class="material-symbols-outlined">payments</span>
+        </div>
+        <span class="text-emerald-500 text-xs font-bold bg-emerald-50 px-2 py-1 rounded-full">+8.2%</span>
+        </div>
+        <p class="text-slate-500 text-sm font-medium">Total Revenue</p>
+        <h3 class="text-2xl font-bold text-slate-900 mt-1">$425,000.00</h3>
+        <div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+        <div class="bg-emerald-500 h-full rounded-full" style="width: 48%;"></div>
+        </div>
+    </div>
+
+    <a href="{% url 'admin_approvedsellers' %}">
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+        <div class="flex justify-between items-start mb-4">
+        <div class="p-3 bg-blue-100 text-blue-600 rounded-lg">
+        <span class="material-symbols-outlined">storefront</span>
+        </div>
+        <span class="text-blue-500 text-xs font-bold bg-blue-50 px-2 py-1 rounded-full">+5.4%</span>
+        </div>
+        <p class="text-slate-500 text-sm font-medium">Active Sellers</p>
+        <h3 class="text-2xl font-bold text-slate-900 mt-1">{{approvedsellers.count}}</h3>
+        <div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+        <div class="bg-blue-500 h-full rounded-full" style="width: 72%;"></div>
+        </div>
+    </div></a>
+
+    <a href="{% url 'admin_sellerverification' %}">
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+        <div class="flex justify-between items-start mb-4">
+        <div class="p-3 rounded-lg bg-primary/30">
+        <span class="material-symbols-outlined">pending_actions</span>
+        </div>
+        <span class="text-xs font-bold px-2 py-1 rounded-full">Requires Action</span>
+        </div>
+        <p class="text-slate-500 text-sm font-medium">Pending Approvals</p>
+        <h3 class="text-2xl font-bold text-slate-900 mt-1">{{pendingsellers.count}}</h3>
+        <div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+        <div class="h-full rounded-full" style="width: 30%;"></div>
+        </div>
+    </div></a>
+
 </div>
-<span class="text-emerald-500 text-xs font-bold bg-emerald-50 px-2 py-1 rounded-full">+12.5%</span>
-</div>
-<p class="text-slate-500 text-sm font-medium">Total Users</p>
-<h3 class="text-2xl font-bold text-slate-900 mt-1">12,840</h3>
-<div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-<div class="bg-primary h-full rounded-full" style="width: 65%;"></div>
-</div>
-</div>
-<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-<div class="flex justify-between items-start mb-4">
-<div class="p-3 bg-emerald-100 text-emerald-600 rounded-lg">
-<span class="material-symbols-outlined">payments</span>
-</div>
-<span class="text-emerald-500 text-xs font-bold bg-emerald-50 px-2 py-1 rounded-full">+8.2%</span>
-</div>
-<p class="text-slate-500 text-sm font-medium">Total Revenue</p>
-<h3 class="text-2xl font-bold text-slate-900 mt-1">$425,000.00</h3>
-<div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-<div class="bg-emerald-500 h-full rounded-full" style="width: 48%;"></div>
-</div>
-</div>
-<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-<div class="flex justify-between items-start mb-4">
-<div class="p-3 bg-blue-100 text-blue-600 rounded-lg">
-<span class="material-symbols-outlined">storefront</span>
-</div>
-<span class="text-blue-500 text-xs font-bold bg-blue-50 px-2 py-1 rounded-full">+5.4%</span>
-</div>
-<p class="text-slate-500 text-sm font-medium">Active Sellers</p>
-<h3 class="text-2xl font-bold text-slate-900 mt-1">850</h3>
-<div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-<div class="bg-blue-500 h-full rounded-full" style="width: 72%;"></div>
-</div>
-</div>
-<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-<div class="flex justify-between items-start mb-4">
-<div class="p-3 rounded-lg bg-primary/30">
-<span class="material-symbols-outlined">pending_actions</span>
-</div>
-<span class="text-xs font-bold px-2 py-1 rounded-full">Requires Action</span>
-</div>
-<p class="text-slate-500 text-sm font-medium">Pending Approvals</p>
-<h3 class="text-2xl font-bold text-slate-900 mt-1">42</h3>
-<div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-<div class="h-full rounded-full" style="width: 30%;"></div>
-</div>
-</div>
-</div>
+
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 <!-- User Management Table (Large Module) -->
 <div class="lg:col-span-2 space-y-6">
-<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-<div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
-<h3 class="font-bold text-slate-800">User Management</h3>
-<button class="text-sm font-semibold text-[#1A2D37] hover:underline flex items-center gap-1">View All <span class="material-symbols-outlined text-xs">arrow_forward</span></button>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left">
-<thead class="bg-slate-50 text-slate-500 text-xs uppercase font-bold tracking-wider">
-<tr>
-<th class="px-6 py-4">User</th>
-<th class="px-6 py-4">Status</th>
-<th class="px-6 py-4">Role</th>
-<th class="px-6 py-4">Join Date</th>
-<th class="px-6 py-4 text-right">Actions</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-slate-100 text-sm">
-<tr class="hover:bg-slate-50 transition-colors">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="size-8 rounded-full bg-slate-200 overflow-hidden" data-alt="User avatar">
-<img alt="User" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8aY8I211Df5DXB0b9OnzTjMkgd0sQSeKoCgDcbmXWrp0ECQN1AQLQLZf_7jpmx5glZ_ftZduf3REW-xd2k5k6wylSCZo5qMGY-AIh4Sua-Rp5G_-lO4Omh1hAOv04o64Yep1jGLJyOwymQEdIOx15YP6LXcKgo-RGOCpArIGtvJ0SkkESXx6yUF3s0zKWUH0Qw-0fNzrWPuhfhhRNJd2O63jj_XtCgKGC-s3JK39lmFs5W3QAENndEEtNGQjy1btm8rPrnPji8oX0"/>
-</div>
-<div>
-<p class="font-bold text-slate-900">Sarah Jenkins</p>
-<p class="text-xs text-slate-500">sarah.j@example.com</p>
-</div>
-</div>
-</td>
-<td class="px-6 py-4">
-<span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-bold uppercase">Active</span>
-</td>
-<td class="px-6 py-4 text-slate-600 font-medium">Customer</td>
-<td class="px-6 py-4 text-slate-500">Oct 12, 2023</td>
-<td class="px-6 py-4 text-right">
-<button class="p-2 hover:bg-slate-100 rounded-lg text-slate-400">
-<span class="material-symbols-outlined text-sm">more_vert</span>
-</button>
-</td>
-</tr>
-<tr class="hover:bg-slate-50 transition-colors">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="size-8 rounded-full bg-slate-200 overflow-hidden" data-alt="User avatar">
-<img alt="User" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz99hf2NiUeWKDFjjhEJnUunjI4gEiYhYiGlC3_mEQHKDz7h0MsD0qNlpW3qpCBXm7TKj60lIvcOlc4ty15IXSgbO1SN6Ed5OSmlWUpm9sjKgTh_rh5FFFtLJulIO4ArPKoLz4VtyfxjjYbDc_MTOwBn3NeYPWL_4NBFlLMtnXp94GjRtcJcAYz-yzFDtlE08U6nKQ6qlDxmDlmW9sYf10VCOnq92LL7kISfbRysk756qHKqyrMEkJIQBCcO9qoIJnPn3E0pnk2Rm2"/>
-</div>
-<div>
-<p class="font-bold text-slate-900">Marcus Thorne</p>
-<p class="text-xs text-slate-500">m.thorne@urbanstyle.com</p>
-</div>
-</div>
-</td>
-<td class="px-6 py-4">
-<span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-bold uppercase">Active</span>
-</td>
-<td class="px-6 py-4 text-slate-600 font-medium">Seller</td>
-<td class="px-6 py-4 text-slate-500">Oct 05, 2023</td>
-<td class="px-6 py-4 text-right">
-<button class="p-2 hover:bg-slate-100 rounded-lg text-slate-400">
-<span class="material-symbols-outlined text-sm">more_vert</span>
-</button>
-</td>
-</tr>
-<tr class="hover:bg-slate-50 transition-colors">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="size-8 rounded-full bg-slate-200 overflow-hidden" data-alt="User avatar">
-<img alt="User" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA31zY5ySo2TuQtgM7ItLcCgk1a8IZC-Zbvk4A9O6RcnmkCFykzjoWiVcq9rbQmY_mlatFybEb-3bq3tTTlj06SW0pAtJj92VAmifnME8gJmhh7N-yh9V41fHg1yvB6ooKEMYlbUskPClz1KG967t3vR56rk8wJvnwbp83ct0VLmrYFRnwmUAH84WgPLA9pf7aG5eZ2W0q6ooVk9aSbhg8GZSQwDyCFwRfQglNhJj4fLMbi8avtA2ObF7Dxn0x-5jlm3uD53TBAuhd"/>
-</div>
-<div>
-<p class="font-bold text-slate-900">David Miller</p>
-<p class="text-xs text-slate-500">davidm@outlook.com</p>
-</div>
-</div>
-</td>
-<td class="px-6 py-4">
-<span class="px-2 py-1 bg-red-100 text-red-700 rounded-full text-[10px] font-bold uppercase">Banned</span>
-</td>
-<td class="px-6 py-4 text-slate-600 font-medium">Customer</td>
-<td class="px-6 py-4 text-slate-500">Sep 28, 2023</td>
-<td class="px-6 py-4 text-right">
-<button class="p-2 hover:bg-slate-100 rounded-lg text-slate-400">
-<span class="material-symbols-outlined text-sm">more_vert</span>
-</button>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
+        <h3 class="font-bold text-slate-800">User Management</h3>
+        <button class="text-sm font-semibold text-[#1A2D37] hover:underline flex items-center gap-1">View All <span class="material-symbols-outlined text-xs">arrow_forward</span></button>
+        </div>
+        <div class="overflow-x-auto">
+        <table class="w-full text-left">
+        <thead class="bg-slate-50 text-slate-500 text-xs uppercase font-bold tracking-wider">
+            <tr>
+                <th class="px-6 py-4">User</th>
+                <th class="px-6 py-4">Status</th>
+                <th class="px-6 py-4">Role</th>
+                <th class="px-6 py-4">Join Date</th>
+                <th class="px-6 py-4 text-right">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody class="divide-y divide-slate-100 text-sm">
+
+            {% for user in totalusers %}
+            <tr class="hover:bg-slate-50 transition-colors">
+            
+                <!-- User Info -->
+                <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                        <div class="size-8 rounded-full bg-slate-200 overflow-hidden">
+                            <!-- Optional: user image -->
+                            <img src="https://ui-avatars.com/api/?name={{ user.username }}" alt="User">
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-900">{{ user.username }}</p>
+                            <p class="text-xs text-slate-500">{{ user.email }}</p>
+                        </div>
+                    </div>
+                </td>
+            
+                <!-- Status -->
+                <td class="px-6 py-4">
+                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-bold uppercase">
+                        Active
+                    </span>
+                </td>
+            
+                <!-- Role -->
+                <td class="px-6 py-4 text-slate-600 font-medium">
+                    {{ user.role }}
+                </td>
+            
+                <!-- Join Date -->
+                <td class="px-6 py-4 text-slate-500">
+                    {{ user.created_at|date:"M d, Y" }}
+                </td>
+            
+                <!-- Actions -->
+                <td class="px-6 py-4 text-right">
+                    <button class="p-2 hover:bg-slate-100 rounded-lg text-slate-400">
+                        <span class="material-symbols-outlined text-sm">more_vert</span>
+                    </button>
+                </td>
+            
+            </tr>
+            {% endfor %}
+
+        </tbody>
+        </table>
+        </div>
+    </div>
+
 <!-- Site-wide Announcements Control -->
 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
 <h3 class="font-bold text-slate-800 mb-6 flex items-center gap-2">
@@ -317,46 +329,101 @@
 </div>
 <!-- Right Column: Verification & System -->
 <div class="space-y-8">
-<!-- Seller Verification Queue -->
+<!-- Product Verification Queue -->
+ 
 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-<div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
-<h3 class="font-bold text-slate-800">Verification Queue</h3>
-<span class="bg-primary text-[10px] font-bold px-2 py-0.5 rounded-full text-background-dark">3 New</span>
+
+    <!-- Header -->
+    <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+        <h3 class="font-bold text-slate-800">Verification Queue</h3>
+
+        <span class="bg-primary text-[10px] font-bold px-2 py-0.5 rounded-full text-background-dark">
+            {{ totalpendingproducts|length }} New
+        </span>
+    </div>
+
+    <!-- Items -->
+    <div class="p-4 space-y-4">
+
+        {% for product in pendingproducts %}
+        <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-start gap-3">
+
+            <!-- ✅ Product Image (from variant) -->
+            <div class="size-10 rounded-lg bg-slate-300 overflow-hidden flex-shrink-0">
+                {% with variant=product.variants.first %}
+                    {% if variant and variant.images.first %}
+                        <img src="{{ variant.images.first.image_url }}" alt="Product">
+                    {% else %}
+                        <img src="https://via.placeholder.com/40" alt="Product">
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            <!-- Product Info -->
+            <div class="flex-1 min-w-0">
+                <p class="font-bold text-slate-900 text-sm truncate">
+                    {{ product.name }}
+                </p>
+
+                <!-- ✅ Price fix -->
+                <p class="text-xs text-slate-500 mb-2">
+                    {% with variant=product.variants.first %}
+                        {% if variant %}
+                            ₹{{ variant.selling_price }}
+                        {% else %}
+                            No price
+                        {% endif %}
+                    {% endwith %}
+                    • {{ product.subcategory.category.name }}
+                </p>
+
+                <!-- Buttons -->
+                <div class="flex gap-2">
+
+                    <!-- ✅ Approve -->
+                    <form method="POST" action="{% url 'admin_dashboard' %}" class="flex-1">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <input type="hidden" name="action" value="approve">
+                        <button type="submit"
+                            class="w-full bg-[#1A2D37] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#1A2D37]/90 transition-colors border border-[#D6E8EE]/30">
+                            Approve
+                        </button>
+                    </form>
+                
+                    <!-- ❌ Reject -->
+                    <form method="POST" action="{% url 'admin_dashboard' %}" class="flex-1">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <input type="hidden" name="action" value="reject">
+                        <button type="submit"
+                            class="w-full bg-[#607D8B] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#607D8B]/90 transition-colors">
+                            Reject
+                        </button>
+                    </form>
+                
+                </div>
+            </div>
+
+        </div>
+
+        {% empty %}
+        <p class="text-center text-slate-400 text-sm">No pending products</p>
+        {% endfor %}
+
+    </div>
+
+    <!-- Footer -->
+    <div class="px-6 py-3 bg-slate-50 border-t border-slate-100">
+        <a href="{% url 'admin_productverification' %}"
+           class="w-full block text-center text-xs font-bold text-[#1A2D37]">
+            View All Requests
+        </a>
+    </div>
+
 </div>
-<div class="p-4 space-y-4">
-<!-- Queue Item -->
-<div class="p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-start gap-3">
-<div class="size-10 rounded-lg bg-slate-300 overflow-hidden flex-shrink-0" data-alt="Store logo">
-<img alt="Store" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIGxdSsq2EUO_nXs8TdwzDIyVSj81uFIU1iW7H2RVGx9_b1lajF7cVxURy897HrFdpTZz-xFnhkG3CtSPU8bH2DCXIfV_aSDn1AGnyb757NQd3e9PTKLeym9xzb75Ihyy74DkMBAUHDgJSJcrUDlLh4lgnSA9FmlUdRQ2doxs47FYQSRKelgOf9l51RahVLj7BmBkeYKEdP7sZNNiRbz_m0MPPvdvTP-0F9uBPkW4wsv-52lnY0_I_Zo8q7dKSigKIiGRl1seMhnjY"/>
-</div>
-<div class="flex-1 min-w-0">
-<p class="font-bold text-slate-900 text-sm truncate">Eco-Friendly Living</p>
-<p class="text-xs text-slate-500 mb-2">Sustainable Home Goods</p>
-<div class="flex gap-2">
-<button class="flex-1 bg-[#1A2D37] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#1A2D37]/90 transition-colors border border-[#D6E8EE]/30">Review</button>
-<button class="flex-1 bg-[#607D8B] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#607D8B]/90 transition-colors">Dismiss</button>
-</div>
-</div>
-</div>
-<!-- Queue Item -->
-<div class="p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-start gap-3">
-<div class="size-10 rounded-lg bg-slate-300 overflow-hidden flex-shrink-0" data-alt="Store logo">
-<img alt="Store" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNZnxm80_-W18P1P--fXgwObvWsdLqc7j7OydSZwEiG5YZDAydvkT7VBlcZPS1deTQqIUdjBBuoZQFOuO4u6sYX40Xan0ft7jJNoFiFYreLgt2H7o8Zp-9Y185Bvr3xBM0AmB5k7cMQY55AVFx77OcTu6d-LCdkiM4i4HSBFsRzKaUxflRcHKLapg8doyZy697CFm7sOK607FXVsIkGYApEye330gE02EM1rR1iF5zt_PiGkJhJffMhU6SXiYwVosMWtK0bg2woS4k"/>
-</div>
-<div class="flex-1 min-w-0">
-<p class="font-bold text-slate-900 text-sm truncate">TechNest Global</p>
-<p class="text-xs text-slate-500 mb-2">Electronics &amp; Gadgets</p>
-<div class="flex gap-2">
-<button class="flex-1 bg-[#1A2D37] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#1A2D37]/90 transition-colors border border-[#D6E8EE]/30">Review</button>
-<button class="flex-1 bg-[#607D8B] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#607D8B]/90 transition-colors">Dismiss</button>
-</div>
-</div>
-</div>
-</div>
-<div class="px-6 py-3 bg-slate-50 border-t border-slate-100">
-<button class="w-full text-xs font-bold hover:text-slate-800 transition-colors text-[#1A2D37]">View All Requests</button>
-</div>
-</div>
+
+
 <!-- System Quick Controls -->
 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
 <h3 class="font-bold text-slate-800 mb-4">System Controls</h3>
@@ -420,3 +487,8 @@
 </main>
 </div>
 </body></html>
+
+<!-- <div class="flex gap-2">
+<button class="flex-1 bg-[#1A2D37] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#1A2D37]/90 transition-colors border border-[#D6E8EE]/30">Review</button>
+<button class="flex-1 bg-[#607D8B] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#607D8B]/90 transition-colors">Dismiss</button>
+</div> -->

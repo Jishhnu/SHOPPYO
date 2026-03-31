@@ -128,7 +128,7 @@
 <div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0px_20px_40px_rgba(26,45,55,0.04)]">
 <h3 class="font-headline font-semibold text-primary mb-6">Add New Sub-Category</h3>
 
-<form class="space-y-5">
+<!-- <form class="space-y-5">
     {% csrf_token %}
 <div class="space-y-1.5">
 <label class="text-xs font-semibold text-on-secondary-container px-1 uppercase tracking-wider">Sub-Category Name</label>
@@ -155,7 +155,74 @@
 <button class="w-full bg-primary text-on-primary py-3.5 rounded-lg font-semibold text-sm shadow-lg shadow-primary/20 active:scale-[0.98] transition-all mt-4" type="submit">
                             Create Sub-Category
                         </button>
+</form> -->
+
+
+<form class="space-y-5" method="POST">
+    {% csrf_token %}
+    
+    <div class="space-y-1.5">
+    <label class="text-xs font-semibold text-on-secondary-container px-1 uppercase tracking-wider">Parent Category</label>
+    <div class="relative">
+        <select name="category_id" required
+            class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3 text-sm">
+
+            <option value="" disabled>Select Category</option>
+
+            {% for cat in categories %}
+                <option value="{{ cat.id }}"
+                    {% if category.id == cat.id %}selected{% endif %}>
+                    {{ cat.name }}
+                </option>
+            {% endfor %}
+        </select>
+        
+        <!-- <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-on-surface-variant">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </div> -->
+    </div>
+</div>
+
+    <div class="space-y-1.5">
+        <label class="text-xs font-semibold text-on-secondary-container px-1 uppercase tracking-wider">Sub-Category Name</label>
+        <input id="id_name" name="name" required type="text" placeholder="e.g., Wireless Headphones" 
+            class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-primary/10 transition-all outline-none" />
+    </div>
+
+    <div class="space-y-1.5">
+        <label class="text-xs font-semibold text-on-secondary-container px-1 uppercase tracking-wider">Slug</label>
+        <input id="id_slug" name="slug" type="text" placeholder="wireless-headphones" 
+            class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-primary/10 transition-all outline-none" />
+    </div>
+
+    <div class="space-y-1.5">
+        <label class="text-xs font-semibold text-on-secondary-container px-1 uppercase tracking-wider">Image URL (Optional)</label>
+        <input name="image_url" type="url" placeholder="https://example.com/image.jpg" 
+            class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-primary/10 transition-all outline-none" />
+    </div>
+
+    <button type="submit" class="w-full bg-primary text-on-primary py-3.5 rounded-lg font-semibold text-sm shadow-lg shadow-primary/20 active:scale-[0.98] transition-all mt-4">
+        Create Sub-Category
+    </button>
 </form>
+
+<script>
+    // Auto-generate Slug from Name
+    const nameInput = document.getElementById('id_name');
+    const slugInput = document.getElementById('id_slug');
+
+    nameInput.addEventListener('input', function() {
+        const slug = nameInput.value
+            .toLowerCase()
+            .trim()
+            .replace(/[^\w\s-]/g, '') // Remove non-word chars
+            .replace(/[\s_-]+/g, '-') // Replace spaces/underscores with -
+            .replace(/^-+|-+$/g, ''); // Trim leading/trailing dashes
+        slugInput.value = slug;
+    });
+</script>
+
+
 </div>
 <div class="mt-8 p-4 bg-primary-container rounded-xl text-on-primary flex items-start gap-4">
 <span class="material-symbols-outlined text-primary-fixed">info</span>
@@ -239,29 +306,29 @@
     </td>
 
 <!-- Toggle -->
-<td class="px-4 py-6 bg-surface-container-lowest text-center">
+<td class="px-4 py-6 text-center">
   <div class="flex justify-center items-center gap-3">
 
     <!-- ON -->
     <button
-      onclick="event.stopPropagation(); toggleStatus({{ sub.id }}, true)"
-      class="w-9 h-9 flex items-center justify-center rounded-full transition
+      onclick="toggleStatus({{ sub.id }}, true)"
+      class="w-9 h-9 flex items-center justify-center rounded-full
       {% if sub.is_active %}
-        bg-green-100 text-green-600 shadow
+        bg-green-100 text-green-600
       {% else %}
-        bg-gray-100 text-gray-400 hover:bg-green-50
+        bg-gray-100 text-gray-400
       {% endif %}">
       ✔
     </button>
 
     <!-- OFF -->
     <button
-      onclick="event.stopPropagation(); toggleStatus({{ sub.id }}, false)"
-      class="w-9 h-9 flex items-center justify-center rounded-full transition
+      onclick="toggleStatus({{ sub.id }}, false)"
+      class="w-9 h-9 flex items-center justify-center rounded-full
       {% if not sub.is_active %}
-        bg-red-100 text-red-500 shadow
+        bg-red-100 text-red-500
       {% else %}
-        bg-gray-100 text-gray-400 hover:bg-red-50
+        bg-gray-100 text-gray-400
       {% endif %}">
       ✖
     </button>
@@ -273,7 +340,7 @@
   <td class="px-6 py-5 text-right">
     <div class="flex justify-end gap-2">
       <button class="p-2 hover:bg-secondary-container/50 rounded-lg">✏️</button>
-      <button class="p-2 hover:bg-error-container/50 rounded-lg">🗑️</button>
+      <a href="{% url 'delete_admin_subcategory' sub.slug %}" class="p-2 hover:bg-error-container/50 rounded-lg">🗑️</a>
     </div>
   </td>
 
@@ -342,9 +409,9 @@
 
 <script>
 function toggleStatus(id, status) {
-    console.log("Clicked:", id, status);  // 🔥 DEBUG
+    console.log("Clicked:", id, status);
 
-    fetch(`/admin/toggle-subcategory/${id}/`, {
+    fetch(`/admin_subcategory/toggle-subcategory/${id}/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -354,21 +421,38 @@ function toggleStatus(id, status) {
             is_active: status
         })
     })
-    .then(res => res.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+        }
+        return response.json();
+    })
     .then(data => {
-        console.log(data);  // 🔥 DEBUG
+        console.log("Response:", data);
+
         if (data.success) {
-            location.reload();
+            location.reload();   // simple & safe
+        } else {
+            alert(data.error || "Toggle failed!");
         }
     })
-    .catch(err => console.error(err));
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Toggle failed!");
+    });
 }
 
 function getCSRFToken() {
-    return document.cookie
-        .split('; ')
-        .find(row => row.startsWith('csrftoken'))
-        ?.split('=')[1];
+    const name = "csrftoken=";
+    const cookies = document.cookie.split(';');
+
+    for (let i = 0; i < cookies.length; i++) {
+        let c = cookies[i].trim();
+        if (c.startsWith(name)) {
+            return c.substring(name.length);
+        }
+    }
+    return null;
 }
 </script>
 

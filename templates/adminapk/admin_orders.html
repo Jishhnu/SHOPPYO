@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Seller Verification | ShoppyO Admin</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#93000a",
+              "on-error": "#ffffff",
+              "on-primary-fixed": "#0a1e27",
+              "tertiary-fixed-dim": "#c3c7c8",
+              "surface-tint": "#4e616c",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#364954",
+              "on-tertiary-fixed-variant": "#434849",
+              "on-primary-container": "#8195a1",
+              "secondary": "#506166",
+              "on-tertiary-container": "#8e9293",
+              "surface-dim": "#dcd9d9",
+              "surface-container-highest": "#e4e2e1",
+              "error": "#ba1a1a",
+              "surface-container-high": "#eae8e7",
+              "inverse-surface": "#303030",
+              "on-tertiary-fixed": "#181c1d",
+              "on-surface-variant": "#43474b",
+              "surface-container": "#f0eded",
+              "inverse-primary": "#b5c9d6",
+              "tertiary-fixed": "#dfe3e4",
+              "on-surface": "#1b1c1c",
+              "secondary-fixed": "#d4e6ec",
+              "surface-variant": "#e4e2e1",
+              "outline": "#73787b",
+              "inverse-on-surface": "#f3f0f0",
+              "tertiary-container": "#262b2c",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-container": "#56676c",
+              "secondary-container": "#d4e6ec",
+              "error-container": "#ffdad6",
+              "on-primary": "#ffffff",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed-variant": "#39494e",
+              "on-secondary-fixed": "#0d1e22",
+              "background": "#fbf9f8",
+              "primary-fixed": "#d1e5f3",
+              "primary": "#041822",
+              "surface": "#fbf9f8",
+              "surface-container-low": "#f6f3f2",
+              "surface-bright": "#fbf9f8",
+              "primary-fixed-dim": "#b5c9d6",
+              "tertiary": "#121718",
+              "secondary-fixed-dim": "#b8c9cf",
+              "primary-container": "#1a2d37",
+              "outline-variant": "#c3c7cb",
+              "on-background": "#1b1c1c"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            /* Swapped: F5F9FA as primary background, D6E8EE as secondary gradient stop */
+            background: linear-gradient(135deg, #f5f9fa 0%, #d6e8ee 100%);
+            min-height: 100vh;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="font-body text-on-surface">
+<!-- TopNavBar -->
+<header class="bg-[#041822] text-[#d1e5f3] font-headline tracking-tight font-semibold text-sm docked full-width top-0 sticky z-50 no-border tonal-shift bg-opacity-95 backdrop-blur-md shadow-[0px_20px_40px_rgba(26,45,55,0.06)] flex justify-between items-center w-full px-8 py-4">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-white tracking-tighter">ShoppyO</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-[#d4e6ec]/70 hover:text-white transition-colors" href="#">Dashboard</a>
+<a class="text-[#d4e6ec]/70 hover:text-white transition-colors" href="#">Orders</a>
+<a class="text-[#d4e6ec]/70 hover:text-white transition-colors" href="#">Catalog</a>
+<a class="text-[#d4e6ec]/70 hover:text-white transition-colors" href="#">Customers</a>
+<a class="text-white border-b-2 border-[#d1e5f3] pb-1" href="#">Seller Verification</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-white/10 rounded-md transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 hover:bg-white/10 rounded-md transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-fixed overflow-hidden ml-2 border border-white/20">
+<img alt="Admin Profile" class="w-full h-full object-cover" data-alt="professional headshot of a middle-aged male administrator with a clean-cut look and friendly expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChQIddMSqOi2xQltX5Mj6FTNoIS-iFoPGAz4BOE0BROnSLPS3yK8u5mbCcvrmSPBGijwJ3eTj_6F0ANvs6k13Wy9Ql_pY6LB0doXq4ZftSTGcnewrYL6nzL1pp0aw388w12b4QOecOBg0TgHE0nYUC0AjrQZL27qZdgENz0VFQVRnQ177MFPyc1OrVqWQwB2YiXG7rXeY3IrDVdhjFwxT6IrMSuUo-cN7FSFvwzTCXHP95HmW-vzaA_dRTezRhk-_SVIN_O3WMLc-3"/>
+</div>
+</div>
+</header>
+<div class="flex">
+<!-- SideNavBar (Desktop) -->
+<!-- Swapped: background from d4e6ec/30 to fbf9f8 (f5f9fa equivalent in system tokens) -->
+<aside class="hidden lg:flex flex-col h-[calc(100vh-72px)] w-64 fixed left-0 top-[72px] py-6 bg-white text-[#041822] dark:text-[#d1e5f3] font-inter text-sm font-medium tonal-layering flat-no-shadows border-r border-outline-variant/15">
+<div class="px-4 mb-8">
+<h2 class="text-lg font-bold text-[#041822] dark:text-white">Admin Panel</h2>
+<p class="text-xs text-on-surface-variant opacity-70">System Overview</p>
+</div>
+<nav class="flex-grow space-y-1">
+        <a href="{% url 'admin_dashboard' %}" class="flex items-center gap-3 px-4 py-2 text-[#43474b] dark:text-[#d4e6ec] hover:bg-[#e4e2e1] mx-2 rounded-lg hover:translate-x-1 transition-transform ease-in-out duration-300" href="#">
+        <span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+        <a href="{% url 'admin_users' %}" class="flex items-center gap-3 px-4 py-2 bg-[#041822] text-white rounded-lg mx-2 transition-transform ease-in-out duration-300" href="#">
+            <span class="material-symbols-outlined">group</span>Users
+            </a>
+        <a class="flex items-center gap-3 px-4 py-2 text-[#43474b] dark:text-[#d4e6ec] hover:bg-[#e4e2e1] mx-2 rounded-lg hover:translate-x-1 transition-transform ease-in-out duration-300" href="#">
+        <span class="material-symbols-outlined">inventory_2</span> Catalog
+            </a>
+        <a href="{% url 'admin_category' %}" class="flex items-center gap-3 px-4 py-2 text-[#43474b] dark:text-[#d4e6ec] hover:bg-[#e4e2e1] mx-2 rounded-lg hover:translate-x-1 transition-transform ease-in-out duration-300" href="#">
+            <span class="material-symbols-outlined">category</span>Category
+            </a>
+        <a href="{% url 'admin_sellerverification' %}" class="flex items-center gap-3 px-4 py-2 text-[#43474b] dark:text-[#d4e6ec] hover:bg-[#e4e2e1] mx-2 rounded-lg hover:translate-x-1 transition-transform ease-in-out duration-300" href="#">
+            <span class="material-symbols-outlined">group</span> Seller Verification
+            </a>
+        <a href="{% url 'admin_approvedsellers' %}" class="flex items-center gap-3 px-4 py-2 text-[#43474b] dark:text-[#d4e6ec] hover:bg-[#e4e2e1] mx-2 rounded-lg hover:translate-x-1 transition-transform ease-in-out duration-300" href="#">
+            <span class="material-symbols-outlined">verified_user</span>Approved Sellers
+            </a>
+        <a href="{% url 'admin_rejectsellers' %}" class="flex items-center gap-3 px-4 py-2 text-[#43474b] dark:text-[#d4e6ec] hover:bg-[#e4e2e1] mx-2 rounded-lg hover:translate-x-1 transition-transform ease-in-out duration-300" href="#">
+            <span class="material-symbols-outlined">close</span>Rejected Sellers
+            </a>
+        <a href="{% url 'admin_suspendedsellers' %}" class="flex items-center gap-3 px-4 py-2 text-[#43474b] dark:text-[#d4e6ec] hover:bg-[#e4e2e1] mx-2 rounded-lg hover:translate-x-1 transition-transform ease-in-out duration-300" href="#">
+            <span class="material-symbols-outlined">schedule</span>Suspended Sellers
+            </a>
+        <a href="{% url 'admin_productverification' %}" class="flex items-center gap-3 px-4 py-2 text-[#43474b] dark:text-[#d4e6ec] hover:bg-[#e4e2e1] mx-2 rounded-lg hover:translate-x-1 transition-transform ease-in-out duration-300" href="#">
+            <span class="material-symbols-outlined">group</span> Product-Verification
+            </a>
+        <a href="{% url 'admin_approvedproduct' %}" class="flex items-center gap-3 px-4 py-2 text-[#43474b] dark:text-[#d4e6ec] hover:bg-[#e4e2e1] mx-2 rounded-lg hover:translate-x-1 transition-transform ease-in-out duration-300" href="#">
+            <span class="material-symbols-outlined">verified_user</span>Approved-Products
+            </a>
+        <a href="{% url 'admin_rejectproduct' %}" class="flex items-center gap-3 px-4 py-2 text-[#43474b] dark:text-[#d4e6ec] hover:bg-[#e4e2e1] mx-2 rounded-lg hover:translate-x-1 transition-transform ease-in-out duration-300" href="#">
+            <span class="material-symbols-outlined">close</span>Rejected-Products
+            </a>
+</nav>
+<div class="px-2 mt-auto space-y-1 border-t border-outline-variant/10 pt-4">
+<!-- <a class="flex items-center gap-3 px-4 py-2 text-[#43474b] dark:text-[#d4e6ec] hover:bg-[#e4e2e1] rounded-lg hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">help</span> Help
+            </a> -->
+<a class="flex items-center gap-3 px-4 py-2 text-[#43474b] dark:text-[#d4e6ec] hover:bg-[#e4e2e1] rounded-lg hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">logout</span> Logout
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-grow lg:ml-64 p-8 flex flex-col xl:flex-row gap-8">
+<!-- Table Section -->
+<div class="flex-grow space-y-6 min-w-0">
+<div class="flex items-center justify-between">
+<div>
+<h1 class="font-headline text-3xl font-extrabold text-primary tracking-tight">Users</h1>
+<p class="text-on-surface-variant font-medium">Users onboarding requests.</p>
+</div>
+<div class="flex gap-3">
+<div class="relative">
+<!-- Swapped: input bg from surface-container-highest/50 to d4e6ec/50 (ice blue) -->
+<input class="bg-[#fbf9f8]/50 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 w-64" placeholder="Search sellers..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-2 text-on-surface-variant text-sm">search</span>
+</div>
+<button class="bg-surface-container-lowest border border-outline-variant/20 p-2 rounded-lg shadow-sm hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<!-- High Fidelity Data Table -->
+<div class="overflow-x-auto">
+  <table class="w-full border-separate border-spacing-y-3 text-sm text-center">
+
+  <!-- HEADER -->
+  <thead>
+    <tr class="text-gray-500 uppercase text-xs text-center">
+      <th class="px-6 py-3 text-center">#</th>
+      <th class="px-6 py-3 text-center">Order No</th>
+      <th class="px-6 py-3 text-center">Customer</th>
+      <th class="px-6 py-3 text-center">Amount</th>
+      <th class="px-6 py-3 text-center">Status</th>
+      <th class="px-6 py-3 text-center">Date</th>
+    </tr>
+  </thead>
+
+  <!-- BODY -->
+  <tbody>
+    {% for order in orders %}
+    <tr onclick="window.location.href='{% url 'admin_order_detail' order.id %}'"
+        class="bg-white shadow-sm hover:shadow-md cursor-pointer rounded-xl text-center">
+
+      <td class="px-6 py-4 text-center">{{ forloop.counter }}</td>
+
+      <td class="px-6 py-4 font-semibold text-center">
+        {{ order.order_number }}
+      </td>
+
+      <td class="px-6 py-4 text-center">
+        {{ order.user.username }}
+      </td>
+
+      <td class="px-6 py-4 font-semibold text-center">
+        ₹{{ order.total_amount }}
+      </td>
+
+      <td class="px-6 py-4 text-center">
+        {{ order.order_status }}
+      </td>
+
+      <td class="px-6 py-4 text-center">
+        {{ order.ordered_at|date:"d M Y H:i" }}
+      </td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+
+</table>
+</div>
+
+
+<!-- Swapped footer bg: from surface-container-low/50 (mist whiteish) to d4e6ec/20 (ice blue)
+<div class="p-6 bg-[#d4e6ec]/20 flex items-center justify-between border-t border-outline-variant/10">
+<span class="text-xs font-medium text-on-surface-variant">Showing 4 of 28 pending requests</span>
+<div class="flex gap-2">
+<button class="px-4 py-2 text-xs font-bold bg-surface-container-lowest border border-outline-variant/20 rounded-lg opacity-50 cursor-not-allowed">Previous</button>
+<button class="px-4 py-2 text-xs font-bold bg-surface-container-lowest border border-outline-variant/20 rounded-lg hover:bg-white shadow-sm">Next</button>
+</div>
+</div>
+</div>
+</div> -->
+
+
+<!-- Action Footer -->
+</div>
+</aside>
+</main>
+</div>
+</body></html>

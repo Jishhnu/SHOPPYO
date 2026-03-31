@@ -11,8 +11,14 @@ class SellerProfile(models.Model):
     ifsc_code = models.CharField(max_length=20)
     business_address = models.TextField()
     rating = models.FloatField(default=0)
-    is_verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    STATUS_CHOICES =[
+        ('PENDING', 'Pending'),
+        ('APPROVED','Approved'),
+        ('REJECTED','Rejected'),
+    ]
+    status = models.CharField(max_length=20,choices=STATUS_CHOICES,default='PENDING')
+    suspended_until = models.DateTimeField(null=True, blank=True)
 
 class Product(models.Model):
     seller = models.ForeignKey(SellerProfile, on_delete=models.CASCADE, related_name="products")
@@ -25,7 +31,11 @@ class Product(models.Model):
     is_cancellable = models.BooleanField(default=True)
     is_returnable = models.BooleanField(default=True)
     return_days = models.IntegerField(default=7)
-    approval_status = models.CharField(max_length=20, choices=(('PENDING', 'Pending'), ('APPROVED', 'Approved'), ('REJECTED', 'Rejected')), default='PENDING')
+    approval_status = models.CharField(max_length=20, choices=(
+            ('PENDING', 'Pending'),
+            ('APPROVED', 'Approved'),
+            ('REJECTED', 'Rejected')),default='PENDING')
+    
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -47,7 +57,7 @@ class ProductVariant(models.Model):
     def discount_percentage(self):
         if self.mrp > self.selling_price:
             discount = ((self.mrp - self.selling_price) / self.mrp) * 100
-            return int(discount) # Returns a whole number like 20
+            return int(discount)
         return 0
 
 class ProductImage(models.Model):

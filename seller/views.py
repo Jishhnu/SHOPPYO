@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from core.decorator import seller_required
 
 # Create your views here.
+# --------------Seller_Register--------------------------
 def Seller_Register(request):
     if request.method=="POST":
         first_name=request.POST.get("first_name")
@@ -37,11 +38,15 @@ def Seller_Register(request):
         return redirect("login")
     return render(request, "seller/Seller_Register.html")
 
+# --------------Seller_Home--------------------------
+def seller_home(request):
+    return render(request, "seller/seller_home.html")
+
+# --------------Seller_Dashboard--------------------------
 @seller_required
 @login_required
 def Seller_Dashboard(request):
     seller_profile=SellerProfile.objects.all()
     return render(request, "seller/Seller_dashboard.html", {"seller_profile": seller_profile})
 
-def seller_home(request):
-    return render(request, "seller/seller_home.html")
+

@@ -154,7 +154,7 @@ def Login_view(request):
 #__________________Page(Home/category/subcategory/subcategory_product)____________________________________
 def Customer_Home(request):
     user=request.user
-    product=Product.objects.filter(is_active=True, variants__isnull=False).distinct().prefetch_related('variants', 'variants__images')
+    product=Product.objects.filter(is_active=True, variants__isnull=False).distinct().prefetch_related('variants', 'variants__images').order_by('-created_at')
     category=Category.objects.filter(is_active=True)
     cart_count=0
     if user.is_authenticated:
