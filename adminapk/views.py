@@ -11,6 +11,7 @@ import json
 from django.views.decorators.http import require_POST
 from datetime import timedelta
 from django.utils import timezone
+from django.db.models import Sum
 
 # Create your views here.
 #---------Dashboard-----------------------
@@ -40,7 +41,9 @@ def admin_dashboard(request):
         product.save()
         return redirect("admin_dashboard")
     
-    return render(request,"adminapk/admin_dashboard.html",{"pendingsellers":pendingsellers,"approvedsellers":approvedsellers,"users":users,"totalusers":totalusers,"pendingproducts":pendingproducts,"totalpendingproducts":totalpendingproducts})
+    total_revenue=Order.objects.filter(order_status='DELIVERED').aggregate(total=Sum('total_amount'))['total'] or 0
+    
+    return render(request,"adminapk/admin_dashboard.html",{"pendingsellers":pendingsellers,"approvedsellers":approvedsellers,"users":users,"totalusers":totalusers,"pendingproducts":pendingproducts,"totalpendingproducts":totalpendingproducts,"total_revenue":total_revenue})
 
 #---------Category-----------------------
 def admin_category(request):

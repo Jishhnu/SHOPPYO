@@ -36,6 +36,20 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+        /* Hide scrollbar but keep scrolling */
+        nav::-webkit-scrollbar {
+            display: none;
+        }
+        nav {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        a {
+            cursor: pointer !important;
+        }
+        nav a {
+            cursor: pointer !important;
+        }
     </style>
 </head>
 <body class="bg-background-light text-slate-900 font-display">
@@ -43,78 +57,70 @@
 <div class="flex min-h-screen">
 <!-- Sidebar Navigation (Deep Navy) -->
 <aside class="w-64 bg-background-dark text-white flex flex-col fixed h-full z-20">
-<div class="p-6 flex items-center gap-3">
-<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-background-dark">
-<span class="material-symbols-outlined text-white">shopping_bag</span>
+
+<!-- LEFT: LOGO -->
+<div class="px-6 py-4 flex items-center gap-1 text-white">
+  <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-lg shadow-inner">
+    <span class="material-symbols-outlined text-xs font-light">shopping_bag</span>
+  </div>
+  <div class="flex flex-col justify-center">
+    <h1 class="text-2xl font-black tracking-tighter leading-none italic uppercase">
+      Shoppy<span class="text-blue-300">O</span><span class="text-xs ml-1">Admin</span>
+    </h1>
+  </div>
 </div>
-<h1 class="text-xl font-bold tracking-tight">ShoppyO</h1>
-</div>
-<nav class="flex-1 px-4 space-y-2 mt-4">
+
+<nav class="flex-1 px-4 space-y-2 mt-4 overflow-y-auto">
 <a href="{% url 'admin_dashboard' %}" class="flex items-center gap-3 px-4 py-3 bg-primary/20 text-primary border-l-4 border-primary rounded-r-lg font-semibold transition-all" href="#">
 <span class="material-symbols-outlined">dashboard</span>
-                    Dashboard
-                </a>
+Dashboard
+</a>
 <a href="{% url 'admin_users' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
 <span class="material-symbols-outlined">group</span>
-                    Users
-                </a>
+Users
+</a>
 <a href="{% url 'admin_orders' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
-    <span class="material-symbols-outlined">shopping_cart</span> Orders
-                    </a>
+<span class="material-symbols-outlined">shopping_cart</span> Orders
+</a>
 <a href="{% url 'admin_category' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
-    <span class="material-symbols-outlined">category</span>
-    Category
+<span class="material-symbols-outlined">category</span>
+Category
 </a>
 <a href="{% url 'admin_sellerverification' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
 <span class="material-symbols-outlined">group</span>
-                    Seller Verification
-                </a>
+Seller Verification
+</a>
 <a href="{% url 'admin_approvedsellers' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
 <span class="material-symbols-outlined">verified_user</span>
-                    Approved Sellers
-                </a>
+Approved Sellers
+</a>
 <a href="{% url 'admin_rejectsellers' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
 <span class="material-symbols-outlined">close</span>
-                    Rejected Sellers
-                </a>
+Rejected Sellers
+</a>
 <a href="{% url 'admin_suspendedsellers' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
 <span class="material-symbols-outlined">schedule</span>
-                    Suspended Sellers
-                </a>
+Suspended Sellers
+</a>
 <a href="{% url 'admin_productverification' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
 <span class="material-symbols-outlined">group</span>
-                    Product-Verification
-                </a>
+Product-Verification
+</a>
 <a href="{% url 'admin_approvedproduct' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
 <span class="material-symbols-outlined">verified_user</span>
-                    Approved-Products
-                </a>
+Approved-Products
+</a>
 <a href="{% url 'admin_rejectproduct' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
 <span class="material-symbols-outlined">close</span>
-                    Rejected-Products
-                </a>
-
-<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
-<span class="material-symbols-outlined">campaign</span>
-                    Announcements
-                </a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
-<span class="material-symbols-outlined">payments</span>
-                    Revenue
-                </a>
-<div class="pt-4 border-t border-white/10 mt-4">
-<p class="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">System</p>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
-<span class="material-symbols-outlined">settings</span>
-                        Settings
-                    </a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
-<span class="material-symbols-outlined">security</span>
-                        Audit Logs
-                    </a>
+Rejected-Products
+</a>
+<div class="px-4 mt-6 pt-4 border-t border-white/10">
+<a class="flex items-center justify-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition-colors duration-200 text-sm" href="#">
+<span class="material-symbols-outlined text-base">logout</span>Logout
+</a>
 </div>
 </nav>
-<div class="p-4 bg-white/5 m-4 rounded-xl">
+<!-- <div class="p-4 bg-white/5 m-4 rounded-xl">
 <div class="flex items-center gap-3">
 <div class="size-10 rounded-full bg-slate-500 overflow-hidden" data-alt="Admin user profile picture">
 <img alt="Admin Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdHonfxsF1PkF7Qrj547BSYlBRPz02m4QMlvQjSZRqg3VngFcn6ZhC9OBYvcJGvczZdsTn9NwP2yoJlonrNARHVuuE4h-v5Ef6kF5tq8--8aApO-K65nRmTZ8_Cr9Jui6SiP7Mkst4Y2b_xooZP_sf77fds_iB4WTLnC72agtgHUj3lv4-uFM148hbGbv21t2JBhWdPV-0rLHGfTt8bWY-nzKc4a5gGAGVkvHlc0SUQwVCuwmr-wjaXYZD2hVf6OqF7tWN3iSj5thA"/>
@@ -124,34 +130,20 @@
 <p class="text-xs text-slate-400">Super Admin</p>
 </div>
 </div>
-</div>
+</div> -->
 </aside>
+
 <!-- Main Content Area -->
 <main class="flex-1 ml-64 flex flex-col min-h-screen">
 <!-- Top Navigation Bar -->
-<header class="bg-background-dark text-white px-8 py-4 flex items-center justify-between sticky top-0 z-10 shadow-lg">
-<div class="flex items-center gap-4 flex-1">
-<label class="relative w-full max-w-md">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
-<input class="w-full bg-white/10 border-none rounded-xl py-2 pl-10 pr-4 focus:ring-2 focus:ring-primary placeholder:text-slate-400 text-sm" placeholder="Search for users, transactions, or sellers..." type="text"/>
-</label>
-</div>
-<div class="flex items-center gap-6">
-<button class="relative p-2 hover:bg-white/10 rounded-full transition-colors">
-<span class="material-symbols-outlined">notifications</span>
-<span class="absolute top-2 right-2 size-2 bg-primary rounded-full border-2 border-background-dark text-background-dark"></span>
-</button>
-<button class="p-2 hover:bg-white/10 rounded-full transition-colors">
-<span class="material-symbols-outlined">help_outline</span>
-</button>
-<div class="h-6 w-px bg-white/20"></div>
+<header class="bg-background-dark text-white px-8 py-4 flex justify-end sticky top-0 z-10 shadow-lg">
 <div class="flex items-center gap-2">
+    <div class="h-6 w-px bg-white/20"></div>
 <span class="text-sm font-medium">System Status:</span>
 <span class="flex items-center gap-1.5 text-xs font-bold text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-full">
 <span class="size-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
-                            Operational
-                        </span>
-</div>
+Operational
+</span>
 </div>
 </header>
 <!-- Dashboard Content -->
@@ -186,7 +178,7 @@
         <span class="text-emerald-500 text-xs font-bold bg-emerald-50 px-2 py-1 rounded-full">+8.2%</span>
         </div>
         <p class="text-slate-500 text-sm font-medium">Total Revenue</p>
-        <h3 class="text-2xl font-bold text-slate-900 mt-1">$425,000.00</h3>
+        <h3 class="text-2xl font-bold text-slate-900 mt-1">₹{{ total_revenue|floatformat:2 }}</h3>
         <div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
         <div class="bg-emerald-500 h-full rounded-full" style="width: 48%;"></div>
         </div>

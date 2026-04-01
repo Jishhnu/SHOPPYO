@@ -41,55 +41,108 @@
       }
     </script>
     <style>
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        body {
-            background: linear-gradient(135deg, #f5f9fa 0%, #d6e8ee 100%);
-            min-height: 100vh;
-        }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-    </style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+        background: linear-gradient(135deg, #f5f9fa 0%, #d6e8ee 100%);
+        min-height: 100vh;
+    }
+    /* Hide scrollbar but keep scrolling */
+    nav::-webkit-scrollbar {
+        display: none;
+    }
+    nav {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    /* Cursor pointer for all interactive elements */
+    a, button, [role="button"] {
+        cursor: pointer !important;
+    }
+    /* Specific sidebar navigation */
+    aside nav a {
+        cursor: pointer !important;
+    }
+</style>
 </head>
-<body class="font-body text-on-surface antialiased">
-
-<header class="bg-[#041822] text-[#d1e5f3] font-headline sticky top-0 z-50 px-8 py-4 flex justify-between items-center shadow-lg">
-    <div class="flex items-center gap-8">
-        <span class="text-2xl font-black text-white tracking-tighter">ShoppyO</span>
-
-    </div>
-    <div class="flex items-center gap-4">
-        <button class="p-2 hover:bg-white/10 rounded-md transition-all"><span class="material-symbols-outlined">notifications</span></button>
-        <div class="h-8 w-8 rounded-full bg-primary-fixed border border-white/20 overflow-hidden">
-            <img alt="Admin" src="https://ui-avatars.com/api/?name=Admin&background=d1e5f3&color=041822"/>
-        </div>
-    </div>
+<body class="font-body text-on-surface">
+<!-- TopNavBar & LOGO -->
+<header class="bg-[#1A2D37] text-white px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
+<div class="px-3 flex items-center gap-1 text-white">
+  <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-lg shadow-inner">
+    <span class="material-symbols-outlined text-xs font-light">shopping_bag</span>
+  </div>
+  <div class="flex flex-col justify-center">
+    <h1 class="text-2xl font-black tracking-tighter leading-none italic uppercase">
+      Shoppy<span class="text-blue-300">O</span><span class="text-xs ml-1">Admin</span>
+    </h1>
+  </div>
+</div>
 </header>
 
 <div class="flex">
-    <aside class="hidden lg:flex flex-col h-[calc(100vh-72px)] w-64 fixed left-0 top-[72px] py-6 bg-white border-r border-outline-variant/15">
-        <nav class="flex-grow space-y-1 px-2">
-            <a href="{% url 'admin_dashboard' %}" class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all">
-                <span class="material-symbols-outlined">dashboard</span> Dashboard
-            </a>
-            <a href="{% url 'admin_orders' %}" class="flex items-center gap-3 px-4 py-2 bg-primary text-white rounded-lg shadow-md transition-all">
-                <span class="material-symbols-outlined">shopping_cart</span> Orders
-            </a>
-            <a href="{% url 'admin_users' %}" class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all">
-                <span class="material-symbols-outlined">group</span> Customers
-            </a>
-            <a href="{% url 'admin_sellerverification' %}" class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all">
-                <span class="material-symbols-outlined">verified_user</span> Seller Verification
-            </a>
-        </nav>
-        <div class="px-4 mt-auto border-t pt-4">
-            <a class="flex items-center gap-3 px-4 py-2 text-error hover:bg-error-container/20 rounded-lg transition-colors" href="#">
-                <span class="material-symbols-outlined">logout</span> Logout
-            </a>
-        </div>
-    </aside>
+<!-- SideNavBar (Desktop) -->
+<!-- Swapped: background from d4e6ec/30 to fbf9f8 (f5f9fa equivalent in system tokens) -->
+
+<aside class="w-64 bg-[#1A2D37] text-white flex flex-col fixed h-full z-20">
+    <nav class="flex-1 px-4 space-y-2 mt-3 overflow-y-auto">
+        <a href="{% url 'admin_dashboard' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
+            <span class="material-symbols-outlined">dashboard</span>
+            Dashboard
+        </a>
+
+        <a href="{% url 'admin_users' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
+            <span class="material-symbols-outlined">group</span>
+            Users
+        </a>
+
+        <a href="{% url 'admin_orders' %}" class="flex items-center gap-3 px-4 py-3 bg-[#D6E8EE]/20 text-[#D6E8EE] border-l-4 border-[#D6E8EE] rounded-r-lg font-semibold transition-all">
+            <span class="material-symbols-outlined">shopping_cart</span> 
+            Orders
+        </a>
+
+        <a href="{% url 'admin_category' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
+            <span class="material-symbols-outlined">category</span>
+            Category
+        </a>
+
+        <a href="{% url 'admin_sellerverification' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
+            <span class="material-symbols-outlined">group</span>
+            Seller Verification
+        </a>
+
+        <a href="{% url 'admin_approvedsellers' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
+            <span class="material-symbols-outlined">verified_user</span>
+            Approved Sellers
+        </a>
+
+        <a href="{% url 'admin_rejectsellers' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
+            <span class="material-symbols-outlined">close</span>
+            Rejected Sellers
+        </a>
+
+        <a href="{% url 'admin_suspendedsellers' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
+            <span class="material-symbols-outlined">schedule</span>
+            Suspended Sellers
+        </a>
+
+        <a href="{% url 'admin_productverification' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
+            <span class="material-symbols-outlined">group</span>
+            Product-Verification
+        </a>
+
+        <a href="{% url 'admin_approvedproduct' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
+            <span class="material-symbols-outlined">verified_user</span>
+            Approved-Products
+        </a>
+
+        <a href="{% url 'admin_rejectproduct' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
+            <span class="material-symbols-outlined">close</span>
+            Rejected-Products
+        </a>
+    </nav>
+</aside>
 
     <main class="flex-grow lg:ml-64 p-8">
         

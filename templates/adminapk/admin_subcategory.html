@@ -86,38 +86,22 @@
 </head>
 <body class="bg-surface text-on-surface min-h-screen flex flex-col">
 <!-- TopNavBar -->
-<header class="fixed top-0 w-full z-50 bg-[#ffffff]/80 backdrop-blur-xl shadow-[0px_20px_40px_rgba(26,45,55,0.06)] h-16">
-<div class="flex justify-between items-center w-full px-8 h-16 max-w-none">
-<div class="flex items-center gap-12">
-<span class="text-xl font-bold text-[#041822] tracking-tighter">ShoppyO Admin</span>
-<nav class="hidden md:flex gap-8 items-center">
-<a class="text-[#56676c] hover:text-[#041822] transition-colors font-manrope text-sm font-medium tracking-tight" href="#">Dashboard</a>
-<a class="text-[#56676c] hover:text-[#041822] transition-colors font-manrope text-sm font-medium tracking-tight" href="#">Orders</a>
-<a class="text-[#041822] font-bold border-b-2 border-[#041822] pb-1 font-manrope text-sm tracking-tight" href="#">Catalog</a>
-<a class="text-[#56676c] hover:text-[#041822] transition-colors font-manrope text-sm font-medium tracking-tight" href="#">Customers</a>
-</nav>
-</div>
-<div class="flex items-center gap-6">
-<div class="relative hidden lg:block">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-secondary-container">search</span>
-<input class="bg-surface-container-highest border-none rounded-lg pl-10 pr-4 py-2 text-sm w-64 focus:ring-1 focus:ring-primary transition-all" placeholder="Search catalog..." type="text"/>
-</div>
-<div class="flex items-center gap-4">
-<button class="p-2 text-on-secondary-container hover:bg-[#fbf9f8] rounded-full transition-all duration-200">
-<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
-</button>
-<button class="p-2 text-on-secondary-container hover:bg-[#fbf9f8] rounded-full transition-all duration-200">
-<span class="material-symbols-outlined" data-icon="settings">settings</span>
-</button>
-<div class="h-8 w-8 rounded-full bg-secondary-container overflow-hidden ring-2 ring-white ring-offset-2 ring-offset-secondary-container">
-<img alt="Admin Profile" class="w-full h-full object-cover" data-alt="professional portrait of a creative director in a minimalist studio setting with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdxIy6hCc0wUNvfPYGeH8_Q5HesUCsOkf7wdARIsLWAsBT5ngVBVl7EWrKXrK-ed0FCSQ9KawJxivkoQYBknAGs7T3iPsNJx6Em85jcKWlgDXfTMn-5UhYBvxTlKQxLcpKwFoduApCT4cjPLXlAj8UcKJ1yjDgXWRKYVQDtEHzYAxGNRcM77RjVcsIOopxUZRotbEg9xCzsKSau3d7ps4FU9SiQnUF6hPKSoKI8UVkJ5A-aLxS4Te6hM6EwiuA-fUs_XsIYX8Rv0Tx"/>
-</div>
-</div>
-</div>
+<!-- TopNavBar & LOGO -->
+<header class="bg-[#1A2D37] text-white px-8 py-3 flex justify-between items-center sticky top-0 z-50 shadow-sm">
+<div class="px-3 flex items-center gap-1 text-white">
+  <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-lg shadow-inner">
+    <span class="material-symbols-outlined text-xs font-light">shopping_bag</span>
+  </div>
+  <div class="flex flex-col justify-center">
+    <h1 class="text-2xl font-black tracking-tighter leading-none italic uppercase">
+      Shoppy<span class="text-blue-300">O</span><span class="text-xs ml-1">Admin</span>
+    </h1>
+  </div>
 </div>
 </header>
+
 <!-- Main Content Area -->
-<main class="pt-16 flex-grow flex flex-col md:flex-row bg-gradient-to-br from-background via-secondary-container/20 to-surface">
+<main class="pt-2 flex-grow flex flex-col md:flex-row bg-gradient-to-br from-background via-secondary-container/20 to-surface">
 <!-- Left Sidebar: Form Section -->
 <aside class="w-full md:w-96 p-8 border-r border-outline-variant/15 flex flex-col gap-8">
 <div class="sticky top-24">
@@ -206,23 +190,6 @@
     </button>
 </form>
 
-<script>
-    // Auto-generate Slug from Name
-    const nameInput = document.getElementById('id_name');
-    const slugInput = document.getElementById('id_slug');
-
-    nameInput.addEventListener('input', function() {
-        const slug = nameInput.value
-            .toLowerCase()
-            .trim()
-            .replace(/[^\w\s-]/g, '') // Remove non-word chars
-            .replace(/[\s_-]+/g, '-') // Replace spaces/underscores with -
-            .replace(/^-+|-+$/g, ''); // Trim leading/trailing dashes
-        slugInput.value = slug;
-    });
-</script>
-
-
 </div>
 <div class="mt-8 p-4 bg-primary-container rounded-xl text-on-primary flex items-start gap-4">
 <span class="material-symbols-outlined text-primary-fixed">info</span>
@@ -232,12 +199,13 @@
 </div>
 </div>
 </aside>
+
 <!-- Main Section: Table -->
 <section class="flex-grow p-8">
 <div class="flex flex-col md:flex-row justify-between items-end md:items-center mb-8 gap-4">
 <div>
 <h2 class="text-2xl font-bold tracking-tight text-primary">Active Sub-Categories</h2>
-<p class="text-on-secondary-container text-sm">Managing 24 sub-categories across 6 parent categories</p>
+<p class="text-on-secondary-container text-sm">Managing sub-categories across verity parent categories</p>
 </div>
 <div class="flex gap-3">
 <button class="flex items-center gap-2 px-4 py-2 bg-surface-container-lowest border border-outline-variant/15 rounded-lg text-sm font-medium hover:bg-surface-container-low transition-colors">
@@ -454,6 +422,21 @@ function getCSRFToken() {
     }
     return null;
 }
+</script>
+<script>
+    // Auto-generate Slug from Name
+    const nameInput = document.getElementById('id_name');
+    const slugInput = document.getElementById('id_slug');
+
+    nameInput.addEventListener('input', function() {
+        const slug = nameInput.value
+            .toLowerCase()
+            .trim()
+            .replace(/[^\w\s-]/g, '') // Remove non-word chars
+            .replace(/[\s_-]+/g, '-') // Replace spaces/underscores with -
+            .replace(/^-+|-+$/g, ''); // Trim leading/trailing dashes
+        slugInput.value = slug;
+    });
 </script>
 
 </body></html>
