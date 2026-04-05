@@ -174,3 +174,6 @@ ACCOUNT_EMAIL_REQUIRED = True
 
 from dotenv import load_dotenv
 load_dotenv()
+
+RAZORPAY_KEY="rzp_test_SZuaJynYnVcowM"
+RAZORPAY_SECRET="F11K2ZGKzQwda8ACP1yz4ygZ"

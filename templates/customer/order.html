@@ -75,7 +75,7 @@
 </div>
 </header>
 <main class="px-4 md:px-20 lg:px-40 flex flex-1 justify-center py-8">
-    {% if messages %}
+    <!-- {% if messages %}
 <div class="mb-6 space-y-2">
 
 {% for message in messages %}
@@ -97,7 +97,7 @@ bg-blue-100 text-blue-800 border border-blue-200
 {% endfor %}
 
 </div>
-{% endif %}
+{% endif %} -->
 <div class="layout-content-container flex flex-col max-w-[1000px] flex-1">
 <div class="flex flex-wrap gap-2 mb-6">
 <a class="text-slate-500 hover:text-primary text-sm font-medium" href="{% url 'customer_home' %}">Home</a>
@@ -366,21 +366,21 @@ Qty: 1
 </div>
 
 <!------------------Form------------------->
-<form id="orderForm" method="POST" action="{% url 'place_order' %}">
-{% csrf_token %}
+<form method="POST" action="{% url 'place_order' %}">
+    {% csrf_token %}
 
-{% if is_cart_checkout %}
-<input type="hidden" name="cart_id" value="{{ cart.id }}">
-{% else %}
-<input type="hidden" name="variant_id" value="{{ order.id }}">
-{% endif %}
+    {% if is_cart_checkout %}
+        <input type="hidden" name="cart_id" value="{{ cart.id }}">
+    {% else %}
+        <input type="hidden" name="variant_id" value="{{ order.id }}">
+    {% endif %}
 
-<input type="hidden" name="payment_method" value="COD">
+    <input type="hidden" name="payment_method" id="payment_method" value="COD">
 
-<button type="submit"
-class="block w-full text-center bg-primary hover:bg-slate-800 text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 transition-all active:scale-[0.98]">
-Place Order
-</button>
+    <button type="submit"
+    class="block w-full text-center bg-primary hover:bg-slate-800 text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 transition-all active:scale-[0.98]">
+        Place Order
+    </button>
 </form>
 
 
@@ -404,7 +404,7 @@ Place Order
 </footer>
 </div>
 </div>
-</body>
+
 <script>
 function toggleAddressList() {
     const addressList = document.getElementById('addressList');
@@ -412,43 +412,51 @@ function toggleAddressList() {
 }
 
 function selectPayment(method) {
-    // Update the hidden input
+
+    // ✅ update hidden input
     document.getElementById('payment_method').value = method;
 
-    // Select all cards and ticks
     const codCard = document.getElementById('card-COD');
     const onlineCard = document.getElementById('card-ONLINE');
+
     const codTick = document.getElementById('tick-COD');
     const onlineTick = document.getElementById('tick-ONLINE');
+
     const onlineIcon = document.getElementById('online-icon');
 
     if (method === 'COD') {
-        // Style COD as active
+
         codCard.classList.add('border-primary', 'bg-primary/5', 'border-2');
         codCard.classList.remove('border-slate-200');
         codTick.classList.remove('hidden');
 
-        // Style Online as inactive
         onlineCard.classList.remove('border-primary', 'bg-primary/5', 'border-2');
         onlineCard.classList.add('border-slate-200');
         onlineTick.classList.add('hidden');
         onlineIcon.classList.replace('text-primary', 'text-slate-500');
+
     } else {
-        // Style Online as active
+
         onlineCard.classList.add('border-primary', 'bg-primary/5', 'border-2');
         onlineCard.classList.remove('border-slate-200');
         onlineTick.classList.remove('hidden');
         onlineIcon.classList.replace('text-slate-500', 'text-primary');
 
-        // Style COD as inactive
         codCard.classList.remove('border-primary', 'bg-primary/5', 'border-2');
         codCard.classList.add('border-slate-200');
         codTick.classList.add('hidden');
     }
 }
+
+// ✅ default selection
+window.onload = function () {
+    selectPayment('COD');
+};
+
+// auto hide alerts
 setTimeout(() => {
     const alerts = document.querySelectorAll('[role="alert"]');
     alerts.forEach(alert => alert.style.display = 'none');
 }, 4000);
 </script>
-</html>
+</body></html>

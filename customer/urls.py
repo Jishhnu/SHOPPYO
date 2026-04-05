@@ -30,9 +30,9 @@ urlpatterns = [
     path("single_product_variant/<str:slug>/", views.single_product_variant, name="single_product_variant"),
 
     #------------------Order---------------------------
+    path("order/place/", views.place_order, name='place_order'),
     path("order/<str:slug>/",views.order,name='order'),
     path("order/select-address/<int:address_id>/",views.order_select_address,name='order_select_address'),
-    path("order/place/", views.place_order, name='place_order'),
     path("order/checkout/<int:cart_id>",views.checkout,name="checkout"),
     path("order/confirmation/<int:order_id>/",views.order_confirmation,name="order_confirmation"),
     path("customer/order_history/",views.order_history,name="order_history"),
@@ -44,5 +44,9 @@ urlpatterns = [
 
     #------------------Review--------------------
     path("add_review/<int:product_id>",views.add_review,name="add_review"),
+
+    #-------------Payment|Razorpay---------------------
+    path('pay/<int:order_id>/', views.create_payment,name="create_payment"),
+    path('payment-success/', views.payment_success,name="payment_success"),
 
 ]

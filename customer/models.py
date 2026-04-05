@@ -40,7 +40,12 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
     order_number = models.CharField(max_length=100, unique=True)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_status = models.CharField(max_length=20, default='PENDING')
+    payment_status = models.CharField(max_length=20,
+        choices=[
+            ('PENDING', 'Pending'),
+            ('SUCCESS', 'Success'),
+            ('FAILED', 'Failed')
+            ],default='PENDING')
     ordered_at = models.DateTimeField(auto_now_add=True)
     address= models.ForeignKey(Address, on_delete=models.CASCADE, related_name="address", null=True)
     ORDER_STATUS_CHOICES = [
@@ -57,3 +62,19 @@ class OrderItem(models.Model):
     seller = models.ForeignKey(SellerProfile, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price_at_purchase = models.DecimalField(max_digits=10, decimal_places=2)
+
+class Payment(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name="payment")
+    razorpay_order_id = models.CharField(max_length=200, blank=True, null=True)
+    razorpay_payment_id = models.CharField(max_length=200, blank=True, null=True)
+    razorpay_signature = models.CharField(max_length=200, blank=True, null=True)
+
+    amount = models.IntegerField(default=0)
+    payment_status = models.CharField(max_length=20,
+    choices=[
+        ('PENDING', 'Pending'),
+        ('SUCCESS', 'Success'),
+        ('FAILED', 'Failed')
+    ],default='PENDING'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)

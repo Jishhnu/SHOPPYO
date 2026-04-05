@@ -10,8 +10,9 @@ import uuid
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Q
-from django.http import JsonResponse
-
+from django.http import JsonResponse,HttpResponse
+import razorpay
+from django.conf import settings
 
 
 @login_required
@@ -325,6 +326,7 @@ def order(request, slug):
         'default_address': default_address
     })
 
+    #----------Cart-Checkout|Cart-Order-------------
 @login_required
 def checkout(request, cart_id):
     user = request.user
@@ -337,7 +339,6 @@ def checkout(request, cart_id):
     if not default_address:
         default_address = addresses.first()
 
-    # Calculate totals
     subtotal = sum(item.price_at_time * item.quantity for item in cart_items)
     tax = round(subtotal * Decimal('0.08'), 2)
     grand_total = subtotal + tax
@@ -370,81 +371,99 @@ def order_select_address(request, address_id):
 #---------------Placed Order----------------------------------
 @login_required
 def place_order(request):
-    user=request.user
-    if request.method !="POST":
-        return redirect("customer_home")
-    
-    variant_id=request.POST.get("variant_id")
-    cart_id=request.POST.get("cart_id")
-    payment_method=request.POST.get("payment_method")
-    
-    address=Address.objects.filter(user=user, is_default=True).first()
+    if request.method =="POST":
+        user=request.user
 
-    if not address:
-        messages.error(request,"Please Add a Delivery Address.")
-        return redirect("customer_address_add")
+        payment_method = request.POST.get('payment_method')
+        variant_id=request.POST.get("variant_id")
+        cart_id=request.POST.get("cart_id")
     
-    order_number="SpyO-" + uuid.uuid4().hex[:10].upper()
-    
+        address=Address.objects.filter(user=user, is_default=True).first()
+
+        if not address:
+            messages.error(request,"Please Add a Delivery Address.")
+            return redirect("customer_address_add")
+
+        order_number="SpyO-" + uuid.uuid4().hex[:10].upper()
+
     #-----------Cart checkout-----------------------------
-    if cart_id:
-        cart = get_object_or_404(Cart, id=cart_id, user=user)
-        cart_items = CartItem.objects.filter(cart=cart)
-        
-        if not cart_items.exists():
-            messages.error(request,"Your cart is empty.")
-            return redirect("view_cart")
-        
-        total_amount = sum(item.price_at_time * item.quantity for item in cart_items)
-        
-        # Create order
-        order=Order.objects.create(
-            user=user,
-            order_number=order_number,
-            total_amount=total_amount,
-            payment_method=payment_method,
-            address=address
-        )
-        
-        for item in cart_items:
+        if cart_id:
+            cart = get_object_or_404(Cart, id=cart_id, user=user)
+            cart_items = CartItem.objects.filter(cart=cart)
+
+            if not cart_items.exists():
+                messages.error(request,"Your cart is empty.")
+                return redirect("view_cart")
+
+            total_amount = sum(item.price_at_time * item.quantity for item in cart_items)
+
+            #----Create order-----
+            order=Order.objects.create(
+                user=user,
+                order_number=order_number,
+                total_amount=total_amount,
+                payment_method=payment_method,
+                address=address
+            )
+
+            for item in cart_items:
+                OrderItem.objects.create(
+                    order=order,
+                    variant=item.variant,
+                    seller=item.variant.product.seller,
+                    quantity=item.quantity,
+                    price_at_purchase=item.price_at_time
+                )
+            #----Cart_delete----
+            cart_items.delete()
+            cart.total_amount = 0
+            cart.save()
+
+            # messages.success(request,f"ORDER Placed Successfully! Order Number: {order_number}")
+            # return redirect("order_confirmation", order_id=order.id)
+
+    #-------Single Product Checkout--------------
+        else:
+            if not variant_id:
+                messages.error(request,"Invalid order request.")
+                return redirect("customer_home")
+
+            variant=get_object_or_404(ProductVariant, id=variant_id)
+
+            order=Order.objects.create(
+                user=user,
+                order_number=order_number,
+                total_amount=variant.selling_price,
+                payment_method=payment_method,
+                address=address
+            )
             OrderItem.objects.create(
                 order=order,
-                variant=item.variant,
-                seller=item.variant.product.seller,
-                quantity=item.quantity,
-                price_at_purchase=item.price_at_time
+                variant=variant,
+                seller=variant.product.seller,
+                quantity=1,
+                price_at_purchase=variant.selling_price
             )
-        #cart_delete
-        cart_items.delete()
-        cart.total_amount = 0
-        cart.save()
+            # messages.success(request,f"ORDER Placed SuccessFully! Order Number: {order_number}")
+            # return redirect("order_confirmation", order_id=order.id)
         
-        messages.success(request,f"ORDER Placed Successfully! Order Number: {order_number}")
-        return redirect("order_confirmation", order_id=order.id)
-    
-    #-------Single Product Checkout--------------
-    if not variant_id:
-        messages.error(request,"Invalid order request.")
-        return redirect("customer_home")
-    
-    variant=get_object_or_404(ProductVariant, id=variant_id)
-    
-    order=Order.objects.create(
-        user=user,
-        order_number=order_number,
-        total_amount=variant.selling_price,
-        payment_method=payment_method,
-        address=address
-    )
-    OrderItem.objects.create(
-        order=order,
-        variant=variant,
-        seller=variant.product.seller,
-        quantity=1,
-        price_at_purchase=variant.selling_price
-    )
-    messages.success(request,f"ORDER Placed SuccessFully! Order Number: {order_number}")
-    return redirect("order_confirmation", order_id=order.id)
+        #----Payment(COD|ONLINE)----
+
+        if payment_method == "COD":
+            order.payment_status = "PENDING"
+            order.save()
+
+            messages.success(request, f"Order Placed! Order Number: {order_number}")
+            return redirect("order_confirmation", order_id=order.id)
+        
+        elif payment_method == "ONLINE":
+            order.payment_status = "PENDING"
+            order.save()
+
+            return redirect("create_payment", order_id=order.id)
+
+    return redirect("customer_home")
+
 
 #--------Order_confirmation/Order_history/Reorder---------------------
 @login_required
@@ -566,3 +585,64 @@ def add_review(request, product_id):
     return render(request, "customer/add_Review.html", {"product": product})
 
 
+#---------------------Payment|Razorpay--------------------------------
+def create_payment(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY, settings.RAZORPAY_SECRET))
+
+    amount = int(order.total_amount * 100)
+
+    razorpay_order = client.order.create({
+        "amount": amount,
+        "currency": "INR",
+        "payment_capture": 1
+    })
+
+    payment, created = Payment.objects.get_or_create(order=order)
+
+    payment.razorpay_order_id = razorpay_order['id']
+    payment.amount = amount
+    payment.payment_status = "PENDING"
+    payment.save()
+
+    order.payment_method = "ONLINE"
+    order.payment_status = "PENDING"
+    order.save()
+
+    return render(request, "customer/payment.html", {"order": order,"payment": payment,"items": order.items.all(),"amount_rupees": payment.amount / 100,"key": settings.RAZORPAY_KEY})
+
+
+def payment_success(request):
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY, settings.RAZORPAY_SECRET))
+
+    payment_id = request.GET.get('payment_id')
+    order_id = request.GET.get('order_id')
+    signature = request.GET.get('signature')
+
+    try:
+        client.utility.verify_payment_signature({
+            'razorpay_order_id': order_id,
+            'razorpay_payment_id': payment_id,
+            'razorpay_signature': signature
+        })
+
+        payment = Payment.objects.get(razorpay_order_id=order_id)
+
+        payment.razorpay_payment_id = payment_id
+        payment.razorpay_signature = signature
+        payment.payment_status = "SUCCESS"
+        payment.save()
+
+        order = payment.order
+        order.payment_status = "SUCCESS"
+        order.save()
+
+        return redirect('order_confirmation', order_id=order.id)
+
+    except:
+        payment = Payment.objects.get(razorpay_order_id=order_id)
+        payment.payment_status = "FAILED"
+        payment.save()
+
+        return HttpResponse("Payment Failed")
