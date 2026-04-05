@@ -4,6 +4,7 @@ from core.models import *
 from seller.models import *
 from customer.models import *
 from django.contrib import messages 
+from django.contrib.auth import logout
 from django.db.models import Count
 
 from django.http import JsonResponse
@@ -41,9 +42,52 @@ def admin_dashboard(request):
         product.save()
         return redirect("admin_dashboard")
     
+    #------Total Revenue------------
     total_revenue=Order.objects.filter(order_status='DELIVERED').aggregate(total=Sum('total_amount'))['total'] or 0
+
+    #-----Flow Chart------------
+    today=timezone.now().date()
+    date=[]
+    daily_revenue=[]
+
+        #------last-7days--------
+    for i in range(6,-1,-1):
+        day= today-timedelta(days=i)
+        total= Order.objects.filter(ordered_at__date=day,order_status__in=('DELIVERED','PLACED')).aggregate(total=Sum('total_amount'))['total'] or 0
+        date.append(day.strftime("%b %d"))
+        daily_revenue.append(int(total))
+
+    #------Last-Month------------------
+    month_total= Order.objects.filter(ordered_at__month=today.month,order_status__in=('DELIVERED','PLACED')).aggregate(total=Sum('total_amount'))['total'] or 0
+    days=today.day
+    if days:
+        avg=int(month_total/days)
+    else:
+        avg=0
+
+    monthly_avg=[avg]*7
+
+    #---------Top-Products---------------------
+    top_products=(OrderItem.objects.filter(order__order_status__in=('DELIVERED','PLACED')).values('variant__product__name').annotate(total_sold=Sum('quantity')).order_by('-total_sold')[:5])
+    product_name=[]
+    product_sales=[]
+
+    for p in top_products:
+        product_name.append(p['variant__product__name'])
+        product_sales.append(p['total_sold'])
+
+    context={
+        "pendingsellers":pendingsellers, "approvedsellers":approvedsellers, "users":users, "totalusers":totalusers, "pendingproducts":pendingproducts, "totalpendingproducts":totalpendingproducts,
+        "total_revenue":total_revenue, 'date':date, 'daily_revenue':daily_revenue, 'monthly_avg':monthly_avg, 'product_name':product_name, 'product_sales':product_sales
+    }
     
-    return render(request,"adminapk/admin_dashboard.html",{"pendingsellers":pendingsellers,"approvedsellers":approvedsellers,"users":users,"totalusers":totalusers,"pendingproducts":pendingproducts,"totalpendingproducts":totalpendingproducts,"total_revenue":total_revenue})
+    return render(request,"adminapk/admin_dashboard.html", context)
+
+
+def admin_logout(request):
+    logout(request)
+    messages.success(request, "Logged out successfully")
+    return redirect('login')
 
 #---------Category-----------------------
 def admin_category(request):

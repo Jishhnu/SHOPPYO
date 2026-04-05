@@ -4,6 +4,7 @@ from adminapk import views
 
 urlpatterns = [
     path("admin_dashboard/",views.admin_dashboard,name="admin_dashboard"),
+    path("admin_logout/", views.admin_logout, name="admin_logout"),
 
 #---------Category-----------------------
     path("admin_category/",views.admin_category,name="admin_category"),
@@ -42,8 +43,5 @@ urlpatterns = [
 #----------admin_orders-------------------
     path("admin_orders/",views.admin_orders,name='admin_orders'),
     path("admin_order_detail/<int:id>/",views.admin_order_detail,name='admin_order_detail'),
-
-
-
 
 ]

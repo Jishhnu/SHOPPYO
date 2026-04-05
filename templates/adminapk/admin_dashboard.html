@@ -115,7 +115,7 @@ Approved-Products
 Rejected-Products
 </a>
 <div class="px-4 mt-6 pt-4 border-t border-white/10">
-<a class="flex items-center justify-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition-colors duration-200 text-sm" href="#">
+<a href="{% url 'admin_logout' %}" class="flex items-center justify-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition-colors duration-200 text-sm" href="#">
 <span class="material-symbols-outlined text-base">logout</span>Logout
 </a>
 </div>
@@ -466,6 +466,126 @@ Operational
 </div>
 </div>
 </div>
+<!----------------------Flow Chart----------------------------->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 p-6 bg-slate-50">
+    
+    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h3 class="font-bold text-slate-800 text-lg">Weekly Revenue Flow</h3>
+                <p class="text-xs text-slate-500">Daily actuals vs. Monthly Average (₹)</p>
+            </div>
+            <div class="flex gap-2">
+                <span class="flex items-center gap-1 text-[10px] font-bold px-2 py-1 bg-emerald-100 text-emerald-700 rounded-md">
+                    <span class="size-1.5 bg-emerald-50 rounded-full animate-pulse"></span>
+                    Live Data
+                </span>
+            </div>
+        </div>
+        <div class="h-[320px]">
+            <canvas id="weeklyRevenueChart"></canvas>
+        </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col">
+        <div class="mb-6">
+            <h3 class="font-bold text-slate-800 text-lg">Top Sellers</h3>
+            <p class="text-xs text-slate-500">Units sold (Delivered orders only)</p>
+        </div>
+        <div class="flex-1 min-h-[320px]">
+            <canvas id="topProductsChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // --- 1. Weekly Revenue Chart ---
+    const revCtx = document.getElementById('weeklyRevenueChart').getContext('2d');
+    
+    // Create a smooth gradient for the "ups and downs" area
+    const blueGradient = revCtx.createLinearGradient(0, 0, 0, 300);
+    blueGradient.addColorStop(0, 'rgba(26, 45, 55, 0.15)');
+    blueGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+    new Chart(revCtx, {
+        type: 'line',
+        data: {
+            labels: {{ date|safe }}, 
+            datasets: [
+                {
+                    label: 'Daily Revenue',
+                    data: {{ daily_revenue|safe }},
+                    borderColor: '#1A2D37',
+                    backgroundColor: blueGradient,
+                    fill: true,
+                    tension: 0.4, // This creates the smooth "wave" look for ups and downs
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#1A2D37',
+                    pointBorderWidth: 2
+                },
+                {
+                    label: 'Monthly Avg',
+                    data: {{ monthly_avg|safe }},
+                    borderColor: '#94a3b8',
+                    borderDash: [6, 6], // Dashed line for the average
+                    borderWidth: 2,
+                    pointRadius: 0, // Keep the average line clean
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: '#f1f5f9' },
+                    ticks: { 
+                        font: { size: 11 },
+                        callback: (v) => '₹' + v.toLocaleString() 
+                    }
+                },
+                x: { grid: { display: false }, ticks: { font: { weight: '600' } } }
+            }
+        }
+    });
+
+    // --- 2. Top Products Chart ---
+    const prodCtx = document.getElementById('topProductsChart').getContext('2d');
+    new Chart(prodCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ product_name|safe }},
+            datasets: [{
+                data: {{ product_sales|safe }},
+                backgroundColor: '#1A2D37',
+                borderRadius: 6,
+                barThickness: 15
+            }]
+        },
+        options: {
+            indexAxis: 'y', // Horizontal Bar Chart
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { display: false },
+                y: { 
+                    grid: { display: false },
+                    ticks: { font: { weight: '600' }, color: '#475569' }
+                }
+            }
+        }
+    });
+</script>
+
+
 <!-- Dashboard Footer -->
 <footer class="mt-auto bg-background-dark text-slate-400 px-8 py-6 flex flex-col md:flex-row items-center justify-between border-t border-white/5">
 <p class="text-xs font-medium">© 2026 ShoppyO E-commerce Platform. All Administrative Rights Reserved.</p>
@@ -479,8 +599,3 @@ Operational
 </main>
 </div>
 </body></html>
-
-<!-- <div class="flex gap-2">
-<button class="flex-1 bg-[#1A2D37] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#1A2D37]/90 transition-colors border border-[#D6E8EE]/30">Review</button>
-<button class="flex-1 bg-[#607D8B] text-white text-xs font-bold py-1.5 rounded-md hover:bg-[#607D8B]/90 transition-colors">Dismiss</button>
-</div> -->

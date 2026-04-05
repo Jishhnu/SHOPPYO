@@ -30,7 +30,7 @@ urlpatterns = [
     path("single_product_variant/<str:slug>/", views.single_product_variant, name="single_product_variant"),
 
     #------------------Order---------------------------
-    path("order/<int:id>/",views.order,name='order'),
+    path("order/<str:slug>/",views.order,name='order'),
     path("order/select-address/<int:address_id>/",views.order_select_address,name='order_select_address'),
     path("order/place/", views.place_order, name='place_order'),
     path("order/checkout/<int:cart_id>",views.checkout,name="checkout"),

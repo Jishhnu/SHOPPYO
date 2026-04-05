@@ -309,8 +309,8 @@ def single_product_variant(request,slug):
 
 #------------------Order---------------------------
 @login_required
-def order(request, id):
-    product = get_object_or_404(Product, id=id)
+def order(request, slug):
+    product = get_object_or_404(Product, slug=slug)
     product_variant = ProductVariant.objects.filter(product=product).first()
     
     addresses = Address.objects.filter(user=request.user).order_by('-is_default', '-updated_at')
@@ -362,10 +362,10 @@ def order_select_address(request, address_id):
     address.is_default = True
     address.save()
     
-    product_id = request.GET.get('product_id')
-    if product_id:
-        return redirect('order', id=product_id)
-    return redirect('order')
+    product_slug = request.GET.get('product_slug')
+    if product_slug:
+        return redirect('order', slug=product_slug)
+    return redirect('customer_dashboard')
 
 #---------------Placed Order----------------------------------
 @login_required

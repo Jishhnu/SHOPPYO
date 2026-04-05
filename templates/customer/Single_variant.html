@@ -202,7 +202,7 @@ hover:border-ice-blue bg-mist-white overflow-hidden cursor-pointer transition-al
 <span class="material-symbols-outlined">shopping_cart</span>
                         Add to Cart
 </a>
-<a href="{% url 'order' items.id %}"
+<a href="{% url 'order' items.product.slug %}"
 class="w-full bg-white border-2 border-primary text-primary py-4 rounded-lg font-bold hover:bg-primary/5 transition-colors flex items-center justify-center gap-2">
 Buy Now
 </a>
