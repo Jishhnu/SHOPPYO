@@ -167,13 +167,13 @@
     </div>
 
 
-  <div class="max-w-[1200px] mx-auto">
+  <div class="max-w-[1260px] mx-auto ">
 
-    <!-- <div class="flex gap-12 overflow-x-auto px-4
+    <div class="flex gap-20 overflow-x-auto px-10
                 [scrollbar-width:none]
                 [-ms-overflow-style:none]
-                [&::-webkit-scrollbar]:hidden"> -->
-    <div class="grid grid-cols-2 md:grid-cols-7 gap-10">
+                [&::-webkit-scrollbar]:hidden">
+    <!-- <div class="grid grid-cols-2 md:grid-cols-7 gap-10"> -->
 
       <!-- {% for category in categories %}
 <div class="relative group">
@@ -200,7 +200,7 @@
     <div class="relative group">
         <a href="{% url 'subcategory_list' category.slug %}" class="block">
             
-            <div class="w-24 h-24 rounded-xl bg-ice-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-all duration-300 overflow-hidden mx-auto">
+            <div class="w-24 h-24 rounded-xl bg-ice-white flex items-center justify-center shadow-sm group-hover:scale-105 transition overflow-hidden">
                 <img src="{{ category.image_url }}" alt="{{ category.name }}"
                      class="w-full h-full p-2 object-contain">
             </div>
