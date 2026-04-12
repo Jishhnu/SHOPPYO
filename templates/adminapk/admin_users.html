@@ -103,10 +103,10 @@
 </style>
 </head>
 
-<body class="font-body text-on-surface">
+<body class="font-body text-on-surface bg-background overflow-x-hidden">
 <!-- TopNavBar & LOGO -->
-<header class="bg-[#1A2D37] text-white px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
-<div class="px-3 flex items-center gap-1 text-white">
+<header class="w-full bg-[#1A2D37] text-white px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
+<div class="flex items-center gap-1 text-white">
   <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-lg shadow-inner">
     <span class="material-symbols-outlined text-xs font-light">shopping_bag</span>
   </div>
@@ -118,11 +118,11 @@
 </div>
 </header>
 
-<div class="flex">
+<div class="flex w-full relative">
 <!-- SideNavBar (Desktop) -->
 <!-- Swapped: background from d4e6ec/30 to fbf9f8 (f5f9fa equivalent in system tokens) -->
 
-<aside class="w-64 bg-[#1A2D37] text-white flex flex-col fixed h-full z-20">
+<aside class="w-64 bg-[#1A2D37] text-white flex flex-col fixed h-[calc(100vh-73px)] z-20">
     <nav class="flex-1 px-4 space-y-2 mt-3 overflow-y-auto">
         <a href="{% url 'admin_dashboard' %}" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-lg transition-all">
             <span class="material-symbols-outlined">dashboard</span>
@@ -180,26 +180,25 @@
         </a>
     </nav>
 </aside>
-
 <!-- Main Content Area -->
-<main class="flex-grow lg:ml-64 p-8 flex flex-col xl:flex-row gap-8">
+<main class="flex-1 lg:ml-64 p-4 md:p-8 flex flex-col min-w-0 max-w-full">
 <!-- Table Section -->
-<div class="flex-grow space-y-6 min-w-0">
-<div class="flex items-center justify-between">
+<div class="flex-grow space-y-6 min-w-0 w-full">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
 <div>
 <h1 class="font-headline text-3xl font-extrabold text-primary tracking-tight">Users</h1>
 <p class="text-on-surface-variant font-medium">Users onboarding requests.</p>
 </div>
-<div class="flex gap-3">
-<div class="relative">
-<!-- Swapped: input bg from surface-container-highest/50 to d4e6ec/50 (ice blue) -->
-<input class="bg-[#fbf9f8]/50 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 w-64" placeholder="Search sellers..." type="text"/>
+<!-- <div class="flex gap-3">
+<div class="relative w-full sm:w-auto">
+
+<input class="w-full sm:w-64 bg-[#fbf9f8]/50 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20" placeholder="Search users..." type="text"/>
 <span class="material-symbols-outlined absolute left-3 top-2 text-on-surface-variant text-sm">search</span>
 </div>
 <button class="bg-surface-container-lowest border border-outline-variant/20 p-2 rounded-lg shadow-sm hover:bg-surface-variant transition-colors">
 <span class="material-symbols-outlined">filter_list</span>
 </button>
-</div>
+</div> -->
 </div>
 <!-- High Fidelity Data Table -->
 <div class="overflow-x-auto">
@@ -312,7 +311,6 @@
 
 <!-- Action Footer -->
 </div>
-</aside>
 </main>
 </div>
 </body></html>

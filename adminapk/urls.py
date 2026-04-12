@@ -9,6 +9,7 @@ urlpatterns = [
 #---------Category-----------------------
     path("admin_category/",views.admin_category,name="admin_category"),
     path('toggle-category/<int:id>/', views.toggle_category, name='toggle_category'),
+    path("delete_category/<slug:slug>/",views.delete_admin_category,name="delete_admin_category"),
 
 #---------Sub_Category-----------------------    
     path("admin_subcategory/<slug:slug>/",views.admin_subcategory,name="admin_subcategory"),

@@ -127,6 +127,11 @@ def toggle_category(request, id):
 
         return JsonResponse({'status': 'success'})
     
+def delete_admin_category(request,slug):
+    category=get_object_or_404(Category,slug=slug)
+    category.delete()
+    return redirect("admin_category")
+    
 #---------Sub_Category-----------------------
 def admin_subcategory(request,slug):
     category=get_object_or_404(Category, slug=slug)
@@ -202,9 +207,9 @@ def admin_sellerverification(request):
             elif action == "reject":
                 seller.status = "REJECTED"
 
-        if action == "approve_all":
-            SellerProfile.objects.filter(status='PENDING').update(status='APPROVED')
-            return redirect("admin_sellerverification")
+        # if action == "approve_all":
+        #     SellerProfile.objects.filter(status='PENDING').update(status='APPROVED')
+        #     return redirect("admin_sellerverification")
 
         seller.save()
         return redirect("admin_sellerverification")

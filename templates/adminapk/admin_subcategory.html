@@ -229,7 +229,7 @@
 <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-on-secondary-container">Slug</th>
 <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-on-secondary-container">Product Count</th>
 <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-on-secondary-container">Active/Not</th>
-<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-on-secondary-container text-right">Actions</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-on-secondary-container text-center">Actions</th>
 <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-on-secondary-container text-right">Status</th>
 </tr>
 </thead>
@@ -305,9 +305,9 @@
 </td>
 
   <!-- Actions -->
-  <td class="px-6 py-5 text-right">
-    <div class="flex justify-end gap-2">
-      <button class="p-2 hover:bg-secondary-container/50 rounded-lg">✏️</button>
+  <td class="px-4 py-2 bg-surface-container-lowest text-center align-middle">
+    <div class="flex items-center justify-center h-full">
+      <!-- <button class="p-2 hover:bg-secondary-container/50 rounded-lg">✏️</button> -->
       <a href="{% url 'delete_admin_subcategory' sub.slug %}" class="p-2 hover:bg-error-container/50 rounded-lg">🗑️</a>
     </div>
   </td>

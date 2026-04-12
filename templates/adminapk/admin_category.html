@@ -211,7 +211,7 @@
         <th class="px-4 pb-2">Slug</th>
         <th class="px-4 pb-2">SubCategory</th>
         <th class="px-4 pb-2">Active/Not</th>
-        <th class="px-4 pb-2 text-right">Actions</th>
+        <th class="px-4 pb-2 text-center">Actions</th>
         <th class="px-4 pb-2">Status</th>
       </tr>
     </thead>
@@ -264,12 +264,13 @@
         </td>
       
         <!-- Actions -->
-        <td class="px-4 py-6 bg-surface-container-lowest text-right">
-          <div class="flex justify-end gap-2">
-            <button onclick="event.stopPropagation()" class="p-2 hover:bg-gray-200 rounded-full">✏️</button>
-            <button onclick="event.stopPropagation()" class="p-2 hover:bg-red-200 rounded-full">🗑️</button>
+        <td class="px-4 py-2 bg-surface-container-lowest text-center align-middle">
+          <div class="flex items-center justify-center h-full">
+            <!-- <button onclick="event.stopPropagation()" class="p-2 hover:bg-gray-200 rounded-full">✏️</button> -->
+            <button  onclick="event.stopPropagation(); window.location.href='{% url 'delete_admin_category' category.slug %}';" class="p-2 hover:bg-red-200 rounded-full">🗑️</button>
           </div>
         </td>
+
       
         <!-- Status -->
         <td class="px-4 py-6 bg-surface-container-lowest text-center">
