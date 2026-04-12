@@ -89,10 +89,13 @@
 </div>
 </header>
 <!-- Page Header with Mixed Background -->
-<div class="bg-transparent pt-8 pb-12">
-<div class="max-w-[1200px] mx-auto px-6">
-<nav class="flex items-center gap-2 text-charcoal/60 text-sm mb-4">
+<div class="bg-transparent pt-2 pb-12">
+<div class="max-w-[1200px] mx-auto px-1">
+
+<nav class="flex items-center gap-1 text-charcoal/60 text-sm mb-4">
 <a class="hover:text-primary transition-colors" href="{% url 'customer_home'%}">Home</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="{% url 'customer_dashboard'%}">Dashboard</a>
 <span class="material-symbols-outlined text-sm">chevron_right</span>
 <span class="text-charcoal font-medium">Order History</span>
 </nav>
@@ -117,6 +120,53 @@
 
     </div>
 </div>
+
+<!-- All-to-Cancelled Buttons -->
+<div class="w-full overflow-x-auto">
+  <nav class="flex justify-center items-center gap-10 whitespace-nowrap py-4">
+
+    {% with status=request.GET.status|default:'all' %}
+
+    <!-- All -->
+    <a href="?status=all"
+       class="px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center justify-center
+       {% if status == 'all' %} bg-black text-white shadow-md {% else %} text-gray-600 hover:bg-gray-100 {% endif %}">
+      All
+    </a>
+
+    <!-- Placed -->
+    <a href="?status=placed"
+       class="px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center justify-center
+       {% if status == 'placed' %} bg-black text-white shadow-md {% else %} text-gray-600 hover:bg-gray-100 {% endif %}">
+      Placed
+    </a>
+
+    <!-- Shipped -->
+    <a href="?status=shipped"
+       class="px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center justify-center
+       {% if status == 'shipped' %} bg-black text-white shadow-md {% else %} text-gray-600 hover:bg-gray-100 {% endif %}">
+      Shipped
+    </a>
+
+    <!-- Delivered -->
+    <a href="?status=delivered"
+       class="px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center justify-center
+       {% if status == 'delivered' %} bg-black text-white shadow-md {% else %} text-gray-600 hover:bg-gray-100 {% endif %}">
+      Delivered
+    </a>
+
+    <!-- Cancelled -->
+    <a href="?status=cancelled"
+       class="px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center justify-center
+       {% if status == 'cancelled' %} bg-black text-white shadow-md {% else %} text-gray-600 hover:bg-gray-100 {% endif %}">
+      Cancelled
+    </a>
+
+    {% endwith %}
+
+  </nav>
+</div>
+
 </div>
 </div>
 <!-- Main Content Area -->
@@ -170,50 +220,7 @@
 </div>
 </div> -->
 
-<!-- Order Card 2: Shipped
-<div class="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow border border-charcoal/5">
-<div class="p-6">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
-<div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-8 items-center">
-<div>
-<p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Order ID</p>
-<p class="text-base font-bold text-primary">#SO-99451</p>
-</div>
-<div>
-<p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Date Placed</p>
-<p class="text-base font-medium text-charcoal">Nov 02, 2023</p>
-</div>
-<div>
-<p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Total Amount</p>
-<p class="text-base font-bold text-charcoal">$89.00</p>
-</div>
-<div>
-<p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Status</p>
-<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold mt-1">
-<span class="material-symbols-outlined text-sm">local_shipping</span>
-                                    Shipped
-                                </span>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<button class="flex-1 lg:flex-none px-6 py-2.5 rounded-lg border-2 border-primary/10 text-primary font-bold text-sm hover:bg-primary/5 transition-colors">View Details</button>
-<button class="flex-1 lg:flex-none px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-lg">replay</span>
-                                Reorder
-                            </button>
-</div>
-</div>
-<hr class="border-charcoal/5 mb-6"/>
-<div class="flex flex-wrap items-center gap-4">
-<div class="flex -space-x-3 overflow-hidden">
-<img class="inline-block size-12 rounded-lg ring-2 ring-white object-cover bg-gray-100" data-alt="Product thumbnail organic cotton t-shirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQEPmZQFkbV49hE3yJd0x0jQg-MA-nFv5EdTEWGa2i490GwAjLRgVmnTtqFscX58oKLgwHhEQNmCSDIuE93e5Jem4h14xPJP8gAGnKBO6pIwZJLxDidugIrYBmxJ7zEaBmDgCc8SMi0HrfH7VCKeNmMiNYz3IM1IwH4k2BoCDeIKCyH027v5bELq4W0IuEwx4y8hnx7KyjRgFljhC4jACXFrHRb1zLmDADLntus2TrBBnF6izot0N6JK4pLEbUdpvZOibVY4GpsFyf"/>
-</div>
-<p class="text-sm text-charcoal/70">Estimated delivery: <span class="font-bold text-charcoal">Nov 06, 2023</span> via Express Mail</p>
-</div>
-</div>
-</div> -->
-
-<!-- Order Card 3: Processing -->
+<!-- Order Card -->
 {% for order in orders %}
     <div class="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow border border-charcoal/5 mb-6">
         <div class="p-6">
@@ -235,28 +242,56 @@
                         <p class="text-xs uppercase tracking-wider text-charcoal/50 font-bold">Status</p>
                         
                         {# DYNAMIC STATUS BADGE #}
-                        {% if order.status == 'Delivered' %}
+                        {% if order.order_status == 'DELIVERED' %}
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold mt-1">
                                 <span class="material-symbols-outlined text-sm">check_circle</span> Delivered
                             </span>
-                        {% elif order.status == 'Shipped' %}
+                        {% elif order.order_status == 'SHIPPED' %}
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold mt-1">
                                 <span class="material-symbols-outlined text-sm">local_shipping</span> Shipped
                             </span>
+                        {% elif order.order_status == 'CANCELLED' %}
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold mt-1">
+                                <span class="material-symbols-outlined text-sm">cancel</span> Cancelled
+                            </span>
                         {% else %}
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-bold mt-1">
-                                <span class="material-symbols-outlined text-sm">schedule</span> Processing
+                                <span class="material-symbols-outlined text-sm">schedule</span> PLACED
                             </span>
                         {% endif %}
                     </div>
+
+            <div>
+                <p class="text-xs uppercase tracking-wider text-gray-500 font-bold">Payment</p>
+
+                {% if order.payment_status == 'PAID' %}
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold mt-1">
+                    <span class="material-symbols-outlined text-sm">check_circle</span>
+                    Paid
+                  </span>
+              
+                {% elif order.payment_status == 'FAILED' %}
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold mt-1">
+                    <span class="material-symbols-outlined text-sm">error</span>
+                    Failed
+                  </span>
+              
+                {% else %}
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-bold mt-1">
+                    <span class="material-symbols-outlined text-sm">schedule</span>
+                    Pending
+                  </span>
+                {% endif %}
+            </div>
+
                 </div>
 
 
-<div class="flex flex-wrap items-center gap-2 sm:gap-3">
-    <a href="#"
+<div class="flex flex-wrap items-center gap-2 sm:gap-2">
+    <!-- <a href="#"
        class="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-lg border-2 border-primary/20 bg-white text-primary font-semibold text-xs sm:text-sm hover:bg-primary/5 hover:border-primary transition-all shadow-sm whitespace-nowrap">
        View Details
-    </a>
+    </a> -->
 
     <!-- {% if order.order_status == 'DELIVERED' %}
     <a href="{% url 'add_review' order.items.first.variant.product.id %}"
@@ -266,11 +301,21 @@
     </a>
     {% endif %} -->
 
+    {% if order.order_status != 'CANCELLED' %}
     <a href="{% url 'add_review' order.items.first.variant.product.id %}"
        class="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-amber-200/50 transition-all whitespace-nowrap flex items-center justify-center gap-1.5">
        <span class="material-symbols-outlined text-lg">rate_review</span>
        Review
     </a>
+    {% endif %}
+
+    {% if order.order_status == 'PLACED' %}
+    <a href="{% url 'cancel_order' order.id %}"
+       class="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-lg bg-red-50 text-red-600 font-bold text-xs sm:text-sm hover:bg-red-100 transition-all shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap border border-red-100">
+       <span class="material-symbols-outlined text-lg">cancel</span>
+       Cancel
+    </a>
+    {% endif %}
 
     <a href="{% url 'reorder' order.id %}"
        class="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-xs sm:text-sm hover:opacity-90 transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-1.5 whitespace-nowrap">
@@ -278,8 +323,7 @@
        Reorder
     </a>
 </div>
-
-            </div>
+</div>
 
 <hr class="border-charcoal/5 mb-3"/>
 
@@ -347,10 +391,30 @@
 
 </div>
 </div>
+
+{% empty %}
+
+  <!-- No Orders UI -->
+  <div class="w-full flex flex-col items-center justify-center py-20 text-center">
+    
+    <p class="text-lg font-semibold text-gray-700">
+      No Orders Present
+    </p>
+
+    <p class="text-sm text-gray-500 mt-1">
+      You haven't placed any orders yet.
+    </p>
+
+    <a href="{% url 'customer_home' %}" 
+       class="mt-4 px-5 py-2 bg-black text-white rounded-lg text-sm hover:bg-gray-800">
+      Start Shopping
+    </a>
+
+  </div>
 {%endfor%}
 
 <!-- Pagination -->
-<div class="flex items-center justify-center gap-2 mt-4">
+<!-- <div class="flex items-center justify-center gap-2 mt-4">
 <button class="size-10 flex items-center justify-center rounded-lg border border-charcoal/10 bg-white text-charcoal hover:bg-ice-blue/30 transition-colors">
 <span class="material-symbols-outlined">chevron_left</span>
 </button>
@@ -360,7 +424,7 @@
 <button class="size-10 flex items-center justify-center rounded-lg border border-charcoal/10 bg-white text-charcoal hover:bg-ice-blue/30 transition-colors">
 <span class="material-symbols-outlined">chevron_right</span>
 </button>
-</div>
+</div> -->
 </div>
 </main>
 <!-- Footer -->

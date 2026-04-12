@@ -481,6 +481,18 @@ def order_history(request):
         three_month_ago = timezone.now() - timedelta(days=90)
         orders = orders.filter(ordered_at__gte=three_month_ago)
 
+    status = request.GET.get('status')
+    if status == 'all':
+        orders = Order.objects.filter(user=request.user).order_by('-ordered_at')
+    elif status == 'pending':
+        orders = Order.objects.filter(user=request.user, order_status="PLACED").order_by('-ordered_at')
+    elif status == 'shipped':
+        orders = Order.objects.filter(user=request.user, order_status="SHIPPED").order_by('-ordered_at')
+    elif status == 'delivered':
+        orders = Order.objects.filter(user=request.user, order_status="DELIVERED").order_by('-ordered_at')
+    elif status == 'cancelled':
+        orders = Order.objects.filter(user=request.user, order_status="CANCELLED").order_by('-ordered_at')
+
     return render(request,"customer/order_history.html",{"orders":orders})
 
 @login_required
@@ -497,6 +509,14 @@ def reorder(request,order_id):
         )
     messages.success(request,"Items added to Cart Again.")
     return redirect("view_cart")
+
+@login_required
+def cancel_order(request,order_id):
+    order=get_object_or_404(Order,id=order_id,user=request.user)
+    if order.order_status=='PLACED':
+        order.order_status='CANCELLED'
+        order.save()
+    return redirect('order_history')
 
 #----------------Search---------------------
 # def search(request):
@@ -631,11 +651,11 @@ def payment_success(request):
 
         payment.razorpay_payment_id = payment_id
         payment.razorpay_signature = signature
-        payment.payment_status = "SUCCESS"
+        payment.payment_status = "PAID"
         payment.save()
 
         order = payment.order
-        order.payment_status = "SUCCESS"
+        order.payment_status = "PAID"
         order.save()
 
         return redirect('order_confirmation', order_id=order.id)

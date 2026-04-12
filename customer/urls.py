@@ -37,6 +37,7 @@ urlpatterns = [
     path("order/confirmation/<int:order_id>/",views.order_confirmation,name="order_confirmation"),
     path("customer/order_history/",views.order_history,name="order_history"),
     path("reorder/<int:order_id>/",views.reorder,name="reorder"),
+    path("cancel_order/<int:order_id>/",views.cancel_order,name="cancel_order"),
 
     #------------------Search---------------------
     path("search/",views.search,name="search"),

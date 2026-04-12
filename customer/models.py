@@ -36,18 +36,19 @@ class Order(models.Model):
         ('ONLINE', 'UPI/Card'),
     ]
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, default='COD')
+
+    payment_status = models.CharField(max_length=20,
+        choices=[
+            ('PENDING', 'Pending'),
+            ('PAID', 'Paid'),
+            ('FAILED', 'Failed')],default='PENDING')
     
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
     order_number = models.CharField(max_length=100, unique=True)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_status = models.CharField(max_length=20,
-        choices=[
-            ('PENDING', 'Pending'),
-            ('SUCCESS', 'Success'),
-            ('FAILED', 'Failed')
-            ],default='PENDING')
     ordered_at = models.DateTimeField(auto_now_add=True)
     address= models.ForeignKey(Address, on_delete=models.CASCADE, related_name="address", null=True)
+    
     ORDER_STATUS_CHOICES = [
     ('PLACED', 'Placed'),
     ('SHIPPED', 'Shipped'),
@@ -55,6 +56,13 @@ class Order(models.Model):
     ('CANCELLED', 'Cancelled'),
     ]
     order_status = models.CharField(max_length=20, choices=ORDER_STATUS_CHOICES, default='PLACED')
+
+def save(self, *args, **kwargs):
+    if self.payment_method == 'COD':
+        self.payment_status = 'PENDING'
+    elif self.payment_method == 'ONLINE':
+        self.payment_status = 'PAID'
+    super().save(*args, **kwargs)
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
