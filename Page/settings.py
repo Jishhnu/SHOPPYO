@@ -178,7 +178,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
-SOCIALACCOUNT_ADAPTER = 'core.utils.AutoConnectSocialAccountAdapter'
+# SOCIALACCOUNT_ADAPTER = 'core.utils.AutoConnectSocialAccountAdapter'
 
 #.env
 from dotenv import load_dotenv
