@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-a#di4rr9azl6%8(8+d1m#5bjajmo^$b5mil39c%32-xgoaq1)0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*','13.219.92.228']
 
 
 # Application definition
@@ -178,7 +178,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
-SOCIALACCOUNT_ADAPTER = 'core.utils.AutoConnectSocialAccountAdapter'
+# SOCIALACCOUNT_ADAPTER = 'core.utils.AutoConnectSocialAccountAdapter'
 
 #.env
 from dotenv import load_dotenv
