@@ -1,7 +1,8 @@
-from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
 # from django.http import HttpResponse
-from core.models import User,Category,SubCategory
-from .models import SellerProfile,Product
+from core.models import *
+from customer.models import *
+from .models import *
 from django.utils.text import slugify
 from django.contrib import messages
 from django.contrib.auth import authenticate, login ,logout
@@ -9,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from core.decorator import seller_required
 
 # Create your views here.
-# --------------Seller_Register--------------------------
+#--------------Seller_Register--------------------------
 def Seller_Register(request):
     if request.method=="POST":
         first_name=request.POST.get("first_name")
@@ -38,15 +39,25 @@ def Seller_Register(request):
         return redirect("login")
     return render(request, "seller/Seller_Register.html")
 
-# --------------Seller_Home--------------------------
+#--------------Seller_Home--------------------------
 def seller_home(request):
     return render(request, "seller/seller_home.html")
 
-# --------------Seller_Dashboard--------------------------
+#--------------Seller_Dashboard--------------------------
 @seller_required
 @login_required
 def Seller_Dashboard(request):
     seller_profile=SellerProfile.objects.all()
     return render(request, "seller/Seller_dashboard.html", {"seller_profile": seller_profile})
 
+#-------------Product_Inventory--------------------------
+def product_inventory(request):
+    try:
+        seller = request.user.seller_profile
+    except:
+        return HttpResponse("Seller profile not found")
+    products = Product.objects.filter(seller=seller).prefetch_related('variants__images').order_by('-created_at')
+    return render(request, "seller/product_inventory.html", {"products": products})
 
+def seller_add_products(request):
+    return render(request, "seller/seller_add_products.html")

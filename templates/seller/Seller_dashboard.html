@@ -47,15 +47,20 @@
 <div class="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
 <div class="flex items-center gap-8">
 <div class="flex items-center gap-2">
-<div class="text-primary" style="color: #D6E8EE;">
-<span class="material-symbols-outlined text-4xl">shopping_bag</span>
-</div>
-<h2 class="text-xl font-extrabold tracking-tight hidden md:block">ShoppyO <span class="text-primary/90 font-medium text-lg">Seller</span></h2>
+<div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+      
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-extrabold tracking-tighter leading-none">
+          Shoppy<span class="text-blue-300">O</span><span class="text-primary/90 px-1 font-medium text-lg">Seller</span>
+        </h1>
+      </div>
 </div>
 <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-300">
 <a class="hover:text-primary transition-colors border-b-2 border-primary pb-1" href="#">Dashboard</a>
 <a class="hover:text-primary transition-colors pb-1" href="#">Orders</a>
-<a class="hover:text-primary transition-colors pb-1" href="#">Inventory</a>
+<a class="hover:text-primary transition-colors pb-1" href="{% url 'product_inventory' %}">Inventory</a>
 <a class="hover:text-primary transition-colors pb-1" href="#">Analytics</a>
 </div>
 </div>
@@ -66,28 +71,21 @@
 </div>
 </div>
 <div class="flex items-center gap-3 lg:gap-5">
-<button class="relative p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
-<span class="material-symbols-outlined">notifications</span>
-<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-[#1A2D37]"></span>
-</button>
-<button class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors hidden sm:block">
-<span class="material-symbols-outlined">settings</span>
-</button>
-{% for i in seller_profile %}
+
 <div class="h-8 w-px bg-slate-700 mx-1"></div>
-<div class="flex items-center gap-3">
+
+<!-- Store Name -->
+<!-- <div class="flex items-center gap-3"> -->
 <div class="text-right hidden md:block">
-<p class="text-xs font-bold">{{i.store_name}}</p>
+<p class="text-xs font-bold">{{store_name}}Sasi</p>
 <p class="text-[10px] text-slate-400">Pro Merchant</p>
 </div>
-<div class="w-10 h-10 rounded-full bg-primary/20 border-2 border-primary/50 overflow-hidden">
-<img alt="Seller profile" class="w-full h-full object-cover" data-alt="Professional seller profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEIW5nl49fBQJ_YMYNtypZwX3CvdcItYKrmjDqBkC1tCheKN1n5mYrqxrC4c7T2hVXtMUgOz6Z_UAl1zCaomQRlfe-gau1VWaDpIFHwBGh1YdlTAwTD86xwJEhsWX78bQsbBEuZ3DjKbakxCR2mO2ZU2QBU9HBVfAU5w2WVkvaHvPxvHcn4cQt_fqq6XmpcKVuxLuWQ3boTeztxCcgpixxGzHH2lziL1dvl2_EhwMYWrUfRGmCsAu84wzZZUF7B5tUTQBh9dNO3m-B"/>
-</div>
-</div>
-{% endfor %}
+<!-- </div> -->
+
 </div>
 </div>
 </header>
+
 <main class="max-w-[1440px] mx-auto p-4 lg:p-8 ice-blue-gradient min-h-screen">
 <!-- Dashboard Header -->
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
@@ -95,7 +93,7 @@
 <h1 class="text-3xl font-black text-slate-900 tracking-tight">Store Overview</h1>
 <p class="text-slate-500 mt-1">Welcome back, Alex. Your store is performing 12% better than last week.</p>
 </div>
-<div class="flex gap-3">
+<!-- <div class="flex gap-3">
 <button class="flex items-center gap-2 px-4 py-2 bg-white border rounded-xl text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm" style="color: #1A2D37; border-color: #D6E8EE;">
 <span class="material-symbols-outlined text-lg">calendar_today</span>
                     Last 30 Days
@@ -104,7 +102,7 @@
 <span class="material-symbols-outlined text-lg">download</span>
                     Export Data
                 </button>
-</div>
+</div> -->
 </div>
 <!-- Metric Cards -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -381,7 +379,7 @@
 </div>
 </div>
 <div class="max-w-[1440px] mx-auto mt-12 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] font-bold uppercase tracking-widest">
-<p>© 2024 ShoppyO E-commerce Platform. All rights reserved.</p>
+<p>© 2026 ShoppyO E-commerce Platform. All rights reserved.</p>
 <div class="flex gap-8">
 <a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
 <a class="hover:text-white transition-colors" href="#">Terms of Service</a>

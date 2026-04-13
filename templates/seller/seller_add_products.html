@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShoppyO | Add New Listing</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <style>
+        body { font-family: 'Public Sans', sans-serif; background-color: #F8FAFC; }
+        .input-focus { outline: none; transition: all 0.2s; }
+        .input-focus:focus { ring: 2px; ring-color: #6366F1; border-color: #6366F1; }
+    </style>
+</head>
+<body>
+
+    <header class="bg-[#1A2D37] text-white py-4 px-6 lg:px-10 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </a>
+                <h1 class="text-xl font-black tracking-tight">Add New Product</h1>
+            </div>
+            <div class="flex gap-3">
+                <!-- <button class="px-5 py-2 text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-white transition-colors">Save Draft</button> -->
+                <button class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-500/20">Submit for Review</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-6 lg:p-10">
+        <form action="" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <div class="lg:col-span-2 space-y-8">
+                
+                <section class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-indigo-500">info</span>
+                        <h2 class="text-lg font-black text-slate-800">General Information</h2>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">Product Name</label>
+                            <input type="text" name="name" placeholder="e.g. Nike Air Max 270" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus" required>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">Subcategory</label>
+                                <select name="subcategory" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus">
+                                    <option>Select a subcategory</option>
+                                    </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">Brand</label>
+                                <input type="text" name="brand" placeholder="e.g. Nike" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">Model Number</label>
+                                <input type="text" name="model_number" placeholder="MN-9920" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">URL Slug</label>
+                                <input type="text" name="slug" placeholder="nike-air-max-270" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">Description</label>
+                            <textarea name="description" rows="5" placeholder="Describe your product in detail..." class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus"></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-indigo-500">payments</span>
+                        <h2 class="text-lg font-black text-slate-800">Pricing & Inventory</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">MRP (₹)</label>
+                            <input type="number" name="mrp" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">Selling Price (₹)</label>
+                            <input type="number" name="selling_price" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus font-bold text-indigo-600">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">Cost Price (₹)</label>
+                            <input type="number" name="cost_price" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                        <div>
+                            <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">Stock Quantity</label>
+                            <input type="number" name="stock_quantity" placeholder="0" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">SKU Code</label>
+                            <input type="text" name="sku_code" placeholder="ABC-123" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">Tax (%)</label>
+                            <input type="number" name="tax_percentage" placeholder="18" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus">
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="space-y-8">
+                
+                <section class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-indigo-500">local_shipping</span>
+                        <h2 class="text-lg font-black text-slate-800">Logistics</h2>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-400 mb-1">Weight (kg)</label>
+                                <input type="number" step="0.01" name="weight" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-2 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-400 mb-1">Length (cm)</label>
+                                <input type="number" name="length" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-2 text-sm">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-400 mb-1">Width (cm)</label>
+                                <input type="number" name="width" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-2 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-400 mb-1">Height (cm)</label>
+                                <input type="number" name="height" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-2 text-sm">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-indigo-500">assignment_return</span>
+                        <h2 class="text-lg font-black text-slate-800">Returns & Policy</h2>
+                    </div>
+
+                    <div class="space-y-4">
+                        <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl cursor-pointer">
+                            <span class="text-sm font-bold text-slate-700">Cancellable</span>
+                            <input type="checkbox" name="is_cancellable" checked class="rounded text-indigo-500 focus:ring-indigo-500">
+                        </label>
+                        
+                        <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl cursor-pointer">
+                            <span class="text-sm font-bold text-slate-700">Returnable</span>
+                            <input type="checkbox" name="is_returnable" checked class="rounded text-indigo-500 focus:ring-indigo-500">
+                        </label>
+
+                        <div>
+                            <label class="block text-[11px] font-black uppercase text-slate-500 mb-2 tracking-wider">Return Days</label>
+                            <select name="return_days" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-3 text-sm input-focus">
+                                <option value="7">7 Days</option>
+                                <option value="15">15 Days</option>
+                                <option value="30">30 Days</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="bg-indigo-50 rounded-3xl p-6 border border-indigo-100">
+                    <p class="text-xs text-indigo-700 font-semibold leading-relaxed">
+                        <span class="font-black uppercase block mb-1">💡 Seller Tip:</span>
+                        High-quality descriptions and accurate weight measurements lead to better search rankings and lower return rates.
+                    </p>
+                </div>
+            </div>
+
+        </form>
+        <section class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+    <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-indigo-500">photo_library</span>
+            <h2 class="text-lg font-black text-slate-800">Product Media</h2>
+        </div>
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Max 5 Images</span>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="image-grid">
+        <label class="aspect-square border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:bg-slate-50 hover:border-indigo-300 transition-all group">
+            <span class="material-symbols-outlined text-slate-400 group-hover:text-indigo-500 mb-1">add_a_photo</span>
+            <span class="text-[10px] font-black uppercase text-slate-400 group-hover:text-indigo-500">Add Photo</span>
+            <input type="file" name="product_images" multiple class="hidden" accept="image/*" onchange="previewImages(this)">
+        </label>
+
+        <div class="relative aspect-square rounded-2xl overflow-hidden border border-slate-200 group">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=300" class="w-full h-full object-cover">
+            
+            <label class="absolute top-2 right-2 cursor-pointer">
+                <input type="radio" name="is_primary" value="0" checked class="peer hidden">
+                <div class="w-6 h-6 rounded-full bg-white/80 backdrop-blur-sm border border-slate-200 flex items-center justify-center text-slate-400 peer-checked:bg-green-500 peer-checked:text-white peer-checked:border-green-500 transition-all shadow-sm">
+                    <span class="material-symbols-outlined text-sm font-bold">done</span>
+                </div>
+            </label>
+            
+            <button class="absolute bottom-2 right-2 bg-red-500/80 text-white p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                <span class="material-symbols-outlined text-xs">delete</span>
+            </button>
+        </div>
+    </div>
+    <p class="mt-4 text-[11px] text-slate-400 italic">Select the green tick on the image you want to use as the main thumbnail.</p>
+</section>
+    </main>
+<script>
+function previewImages(input) {
+    const grid = document.getElementById('image-grid');
+    const files = Array.from(input.files);
+
+    files.forEach((file) => {
+        // Only process image files
+        if (!file.type.startsWith('image/')) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const div = document.createElement('div');
+            // Added 'animate-in' and 'group' for better UX
+            div.className = "relative aspect-square rounded-2xl overflow-hidden border border-slate-200 group transition-all";
+            
+            div.innerHTML = `
+                <img src="${e.target.result}" class="w-full h-full object-cover">
+                
+                <label class="absolute top-2 right-2 cursor-pointer z-10">
+                    <input type="radio" name="is_primary" value="${file.name}" 
+                           class="peer hidden" ${grid.querySelectorAll('input[type="radio"]').length === 0 ? 'checked' : ''}>
+                    <div class="w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm border border-slate-200 
+                                flex items-center justify-center text-transparent 
+                                peer-checked:bg-green-500 peer-checked:text-white peer-checked:border-green-500 
+                                transition-all shadow-md hover:scale-110">
+                        <span class="material-symbols-outlined text-sm font-black">done</span>
+                    </div>
+                </label>
+
+                <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button type="button" onclick="this.parentElement.parentElement.remove()" 
+                            class="bg-red-500 text-white p-2 rounded-xl hover:bg-red-600 transition-colors shadow-lg">
+                        <span class="material-symbols-outlined text-sm">delete</span>
+                    </button>
+                </div>
+
+                <div class="absolute bottom-0 inset-x-0 bg-green-500 text-[8px] text-white font-black uppercase py-0.5 text-center translate-y-full peer-checked:translate-y-0 transition-transform">
+                    Main Cover
+                </div>
+            `;
+            grid.appendChild(div);
+        }
+        reader.readAsDataURL(file);
+    });
+}
+</script>
+</body>
+</html>

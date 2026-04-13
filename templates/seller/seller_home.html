@@ -46,22 +46,32 @@
 <header class="sticky top-0 z-50 w-full bg-primary text-white border-b border-white/10">
 <div class="max-w-7xl mx-auto px-6 lg:px-10 flex h-16 items-center justify-between">
 <div class="flex items-center gap-2">
-<div class="size-8 bg-white/10 rounded flex items-center justify-center">
-<span class="material-symbols-outlined text-white">storefront</span>
+<a href="{% url 'customer_home' %}" class="flex items-center gap-2 text-white group">
+      <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+      
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-extrabold tracking-tighter leading-none">
+          Shoppy<span class="text-blue-300">O</span>
+        </h1>
+        <span class="text-xs font-medium text-slate-300 tracking-wider text-right -mt-0.5">
+          Style Now
+        </span>
+      </div>
+    </a>
 </div>
-<h1 class="text-xl font-bold tracking-tight">ShoppyO</h1>
-</div>
-<nav class="hidden md:flex items-center gap-8">
+<!-- <nav class="hidden md:flex items-center gap-8">
 <a class="text-sm font-medium hover:text-blue-200 transition-colors" href="#">Solutions</a>
 <a class="text-sm font-medium hover:text-blue-200 transition-colors" href="#">Pricing</a>
 <a class="text-sm font-medium hover:text-blue-200 transition-colors" href="#">Resources</a>
 <a class="text-sm font-medium hover:text-blue-200 transition-colors" href="#">Success Stories</a>
-</nav>
+</nav> -->
 <div class="flex items-center gap-4">
-<a class="text-sm font-medium hidden sm:block hover:underline" href="#">Log In</a>
-<button class="bg-white text-primary px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-50 transition-colors shadow-lg">
+<a href="{% url 'login' %}" class="text-sm font-medium hidden sm:block hover:underline" href="#">Log In</a>
+<a href="{% url 'Seller_Register' %}" class="bg-white text-primary px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-50 transition-colors shadow-lg">
                     Sign Up to Sell
-                </button>
+</a>
 </div>
 </div>
 </header>
@@ -275,10 +285,18 @@
 <div class="max-w-7xl mx-auto px-6 lg:px-10">
 <div class="grid grid-cols-2 lg:grid-cols-5 gap-12 mb-20">
 <div class="col-span-2">
-<div class="flex items-center gap-2 text-white mb-6">
-<span class="material-symbols-outlined">storefront</span>
-<span class="text-xl font-bold">ShoppyO</span>
-</div>
+<div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+      
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-extrabold tracking-tighter leading-none px-3">
+          Shoppy<span class="text-blue-300">O</span>
+        </h1>
+        <span class="text-xs font-medium text-slate-300 tracking-wider text-right -mt-0.5">
+          Style Now
+        </span>
+      </div>
 <p class="max-w-sm mb-6 leading-relaxed">The global commerce platform for professional merchants. Built for scale, designed for simplicity, and committed to your growth.</p>
 <div class="flex gap-4">
 <a class="hover:text-white" href="#"><span class="material-symbols-outlined">share</span></a>
