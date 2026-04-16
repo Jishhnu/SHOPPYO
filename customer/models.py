@@ -29,6 +29,9 @@ class Review(models.Model):
     rating = models.IntegerField()
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    seller_reply = models.TextField(blank=True, null=True)
+    replied_at = models.DateTimeField(blank=True, null=True)
 
 class Order(models.Model):
     PAYMENT_METHOD_CHOICES = [

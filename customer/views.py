@@ -584,7 +584,6 @@ def live_search(request):
 
 #---------------------Review--------------------------------
 
-
 def add_review(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     user = request.user

@@ -58,10 +58,10 @@
       </div>
 </div>
 <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-300">
-<a class="hover:text-primary transition-colors border-b-2 border-primary pb-1" href="#">Dashboard</a>
-<a class="hover:text-primary transition-colors pb-1" href="#">Orders</a>
+<a class="hover:text-primary transition-colors border-b-2 border-primary pb-1" href="{% url 'seller_dashboard' %}">Dashboard</a>
+<a class="hover:text-primary transition-colors pb-1" href="{% url 'seller_order' %}">Orders</a>
 <a class="hover:text-primary transition-colors pb-1" href="{% url 'product_inventory' %}">Inventory</a>
-<a class="hover:text-primary transition-colors pb-1" href="#">Analytics</a>
+<a class="hover:text-primary transition-colors pb-1" href="{% url 'seller_review' %}">Review</a>
 </div>
 </div>
 <div class="flex-1 max-w-md mx-4 hidden sm:block">
@@ -75,12 +75,39 @@
 <div class="h-8 w-px bg-slate-700 mx-1"></div>
 
 <!-- Store Name -->
-<!-- <div class="flex items-center gap-3"> -->
-<div class="text-right hidden md:block">
-<p class="text-xs font-bold">{{store_name}}Sasi</p>
-<p class="text-[10px] text-slate-400">Pro Merchant</p>
+<div class="relative hidden md:block">
+
+    <!-- CLICK AREA -->
+    <button onclick="toggleDropdown()" class="flex items-center gap-2 px-3 py-2 hover:bg-white/10 rounded-lg transition-colors">
+        <span class="material-symbols-outlined">person</span>
+        <span class="hidden sm:inline font-medium text-sm">
+            Hi, {{ user.first_name }}
+        </span>
+    </button>
+
+    <!-- DROPDOWN -->
+    <div id="profileDropdown" class="hidden absolute right-0 mt-3 w-44 bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden z-50">
+        
+        <a href="{% url 'seller_profile' %}" 
+           class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+            👤 Profile
+        </a>
+
+        <a href="{% url 'seller_order' %}" 
+           class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+            📦 Orders
+        </a>
+
+        <hr class="border-slate-100">
+
+        <a href="#" 
+           class="block px-4 py-2 text-sm text-rose-500 hover:bg-rose-50">
+            🚪 Logout
+        </a>
+
+    </div>
+
 </div>
-<!-- </div> -->
 
 </div>
 </div>
@@ -114,7 +141,7 @@
 <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full" style="background-color: #D6E8EE; color: #1A2D37;">+14.2%</span>
 </div>
 <p class="text-sm font-medium text-slate-500">Total Revenue</p>
-<h3 class="text-2xl font-extrabold text-slate-900 mt-1">$54,230.15</h3>
+<h3 class="text-2xl font-extrabold text-slate-900 mt-1">₹{{ total_revenue }}</h3>
 </div>
 <div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
 <div class="flex justify-between items-start mb-4">
@@ -124,7 +151,7 @@
 <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full" style="background-color: #D6E8EE; color: #1A2D37;">+5.1%</span>
 </div>
 <p class="text-sm font-medium text-slate-500">Active Orders</p>
-<h3 class="text-2xl font-extrabold text-slate-900 mt-1">1,482</h3>
+<h3 class="text-2xl font-extrabold text-slate-900 mt-1">{{ active_orders }}</h3>
 </div>
 <div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
 <div class="flex justify-between items-start mb-4">
@@ -144,7 +171,7 @@
 <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full" style="background-color: #D6E8EE; color: #1A2D37;">Top 1%</span>
 </div>
 <p class="text-sm font-medium text-slate-500">Seller Rating</p>
-<h3 class="text-2xl font-extrabold text-slate-900 mt-1">4.9 / 5.0</h3>
+<h3 class="text-2xl font-extrabold text-slate-900 mt-1">{{ avg_rating }} / 5.0</h3>
 </div>
 </div>
 <!-- Main Analytics & Content -->
@@ -193,68 +220,88 @@
 </div>
 </div>
 <!-- Inventory Widget -->
-<div class="bg-white p-8 rounded-xl border border-slate-100 shadow-sm">
-<div class="flex items-center justify-between mb-6">
-<h2 class="text-lg font-bold text-slate-900">Low Stock Alerts</h2>
-<span class="material-symbols-outlined text-slate-400">inventory_2</span>
-</div>
-<div class="space-y-6">
-<div class="space-y-2">
-<div class="flex justify-between text-sm">
-<span class="font-bold text-slate-700">ShoppyO Wireless Buds</span>
-<span class="text-rose-500 font-bold">12 left</span>
-</div>
-<div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-<div class="h-full bg-rose-500" style="width: 15%"></div>
-</div>
-</div>
-<div class="space-y-2">
-<div class="flex justify-between text-sm">
-<span class="font-bold text-slate-700">Ergonomic Office Chair</span>
-<span class="text-amber-500 font-bold">45 left</span>
-</div>
-<div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-<div class="h-full bg-amber-500" style="width: 35%"></div>
-</div>
-</div>
-<div class="space-y-2">
-<div class="flex justify-between text-sm">
-<span class="font-bold text-slate-700">Mechanical Keyboard v2</span>
-<span class="text-rose-500 font-bold">8 left</span>
-</div>
-<div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-<div class="h-full bg-rose-500" style="width: 10%"></div>
-</div>
-</div>
-<div class="space-y-2">
-<div class="flex justify-between text-sm">
-<span class="font-bold text-slate-700">USB-C Fast Charger</span>
-<span class="text-slate-400 font-bold">120 left</span>
-</div>
-<div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-<div class="h-full bg-primary" style="width: 70%"></div>
-</div>
-</div>
-</div>
-<button class="w-full mt-8 py-3 border-2 border-dashed rounded-xl text-sm font-bold transition-all hover:bg-[#D6E8EE]" style="color: #607D8B; border-color: #607D8B;">
-                    Restock All Items
-                </button>
-<div class="mt-8 p-4 bg-slate-50 rounded-xl">
-<div class="flex gap-3">
-<span class="material-symbols-outlined text-primary" style="color: #1A2D37;">info</span>
+<div class="bg-white p-8 rounded-xl border border-slate-100 shadow-sm h-full flex flex-col justify-between">
+
+<!-- Header -->
 <div>
-<p class="text-xs font-bold text-slate-800">Inventory Health</p>
-<p class="text-[11px] text-slate-500 mt-0.5">Your stock turnover is 20% faster than average.</p>
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-lg font-bold text-slate-900">Low Stock Alerts</h2>
+        <span class="material-symbols-outlined text-slate-400">inventory_2</span>
+    </div>
+
+    <!-- Items -->
+    <div class="space-y-6">
+    {% for product in low_stock_products %}
+    {% with stock=product.min_stock %}
+
+    <div class="space-y-2">
+        
+        <div class="flex justify-between items-center text-sm">
+            <span class="font-bold text-slate-700 truncate">
+                {{ product.name }}
+            </span>
+
+            <span class="
+                {% if stock < 20 %}
+                    text-rose-500
+                {% elif stock < 50 %}
+                    text-amber-500
+                {% else %}
+                    text-slate-400
+                {% endif %}
+                font-bold whitespace-nowrap">
+                {{ stock }} left
+            </span>
+        </div>
+
+        <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+            <div class="h-full 
+                {% if stock < 20 %}
+                    bg-rose-500
+                {% elif stock < 50 %}
+                    bg-amber-500
+                {% else %}
+                    bg-primary
+                {% endif %}"
+                style="width: {{ stock }}%">
+            </div>
+        </div>
+
+    </div>
+
+    {% endwith %}
+    {% endfor %}
+    </div>
 </div>
+
+<!-- Bottom Section -->
+<div>
+    <button onclick="window.location.href='{% url 'product_inventory' %}'"
+        class="w-full mt-5 py-3 border-2 border-dashed rounded-xl text-sm font-bold transition-all hover:bg-[#D6E8EE]"
+        style="color: #607D8B; border-color: #607D8B;">
+        Restock All Items
+    </button>
+
+    <div class="mt-5 p-4 bg-slate-50 rounded-xl">
+        <div class="flex gap-3">
+            <span class="material-symbols-outlined text-primary" style="color: #1A2D37;">info</span>
+            <div>
+                <p class="text-xs font-bold text-slate-800">Inventory Health</p>
+                <p class="text-[11px] text-slate-500 mt-0.5">
+                    Your stock turnover is 20% faster than average.
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
 </div>
 </div>
 <!-- Recent Orders Table -->
 <div class="mt-8 bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
 <div class="px-8 py-6 border-b border-slate-100 flex items-center justify-between">
 <h2 class="text-lg font-bold text-slate-900">Recent Active Orders</h2>
-<a class="text-sm font-bold text-primary hover:underline" href="#" style="color: #607D8B;">View All Orders</a>
+<a class="text-sm font-bold text-primary hover:underline" href="{% url 'seller_order' %}" style="color: #607D8B;">View All Orders</a>
 </div>
 <div class="overflow-x-auto">
 <table class="w-full text-left">
@@ -269,63 +316,76 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-slate-100">
+
+{% for order in recent_orders %}
 <tr class="hover:bg-slate-50/50 transition-colors">
-<td class="px-8 py-4 text-sm font-bold text-slate-900">#ORD-90210</td>
-<td class="px-8 py-4">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold">JD</div>
-<span class="text-sm font-medium text-slate-700">Jane Doe</span>
-</div>
+
+    <!-- Order ID -->
+    <td class="px-8 py-4 text-sm font-bold text-slate-900">
+        #ORD-{{ order.id }}
+    </td>
+
+    <!-- Customer -->
+    <td class="px-8 py-4">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold">
+                {{ order.user.username|slice:":2"|upper }}
+            </div>
+            <span class="text-sm font-medium text-slate-700">
+                {{ order.user.username }}
+            </span>
+        </div>
+    </td>
+
+    <!-- Product -->
+<td class="px-8 py-4 text-sm text-slate-600">
+    {% for item in order.items.all|slice:":1" %}
+        {{ item.variant.product.name }}
+    {% empty %}
+        No product
+    {% endfor %}
 </td>
-<td class="px-8 py-4 text-sm text-slate-600">Wireless Buds Pro</td>
-<td class="px-8 py-4 text-sm font-bold text-slate-900">$129.00</td>
-<td class="px-8 py-4">
-<span class="px-2.5 py-1 bg-amber-50 text-amber-600 rounded-full text-[10px] font-bold uppercase tracking-wide">Processing</span>
-</td>
-<td class="px-8 py-4">
-<button class="text-slate-400 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-lg">visibility</span>
-</button>
-</td>
+
+    <!-- Amount -->
+    <td class="px-8 py-4 text-sm font-bold text-slate-900">
+        ₹{{ order.total_amount }}
+    </td>
+
+    <!-- Status -->
+    <td class="px-8 py-4">
+        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide
+        {% if order.order_status == 'PLACED' %}
+            bg-amber-50 text-amber-600
+        {% elif order.order_status == 'SHIPPED' %}
+            bg-emerald-50 text-emerald-600
+        {% elif order.order_status == 'DELIVERED' %}
+            bg-slate-100 text-slate-600
+        {% else %}
+            bg-slate-100 text-slate-600
+        {% endif %}
+        ">
+            {{ order.order_status }}
+        </span>
+    </td>
+
+    <!-- Actions -->
+    <td class="px-8 py-4">
+        <a href="{% url 'seller_order_details' order.id %}" 
+           class="text-slate-400 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-lg">visibility</span>
+        </a>
+    </td>
+
 </tr>
-<tr class="hover:bg-slate-50/50 transition-colors">
-<td class="px-8 py-4 text-sm font-bold text-slate-900">#ORD-90211</td>
-<td class="px-8 py-4">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold">MS</div>
-<span class="text-sm font-medium text-slate-700">Mark Smith</span>
-</div>
-</td>
-<td class="px-8 py-4 text-sm text-slate-600">Ergo Office Chair</td>
-<td class="px-8 py-4 text-sm font-bold text-slate-900">$345.50</td>
-<td class="px-8 py-4">
-<span class="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-bold uppercase tracking-wide" style="background-color: #D6E8EE; color: #1A2D37;">Shipped</span>
-</td>
-<td class="px-8 py-4">
-<button class="text-slate-400 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-lg">visibility</span>
-</button>
-</td>
+
+{% empty %}
+<tr>
+    <td colspan="6" class="text-center py-6 text-slate-400">
+        No recent orders
+    </td>
 </tr>
-<tr class="hover:bg-slate-50/50 transition-colors">
-<td class="px-8 py-4 text-sm font-bold text-slate-900">#ORD-90212</td>
-<td class="px-8 py-4">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold">AW</div>
-<span class="text-sm font-medium text-slate-700">Anna White</span>
-</div>
-</td>
-<td class="px-8 py-4 text-sm text-slate-600">USB-C Cable (3m)</td>
-<td class="px-8 py-4 text-sm font-bold text-slate-900">$15.00</td>
-<td class="px-8 py-4">
-<span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full text-[10px] font-bold uppercase tracking-wide">Delivered</span>
-</td>
-<td class="px-8 py-4">
-<button class="text-slate-400 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-lg">visibility</span>
-</button>
-</td>
-</tr>
+{% endfor %}
+
 </tbody>
 </table>
 </div>
@@ -335,9 +395,17 @@
 <footer class="bg-[#1A2D37] text-slate-400 py-12 px-6 lg:px-10 border-t border-slate-800">
 <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
 <div class="col-span-1 md:col-span-1">
-<div class="flex items-center gap-2 text-white mb-6">
-<span class="material-symbols-outlined text-primary text-3xl">shopping_bag</span>
-<span class="text-xl font-bold tracking-tight">ShoppyO</span>
+
+<div class="flex items-center gap-2">
+<div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+      
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-extrabold tracking-tighter leading-none">
+          Shoppy<span class="text-blue-300">O</span><span class="text-primary/90 px-1 font-medium text-lg">Seller</span>
+        </h1>
+      </div>
 </div>
 <p class="text-sm leading-relaxed mb-6">Empowering modern sellers with data-driven insights and world-class e-commerce tools. Manage, scale, and thrive.</p>
 <div class="flex gap-4">
@@ -387,4 +455,17 @@
 </div>
 </div>
 </footer>
+<script>
+function toggleDropdown() {
+    const dropdown = document.getElementById("profileDropdown");
+    dropdown.classList.toggle("hidden");
+}
+
+// Close when clicking outside
+window.onclick = function(event) {
+    if (!event.target.closest('button')) {
+        document.getElementById("profileDropdown").classList.add("hidden");
+    }
+}
+</script>
 </body></html>

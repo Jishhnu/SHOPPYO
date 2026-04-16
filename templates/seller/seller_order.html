@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShoppyO | Order Management</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3B82F6",
+                        "ice-blue": "#D6E8EE",
+                        "pdark": "#0F172A",
+                        "lightbg": "#F8FAFC",
+                        "highlight": "#6366F1",
+                        "navy-dark": "#1A2D37",
+                    },
+                    fontFamily: { "display": ["Public Sans", "sans-serif"] },
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .order-row:hover { transform: translateX(4px); box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .tab-active { color: #0F172A !important; border-bottom: 2px solid #0F172A; }
+    </style>
+</head>
+
+<body class="bg-lightbg text-pdark font-sans antialiased">
+
+    <header class="sticky top-0 z-50 bg-[#1A2D37] text-white shadow-lg">
+        <div class="max-w-screen-xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-2">
+                    <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner">
+                        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-3xl font-extrabold tracking-tighter leading-none">
+                            Shoppy<span class="text-blue-300">O</span><span class="text-ice-blue px-1 font-medium text-lg">Seller</span>
+                        </h1>
+                    </div>
+                </div>
+                <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-300">
+                    <a class="hover:text-white transition-colors pb-1" href="{% url 'seller_dashboard' %}">Dashboard</a>
+                    <a class="hover:text-white transition-colors border-b-2 border-ice-blue text-white pb-1" href="{% url 'seller_order' %}">Orders</a>
+                    <a class="hover:text-white transition-colors pb-1" href="{% url 'product_inventory' %}">Inventory</a>
+                    <a class="hover:text-white transition-colors pb-1" href="{% url 'seller_review' %}">Review</a>
+                </div>
+            </div>
+            
+            <!-- <div class="flex items-center gap-2 px-3 py-2 hover:bg-white/10 rounded-lg transition-colors">
+                <div class="h-8 w-px bg-slate-700 mx-1"></div>
+        <span class="material-symbols-outlined">person</span>
+        <span class="hidden sm:inline font-medium text-sm">
+            Hi, {{ user.first_name }}
+        </span>
+            </div> -->
+        </div>
+    </header>
+
+    <nav class="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-30">
+        <div class="max-w-screen-xl mx-auto px-4 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-6 h-full overflow-x-auto no-scrollbar">
+                    <a href="{% url 'seller_order' %}" 
+                       class="{% if not current_status %}tab-active{% else %}text-gray-400{% endif %} whitespace-nowrap px-1 h-full flex items-center text-[11px] font-extrabold uppercase tracking-widest">
+                       All Orders
+                    </a>
+                    <a href="?status=pending" 
+                       class="{% if current_status == 'pending' %}tab-active{% else %}text-gray-400{% endif %} whitespace-nowrap px-1 h-full flex items-center text-[11px] font-extrabold uppercase tracking-widest">
+                       Pending
+                    </a>
+                    <a href="?status=shipped" 
+                       class="{% if current_status == 'shipped' %}tab-active{% else %}text-gray-400{% endif %} whitespace-nowrap px-1 h-full flex items-center text-[11px] font-extrabold uppercase tracking-widest">
+                       Shipped
+                    </a>
+                    <a href="?status=delivered" 
+                       class="{% if current_status == 'delivered' %}tab-active{% else %}text-gray-400{% endif %} whitespace-nowrap px-1 h-full flex items-center text-[11px] font-extrabold uppercase tracking-widest">
+                       Delivered
+                    </a>
+                    <a href="?status=cancelled" 
+                       class="{% if current_status == 'cancelled' %}tab-active{% else %}text-gray-400{% endif %} whitespace-nowrap px-1 h-full flex items-center text-[11px] font-extrabold uppercase tracking-widest">
+                       Cancelled
+                    </a>
+                </div>
+                
+                <!-- <button class="flex items-center gap-2 bg-ice-blue/50 text-navy-dark px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider hover:bg-ice-blue transition-all">
+                    <i class="fa-solid fa-download"></i> Export
+                </button> -->
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-screen-xl mx-auto px-4 lg:px-8 py-8">
+
+    <!-- HEADER -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+        <div>
+            <h1 class="text-4xl font-black text-pdark">Orders</h1>
+            <p class="text-[11px] text-gray-500 font-semibold mt-1">
+                Total Orders: <span class="text-primary">{{ orders.count }}</span>
+            </p>
+        </div>
+
+        <!--  SEARCH -->
+        <form method="GET" action="{% url 'seller_order' %}" class="relative group">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+
+            <input type="text" name="search" value="{{ query|default:'' }}"
+                placeholder="Search Order or Customer..."
+                class="bg-white border border-gray-200 rounded-xl py-3 pl-11 pr-4 text-xs font-medium w-full md:w-80 shadow-sm outline-none">
+
+            {% if current_status %}
+                <input type="hidden" name="status" value="{{ current_status }}">
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- ORDER LIST -->
+    <div class="space-y-4">
+
+        {% for ord in orders %}
+        <div class="bg-white border border-gray-200 rounded-[2rem] p-5 flex flex-col lg:flex-row lg:items-center gap-6 shadow-sm hover:shadow-md transition-all">
+
+            <!-- ORDER ID -->
+            <div class="flex items-center gap-4 lg:w-48">
+                <div class="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center text-primary text-sm font-black shadow-sm">
+                    {{ forloop.counter }}
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-400 uppercase">Order</p>
+                    <p class="text-sm font-bold text-pdark">#{{ ord.order_number }}</p>
+                    <p class="text-[10px] text-gray-500">{{ ord.ordered_at|date:"M d, Y" }}</p>
+                </div>
+            </div>
+
+            <!-- CUSTOMER -->
+            <div class="flex items-center gap-3 lg:flex-1 lg:border-l lg:pl-6 border-gray-100">
+                <div class="w-10 h-10 bg-ice-blue rounded-full overflow-hidden">
+                    <img src="https://ui-avatars.com/api/?name={{ ord.user.username }}" alt="">
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-400 uppercase">Customer</p>
+                    <p class="text-sm font-bold">{{ ord.user.username }}</p>
+                    <p class="text-[10px] text-gray-500">{{ ord.address.city|default:"-" }}</p>
+                </div>
+            </div>
+
+            <!--  PRODUCTS (IMAGE + QUANTITY) -->
+            <div class="flex items-center gap-2 lg:w-48">
+
+    {% for item in ord.items.all|slice:":3" %}
+    <div class="relative group">
+
+        {% if item.variant.primary_image and item.variant.primary_image.image %}
+            <img src="{{ item.variant.primary_image.image.url }}"
+                 class="h-12 w-12 rounded-xl border border-gray-200 object-cover bg-white shadow-sm">
+        {% else %}
+            <div class="h-12 w-12 bg-gray-200 rounded-xl flex items-center justify-center text-gray-400 text-[10px]">
+                No Img
+            </div>
+        {% endif %}
+
+        <!-- Quantity badge -->
+        <span class="absolute -top-1 -right-1 bg-pdark text-white text-[8px] px-1.5 py-[2px] rounded-md font-bold shadow">
+            x{{ item.quantity }}
+        </span>
+
+    </div>
+    {% endfor %}
+
+    <!-- +MORE -->
+    {% if ord.items.count > 3 %}
+    <div class="h-12 w-12 rounded-xl bg-gray-800 flex items-center justify-center text-[10px] text-white font-bold">
+        +{{ ord.items.count|add:"-3" }}
+    </div>
+    {% endif %}
+
+</div>
+
+            <!-- TOTAL + STATUS -->
+            <div class="lg:w-40 lg:border-l lg:pl-6 border-gray-100">
+                <p class="text-[10px] text-gray-400 uppercase">Total</p>
+                <p class="text-lg font-bold text-pdark">₹{{ ord.total_amount }}</p>
+
+                <span class="inline-flex px-2 py-1 rounded-lg text-[9px] font-bold mt-1
+                    {% if ord.order_status == 'PLACED' %}bg-amber-100 text-amber-600
+                    {% elif ord.order_status == 'SHIPPED' %}bg-blue-100 text-blue-600
+                    {% elif ord.order_status == 'DELIVERED' %}bg-green-100 text-green-600
+                    {% elif ord.order_status == 'CANCELLED' %}bg-red-100 text-red-600
+                    {% endif %}">
+                    {{ ord.order_status }}
+                </span>
+            </div>
+
+            <!-- ACTION -->
+            <div class="flex items-center gap-2 lg:ml-auto">
+
+                <a href="{% url 'seller_order_details' ord.id %}"
+                   class="px-5 py-2 bg-pdark text-white rounded-xl text-[10px] font-bold hover:bg-primary">
+                    View Details
+                </a>
+
+                {% if ord.order_status == 'PLACED' %}
+                <form action="{% url 'seller_cancel_order' ord.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="w-10 h-10 flex items-center justify-center border rounded-xl hover:text-red-500 hover:bg-red-50">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </form>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% empty %}
+        <div class="text-center py-20 text-gray-400">
+            No orders found
+        </div>
+        {% endfor %}
+
+    </div>
+
+</main>
+
+</body>
+</html>

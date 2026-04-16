@@ -1,5 +1,6 @@
 from django.db import models
 from core.models import User, SubCategory
+from django.utils.text import slugify
 
 class SellerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="seller_profile")
@@ -20,6 +21,11 @@ class SellerProfile(models.Model):
     status = models.CharField(max_length=20,choices=STATUS_CHOICES,default='PENDING')
     suspended_until = models.DateTimeField(null=True, blank=True)
 
+    def save(self, *args, **kwargs):
+        if not self.store_slug:
+            self.store_slug = slugify(self.store_name)
+        super().save(*args, **kwargs)
+
 class Product(models.Model):
     seller = models.ForeignKey(SellerProfile, on_delete=models.CASCADE, related_name="products")
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name="products")
@@ -31,6 +37,7 @@ class Product(models.Model):
     is_cancellable = models.BooleanField(default=True)
     is_returnable = models.BooleanField(default=True)
     return_days = models.IntegerField(default=7)
+
     approval_status = models.CharField(max_length=20, choices=(
             ('PENDING', 'Pending'),
             ('APPROVED', 'Approved'),
@@ -38,6 +45,17 @@ class Product(models.Model):
     
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.name)
+            slug = base_slug
+            counter = 1
+            while Product.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
 
 class ProductVariant(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="variants")
@@ -59,12 +77,18 @@ class ProductVariant(models.Model):
             discount = ((self.mrp - self.selling_price) / self.mrp) * 100
             return int(discount)
         return 0
+    
+    @property
+    def primary_image(self):
+        return self.images.filter(is_primary=True).first() or self.images.first()
 
 class ProductImage(models.Model):
     variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE, related_name="images")
-    image_url = models.URLField()
+    # image_url = models.URLField()
+    image = models.ImageField(upload_to='products/',null=True,blank=True)
     alt_text = models.CharField(max_length=255, blank=True)
     is_primary = models.BooleanField(default=False)
+
 
 class Attribute(models.Model):
     name = models.CharField(max_length=100) # e.g., Color, Size
