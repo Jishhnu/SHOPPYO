@@ -19,6 +19,21 @@ from django.contrib.auth.hashers import check_password
 from django.core.paginator import Paginator
 
 
+def redirect_user_by_role(user):
+    if user.role == "CUSTOMER":
+        return redirect("customer_home")
+    if user.role == "SELLER":
+        seller_profile = getattr(user, "seller_profile", None)
+        if seller_profile is None:
+            return redirect("seller_register")
+        if seller_profile.status == "APPROVED":
+            return redirect("seller_dashboard")
+        return redirect("seller_waiting")
+    if user.role == "ADMIN":
+        return redirect("admin_dashboard")
+    return redirect("login")
+
+
 #Create your views here.
 #_____________________________Register_________________________________________
 def Customer_Register(request):
@@ -126,6 +141,9 @@ def resend_otp(request):
 
 #___________________Login________________________________________
 def Login_view(request):
+    if request.user.is_authenticated:
+        return redirect_user_by_role(request.user)
+
     if request.method=="POST":
         email=request.POST.get("email").strip().lower()
         password=request.POST.get("password")
@@ -134,16 +152,7 @@ def Login_view(request):
 
         if user is not None:
             login(request,user)
-            # messages.success(request,'Login Successfully')
-
-            if user.role == "CUSTOMER":
-                return redirect("customer_home")
-        
-            elif user.role == "SELLER":
-                return redirect("seller_dashboard")
-            
-            elif user.role == "ADMIN":
-                return redirect("admin_dashboard")
+            return redirect_user_by_role(user)
             
         else:
             messages.error(request,"Invalid Email or Password")
@@ -153,6 +162,9 @@ def Login_view(request):
 #__________________Page(Home/category/subcategory/subcategory_product)____________________________________
 def Customer_Home(request):
     user=request.user
+    if user.is_authenticated and user.role in ["SELLER", "ADMIN"]:
+        return redirect_user_by_role(user)
+
     product=Product.objects.filter(is_active=True, variants__isnull=False).distinct().prefetch_related('variants', 'variants__images').order_by('-created_at')
     category=Category.objects.filter(is_active=True)
     cart_count=0

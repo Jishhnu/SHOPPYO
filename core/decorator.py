@@ -1,12 +1,51 @@
-from django.http import HttpResponse
 from functools import wraps
+from django.core.exceptions import PermissionDenied
+from django.contrib.auth.views import redirect_to_login
+from django.contrib import messages
+from django.shortcuts import redirect
 
-def seller_required(view_func):
+
+
+
+def role_required(allowed_roles=[]):
+    def decorators(view_func):
+        @wraps(view_func)
+        def wrap(request, *args, **kwargs):
+            if not request.user.is_authenticated:
+                
+
+                return redirect_to_login(request.get_full_path())
+            if request.user.role not in allowed_roles:
+                raise PermissionDenied
+            return view_func(request, *args, **kwargs)
+
+        return wrap
+
+    return decorators
+
+
+customer_required = role_required(["CUSTOMER"])
+seller_required = role_required(["SELLER"])
+admin_required = role_required(["ADMIN"])
+
+
+def approved_seller_required(view_func):
     @wraps(view_func)
-    def _wrapped_view(request, *args, **kwargs):
+    def wrap(request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return HttpResponse("Unauthorized", status=401)
-        if request.user.role != 'SELLER':
-            return HttpResponse("Forbidden", status=403)
+            return redirect_to_login(request.get_full_path())
+
+        if request.user.role != "SELLER":
+            raise PermissionDenied
+
+        seller_profile = getattr(request.user, "seller_profile", None)
+        if seller_profile is None:
+            messages.error(request, "Complete your seller registration to access the seller portal.")
+            return redirect("seller_register")
+
+        if seller_profile.status != "APPROVED":
+            return redirect("seller_waiting")
+
         return view_func(request, *args, **kwargs)
-    return _wrapped_view
+
+    return wrap

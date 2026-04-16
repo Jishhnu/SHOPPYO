@@ -3,7 +3,6 @@ from .models import *
 from core.models import *
 from seller.models import *
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from decimal import Decimal
 import uuid
@@ -11,11 +10,21 @@ from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Q
 from django.http import JsonResponse,HttpResponse
-import razorpay
 from django.conf import settings
+from core.decorator import customer_required
+
+try:
+    import razorpay
+except ImportError:
+    class _MissingRazorpayModule:
+        class Client:
+            def __init__(self, *args, **kwargs):
+                raise ImportError("razorpay is required for payment operations")
+
+    razorpay = _MissingRazorpayModule()
 
 
-@login_required
+@customer_required
 def Customer_Dashboard(request):
     user = request.user
     recent_orders = Order.objects.filter(user=request.user).order_by('-ordered_at')[:5]
@@ -25,7 +34,7 @@ def Customer_Dashboard(request):
     return render(request, "customer/customer_dashboard.html", {"profile_user": user, "default_address": default_address,"recent_orders":recent_orders})
 
 
-@login_required
+@customer_required
 def Customer_Update(request):
     user=request.user
 
@@ -48,7 +57,7 @@ def Customer_Update(request):
         return redirect("customer_dashboard")
     return render(request, "customer/customer_update.html", {"profile_user": user})
 
-@login_required
+@customer_required
 def Customer_Logout(request):
     logout(request)
     messages.success(request, "Logged out successfully")
@@ -56,13 +65,13 @@ def Customer_Logout(request):
 
 #---------------------Address---------------------------------------------
 
-@login_required
+@customer_required
 def Customer_Address(request):
     address = Address.objects.filter(user=request.user).order_by('-is_default', '-updated_at')
     return render(request, "customer/customer_address.html", {'address': address})
 
 
-@login_required
+@customer_required
 def Customer_Address_set_default(request, address_id):
     addr = Address.objects.get(id=address_id, user=request.user)
     Address.objects.filter(user=request.user, is_default=True).update(is_default=False)
@@ -71,7 +80,7 @@ def Customer_Address_set_default(request, address_id):
     return redirect('customer_address')
 
 
-@login_required
+@customer_required
 def Customer_Address_add(request):
     if request.method == "POST":
             full_name=request.POST.get("full_name")
@@ -107,6 +116,7 @@ def Customer_Address_add(request):
             return redirect('customer_address')
     return render(request, "customer/customer_addressadd.html")
 
+@customer_required
 def Customer_Address_update(request, address_id):
     address = Address.objects.get(id=address_id, user=request.user)
     if request.method == "POST":
@@ -145,7 +155,7 @@ def Customer_Address_update(request, address_id):
 #         cart_item.save()
 #     return redirect('view_cart')
 
-@login_required
+@customer_required
 def Add_to_cart(request, variant_id):
     variant=get_object_or_404(ProductVariant, id=variant_id)
     try:
@@ -166,7 +176,7 @@ def Add_to_cart(request, variant_id):
         )
     return redirect('view_cart')
 
-@login_required
+@customer_required
 def View_cart(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
     cart_item=CartItem.objects.filter(cart=cart)
@@ -184,7 +194,7 @@ def View_cart(request):
     return render(request,'customer/cart.html',{'items':cart_item,"subtotal":subtotal,'tax':tax,'total_amount':grand_total, 'cart': cart})
 
 
-@login_required
+@customer_required
 def remove_from_cart(request, item_id):
     cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
     cart_item.delete()
@@ -192,14 +202,14 @@ def remove_from_cart(request, item_id):
 
 
 
-@login_required
+@customer_required
 def cart_increase(request, item_id):
     cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
     cart_item.quantity += 1
     cart_item.save()
     return redirect('view_cart')
 
-@login_required
+@customer_required
 def cart_decrease(request, item_id):
     cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
     if cart_item.quantity > 1:
@@ -210,7 +220,7 @@ def cart_decrease(request, item_id):
     return redirect('view_cart')
 
 # ---------------Wishlist---------------------------
-@login_required
+@customer_required
 def add_to_wishlist(request,variant_id):
     variant=get_object_or_404(ProductVariant, id=variant_id)
     try:
@@ -227,7 +237,7 @@ def add_to_wishlist(request,variant_id):
         )
     return redirect("wishlist_view")
 
-@login_required
+@customer_required
 def wishlist_view(request):
     try:
         wishlist=Wishlist.objects.get(user=request.user, wishlist_name="My Wishlist")
@@ -237,13 +247,13 @@ def wishlist_view(request):
 
     return render(request, "customer/wishlist.html", {"items": wishlist_item})
 
-@login_required
+@customer_required
 def remove_from_wishlist(request, item_id):
     wishlist_item = get_object_or_404(WishlistItem, id=item_id, wishlist__user=request.user)
     wishlist_item.delete()
     return redirect("wishlist_view")
 
-@login_required
+@customer_required
 def move_to_cart(request,item_id):
     wishlist_item = get_object_or_404(WishlistItem, id=item_id, wishlist__user=request.user)
     variant=wishlist_item.variant
@@ -267,7 +277,7 @@ def move_to_cart(request,item_id):
 
     return redirect("view_cart")
 
-@login_required
+@customer_required
 def move_all_to_cart(request):
     wishlist = get_object_or_404(Wishlist, user=request.user, wishlist_name="My Wishlist")
     wishlist_items = WishlistItem.objects.filter(wishlist=wishlist)
@@ -309,7 +319,7 @@ def single_product_variant(request,slug):
 
 
 #------------------Order---------------------------
-@login_required
+@customer_required
 def order(request, slug):
     product = get_object_or_404(Product, slug=slug)
     product_variant = ProductVariant.objects.filter(product=product).first()
@@ -327,7 +337,7 @@ def order(request, slug):
     })
 
     #----------Cart-Checkout|Cart-Order-------------
-@login_required
+@customer_required
 def checkout(request, cart_id):
     user = request.user
     cart = get_object_or_404(Cart, id=cart_id, user=user)
@@ -355,7 +365,7 @@ def checkout(request, cart_id):
     })
 
 
-@login_required
+@customer_required
 def order_select_address(request, address_id):
     address = get_object_or_404(Address, id=address_id, user=request.user)
     
@@ -369,7 +379,7 @@ def order_select_address(request, address_id):
     return redirect('customer_dashboard')
 
 #---------------Placed Order----------------------------------
-@login_required
+@customer_required
 def place_order(request):
     if request.method =="POST":
         user=request.user
@@ -466,13 +476,13 @@ def place_order(request):
 
 
 #--------Order_confirmation/Order_history/Reorder---------------------
-@login_required
+@customer_required
 def order_confirmation(request,order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user)
     order_item=OrderItem.objects.filter(order=order)
     return render(request,"customer/order_confirmation.html",{"order":order,"order_item":order_item})
 
-@login_required
+@customer_required
 def order_history(request):
     orders = Order.objects.filter(user=request.user).prefetch_related('items').order_by('-ordered_at')
 
@@ -495,7 +505,7 @@ def order_history(request):
 
     return render(request,"customer/order_history.html",{"orders":orders})
 
-@login_required
+@customer_required
 def reorder(request,order_id):
     order=get_object_or_404(Order,id=order_id,user=request.user)
     cart,created=Cart.objects.get_or_create(user=request.user)
@@ -510,7 +520,7 @@ def reorder(request,order_id):
     messages.success(request,"Items added to Cart Again.")
     return redirect("view_cart")
 
-@login_required
+@customer_required
 def cancel_order(request,order_id):
     order=get_object_or_404(Order,id=order_id,user=request.user)
     if order.order_status=='PLACED':
@@ -584,6 +594,7 @@ def live_search(request):
 
 #---------------------Review--------------------------------
 
+@customer_required
 def add_review(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     user = request.user
@@ -605,6 +616,7 @@ def add_review(request, product_id):
 
 
 #---------------------Payment|Razorpay--------------------------------
+@customer_required
 def create_payment(request, order_id):
     order = get_object_or_404(Order, id=order_id)
 
@@ -632,6 +644,7 @@ def create_payment(request, order_id):
     return render(request, "customer/payment.html", {"order": order,"payment": payment,"items": order.items.all(),"amount_rupees": payment.amount / 100,"key": settings.RAZORPAY_KEY})
 
 
+@customer_required
 def payment_success(request):
     client = razorpay.Client(auth=(settings.RAZORPAY_KEY, settings.RAZORPAY_SECRET))
 

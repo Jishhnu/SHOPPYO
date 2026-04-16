@@ -13,9 +13,11 @@ from django.views.decorators.http import require_POST
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Sum
+from core.decorator import admin_required
 
 # Create your views here.
 #---------Dashboard-----------------------
+@admin_required
 def admin_dashboard(request):
     pendingsellers= SellerProfile.objects.filter(status='PENDING')
     approvedsellers=SellerProfile.objects.filter(status='APPROVED')
@@ -84,12 +86,14 @@ def admin_dashboard(request):
     return render(request,"adminapk/admin_dashboard.html", context)
 
 
+@admin_required
 def admin_logout(request):
     logout(request)
     messages.success(request, "Logged out successfully")
     return redirect('login')
 
 #---------Category-----------------------
+@admin_required
 def admin_category(request):
     category=Category.objects.all().annotate( subcategory_count=Count('subcategories')).order_by('-created_at')
     if request.method=="POST":
@@ -117,6 +121,7 @@ def admin_category(request):
         return redirect('admin_category')
     return render(request,'adminapk/admin_category.html',{'all_category':category})
 
+@admin_required
 def toggle_category(request, id):
     if request.method == "POST":
         category = Category.objects.get(id=id)
@@ -127,12 +132,14 @@ def toggle_category(request, id):
 
         return JsonResponse({'status': 'success'})
     
+@admin_required
 def delete_admin_category(request,slug):
     category=get_object_or_404(Category,slug=slug)
     category.delete()
     return redirect("admin_category")
     
 #---------Sub_Category-----------------------
+@admin_required
 def admin_subcategory(request,slug):
     category=get_object_or_404(Category, slug=slug)
     subcategory=SubCategory.objects.filter(category=category).annotate(product_count=Count('products'))
@@ -159,6 +166,7 @@ def admin_subcategory(request,slug):
 
     return render(request,'adminapk/admin_subcategory.html',{"subcategory":subcategory,"category":category,"categories":categories})
 
+@admin_required
 @require_POST
 def toggle_subcategory(request, id):
     try:
@@ -185,6 +193,7 @@ def toggle_subcategory(request, id):
             "error": str(e)
         })
     
+@admin_required
 def delete_admin_subcategory(request,slug):
     subcategory=get_object_or_404(SubCategory,slug=slug)
     category_slug = subcategory.category.slug
@@ -192,6 +201,7 @@ def delete_admin_subcategory(request,slug):
     return redirect("admin_subcategory",slug=category_slug)
 
 #--------------SellerVerification----------------------------
+@admin_required
 def admin_sellerverification(request):
     sellers= SellerProfile.objects.filter(status='PENDING').order_by('-created_at')
 
@@ -217,6 +227,7 @@ def admin_sellerverification(request):
     return render(request,'adminapk/admin_sellerverification.html',{"sellers":sellers})
 
 #------------------Approved_Sellers-----------------------
+@admin_required
 def admin_approvedsellers(request):
     sellers=SellerProfile.objects.filter(status='APPROVED').order_by('-created_at')
 
@@ -246,6 +257,7 @@ def admin_approvedsellers(request):
     return render(request,'adminapk/admin_approvedsellers.html',{"sellers":sellers})
 
 #----------admin_rejectsellers-------------------
+@admin_required
 def admin_rejectsellers(request):
     sellers=SellerProfile.objects.filter(status='REJECTED').order_by('-created_at')
 
@@ -263,6 +275,7 @@ def admin_rejectsellers(request):
     return render(request,'adminapk/admin_rejectsellers.html',{"sellers":sellers})
 
 #----------admin_suspendedsellers-------------------
+@admin_required
 def admin_suspendedsellers(request):
     sellers=SellerProfile.objects.filter(
         suspended_until__isnull=False,
@@ -289,6 +302,7 @@ def admin_suspendedsellers(request):
     return render(request,'adminapk/admin_suspendedsellers.html',{"sellers":sellers})
 
 #----------admin_productverification-------------------
+@admin_required
 def admin_productverification(request):
     products = Product.objects.filter(approval_status='PENDING').order_by('-created_at')
     if request.method=="POST":
@@ -316,6 +330,7 @@ def admin_productverification(request):
     return render(request,'adminapk/admin_productverification.html',{"products":products})
 
 #----------admin_approvalproduct-------------------
+@admin_required
 def admin_approvedproduct(request):
     products = Product.objects.filter(approval_status='APPROVED').order_by('-created_at')
 
@@ -336,6 +351,7 @@ def admin_approvedproduct(request):
     return render(request,'adminapk/admin_approvedproduct.html',{"products":products})
 
 #----------admin_rejectproduct-------------------
+@admin_required
 def admin_rejectproduct(request):
     products = Product.objects.filter(approval_status='REJECTED').order_by('-created_at')
 
@@ -354,10 +370,12 @@ def admin_rejectproduct(request):
     return render(request,'adminapk/admin_rejectproduct.html',{"products":products})
 
 #----------admin_users-------------------
+@admin_required
 def admin_users(request):
     users=User.objects.filter(role='CUSTOMER').order_by('-created_at')
     return render(request,'adminapk/admin_users.html',{"users":users})
 
+@admin_required
 def user_toggle(request, id, action):
     user = get_object_or_404(User, id=id)
 
@@ -370,10 +388,12 @@ def user_toggle(request, id, action):
     return redirect('admin_users')
 
 #----------admin_orders-------------------
+@admin_required
 def admin_orders(request):
     orders=Order.objects.all().order_by('-ordered_at')
     return render(request,'adminapk/admin_orders.html',{"orders":orders})
 
+@admin_required
 def admin_order_detail(request,id):
     orders=get_object_or_404(Order,id=id)
     return render(request,'adminapk/admin_order_detail.html',{"order":orders})

@@ -1,6 +1,10 @@
 import random
-from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from django.contrib.auth import get_user_model
+
+try:
+    from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+except ImportError:
+    DefaultSocialAccountAdapter = object
 
 def generate_otp():
     return str(random.randint(100000,999999))

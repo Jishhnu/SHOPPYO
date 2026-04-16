@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Verification Status</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: "#13212b",
+                        sand: "#f6f1ea",
+                        coral: "#ff8f6b",
+                        moss: "#8ea58b",
+                        mist: "#d8e2e8",
+                    },
+                    fontFamily: {
+                        heading: ["Manrope", "sans-serif"],
+                        body: ["DM Sans", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="min-h-screen bg-[radial-gradient(circle_at_top,_#fff7ef,_#f6f1ea_45%,_#d8e2e8)] font-body text-ink">
+    <main class="mx-auto flex min-h-screen max-w-6xl items-center px-6 py-12">
+        <section class="grid w-full gap-8 overflow-hidden rounded-[2rem] bg-white/80 shadow-2xl shadow-ink/10 backdrop-blur md:grid-cols-[1.2fr_0.8fr]">
+            <div class="p-8 md:p-12">
+                <p class="mb-4 inline-flex rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white">
+                    Seller Portal Status
+                </p>
+                <h1 class="font-heading text-4xl font-extrabold leading-tight md:text-5xl">
+                    {% if status == "REJECTED" %}
+                        Your seller account was not approved yet.
+                    {% else %}
+                        Your seller account is waiting for admin approval.
+                    {% endif %}
+                </h1>
+                <p class="mt-5 max-w-2xl text-lg leading-8 text-ink/75">
+                    {% if status == "REJECTED" %}
+                        We have emailed your account with the latest status. You can log out now and come back after your details are updated or after you hear back from support.
+                    {% else %}
+                        You can sign in successfully, but seller dashboard actions stay locked until an admin approves your account. We will email you as soon as the status changes.
+                    {% endif %}
+                </p>
+
+                <div class="mt-8 flex flex-wrap gap-4">
+                    <a href="{% url 'seller_logout' %}" class="rounded-xl bg-ink px-6 py-3 font-semibold text-white transition hover:bg-ink/90">
+                        Logout
+                    </a>
+                    <a href="{% url 'customer_home' %}" class="rounded-xl border border-ink/15 px-6 py-3 font-semibold text-ink transition hover:bg-ink/5">
+                        Back To Storefront
+                    </a>
+                </div>
+            </div>
+
+            <aside class="flex flex-col justify-between bg-ink p-8 text-white md:p-10">
+                <div>
+                    <p class="text-sm uppercase tracking-[0.3em] text-white/60">Current Status</p>
+                    <div class="mt-4 inline-flex rounded-full px-4 py-2 text-sm font-bold
+                        {% if status == 'APPROVED' %}bg-moss text-ink
+                        {% elif status == 'REJECTED' %}bg-coral text-ink
+                        {% else %}bg-white/15 text-white{% endif %}">
+                        {{ status }}
+                    </div>
+                </div>
+
+                <div class="mt-10 rounded-[1.5rem] bg-white/10 p-6">
+                    <h2 class="font-heading text-2xl font-bold">What happens next?</h2>
+                    <ul class="mt-4 space-y-4 text-sm leading-7 text-white/80">
+                        <li>Admin reviews your seller registration details.</li>
+                        <li>You get an email when the status becomes approved or rejected.</li>
+                        <li>Once approved, signing in takes you straight to the seller dashboard.</li>
+                    </ul>
+                </div>
+            </aside>
+        </section>
+    </main>
+</body>
+</html>

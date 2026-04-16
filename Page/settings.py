@@ -181,8 +181,13 @@ ACCOUNT_UNIQUE_EMAIL = True
 # SOCIALACCOUNT_ADAPTER = 'core.utils.AutoConnectSocialAccountAdapter'
 
 #.env
-from dotenv import load_dotenv
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    load_dotenv = None
+
+if load_dotenv is not None:
+    load_dotenv()
 
 #payment
 RAZORPAY_KEY="rzp_test_SZuaJynYnVcowM"

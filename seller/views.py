@@ -6,8 +6,7 @@ from .models import *
 from django.utils.text import slugify
 from django.contrib import messages
 from django.contrib.auth import authenticate, login ,logout
-from django.contrib.auth.decorators import login_required
-from core.decorator import seller_required
+from core.decorator import approved_seller_required, seller_required
 
 from django.http import JsonResponse
 from django.urls import reverse
@@ -56,9 +55,22 @@ def seller_home(request):
     return render(request, "seller/seller_home.html")
 
 
-#--------------Seller_Dashboard--------------------------
 @seller_required
-@login_required
+def seller_waiting(request):
+    seller = getattr(request.user, "seller_profile", None)
+    status = seller.status if seller else "PENDING"
+    return render(request, "seller/seller_waiting.html", {"seller": seller, "status": status})
+
+
+@seller_required
+def seller_logout(request):
+    logout(request)
+    messages.success(request, "Seller logged out successfully")
+    return redirect("login")
+
+
+#--------------Seller_Dashboard--------------------------
+@approved_seller_required
 def Seller_Dashboard(request):
     seller = request.user.seller_profile
     products = Product.objects.filter(seller=seller)
@@ -83,12 +95,13 @@ def Seller_Dashboard(request):
                                                         'avg_rating': avg_rating,'low_stock_products': low_stock_products,'recent_orders': recent_orders,})
 
 #------------Seller_Profile-------------------------
-@login_required
+@approved_seller_required
 def seller_profile(request):
     user=request.user
     seller = request.user.seller_profile
     return render(request, "seller/seller_profile.html", {"seller": seller,"user": user})
 
+@approved_seller_required
 def seller_editprofile(request):
     user = request.user
     seller = user.seller_profile
@@ -118,7 +131,7 @@ def seller_editprofile(request):
     return render(request, "seller/seller_editprofile.html",{"user": user,"seller": seller})
 
 #-------------Product_Inventory--------------------------
-@login_required
+@approved_seller_required
 def product_inventory(request):
     try:
         seller = request.user.seller_profile
@@ -149,8 +162,7 @@ def product_inventory(request):
     return render(request, "seller/product_inventory.html", {"products": products,'current_status': status})
 
 #-------------seller_Add_Products/Delete_Product--------------------------
-@seller_required
-@login_required
+@approved_seller_required
 def seller_add_products(request):
 
     if request.method == 'POST':
@@ -204,6 +216,7 @@ def seller_add_products(request):
     categories = Category.objects.all()
     return render(request, "seller/seller_add_products.html", {'categories': categories})
 
+@approved_seller_required
 def get_subcategories(request):
     category_id = request.GET.get('category_id')
     subcategories = SubCategory.objects.filter(category_id=category_id)
@@ -215,14 +228,14 @@ def get_subcategories(request):
 
     return JsonResponse(data, safe=False)
 
-@login_required
+@approved_seller_required
 def delete_product(request, id):
     product = get_object_or_404(Product, id=id, seller=request.user.seller_profile)
     product.delete()
     return redirect('product_inventory')
 
 #-------------Edit_Product--------------------------
-@login_required
+@approved_seller_required
 def edit_product(request, id):
     product = get_object_or_404(Product, id=id, seller=request.user.seller_profile)
     variant = product.variants.first()
@@ -281,7 +294,7 @@ def edit_product(request, id):
 
 
 # -----------Seller_Order---------------
-@login_required
+@approved_seller_required
 def seller_order(request):
     seller=request.user.seller_profile
     # orders=Order.objects.filter(items__seller=seller).order_by('-ordered_at')
@@ -310,7 +323,7 @@ def seller_order(request):
         )
     return render(request,"seller/seller_order.html",{'orders':orders})
 
-@login_required
+@approved_seller_required
 def seller_cancel_order(request,order_id):
 
     order=get_object_or_404(Order,id=order_id)
@@ -320,7 +333,7 @@ def seller_cancel_order(request,order_id):
         order.save()
     return redirect('seller_order')
 
-@login_required
+@approved_seller_required
 def seller_order_details(request,order_id):
     orders=get_object_or_404(Order,id=order_id)
 
@@ -344,6 +357,7 @@ def seller_order_details(request,order_id):
     return render(request,"seller/seller_order_details.html",{'order':orders})
 
 #--------------Seller_Review-----------------------------
+@approved_seller_required
 def seller_review(request):
     seller=request.user.seller_profile
     products=Product.objects.filter(seller=seller).prefetch_related('reviews')
@@ -371,6 +385,7 @@ def seller_review(request):
     return render(request,"seller/seller_reviews.html",{'products': products,'reviews': reviews,'total_reviews_count': total_reviews_count,'avg_rating': round(avg_rating, 1),'positive_percentage': positive_percentage,})
 
     #---------seller_reply_review----------------------
+@approved_seller_required
 def seller_reply_review(request,review_id):
     seller=request.user.seller_profile
 
