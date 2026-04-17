@@ -226,7 +226,9 @@
         <td class="px-4 py-6 bg-surface-container-lowest">
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-lg overflow-hidden">
-              <img src="{{ category.image_url }}" class="w-full h-full object-cover">
+              {% if category.image_url %}
+              <img src="{{ category.image_url.url }}" class="w-full h-full object-cover">
+              {% endif %}
             </div>
             <span class="font-bold text-primary">{{ category.name }}</span>
           </div>
@@ -352,7 +354,7 @@
 
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-1">Category Image 1</label>
-                <input id="imageInput1" name="image_url" type="text" placeholder="Paste URL here..." class="w-full mb-2 p-2 border border-gray-300 rounded-lg text-sm">
+                <input id="imageInput1" name="image_url" type="file" accept="image/*" class="w-full mb-2 p-2 border border-gray-300 rounded-lg text-sm">
                 <div class="w-full h-24 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center bg-gray-50 overflow-hidden relative">
                     <span id="label1" class="text-gray-400 text-xs px-4 text-center">Preview 1</span>
                     <img id="preview1" class="absolute inset-0 w-full h-full object-cover hidden">
@@ -361,7 +363,7 @@
 
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-1">Category Image 2</label>
-                <input id="imageInput2" name="image_url2" type="text" placeholder="Paste URL here..." class="w-full mb-2 p-2 border border-gray-300 rounded-lg text-sm">
+                <input id="imageInput2" name="image_url2" type="file" accept="image/*" class="w-full mb-2 p-2 border border-gray-300 rounded-lg text-sm">
                 <div class="w-full h-24 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center bg-gray-50 overflow-hidden relative">
                     <span id="label2" class="text-gray-400 text-xs px-4 text-center">Preview 2</span>
                     <img id="preview2" class="absolute inset-0 w-full h-full object-cover hidden">
@@ -395,26 +397,33 @@
             .replace(/(^-|-$)/g, '');    // Remove leading/trailing hyphens
     });
 
-    // 3. Image URL Preview Logic
-    function setupURLPreview(inputId, previewId, labelId) {
+    // 3. Image File Preview Logic
+    function setupFilePreview(inputId, previewId, labelId) {
         const input = document.getElementById(inputId);
         const preview = document.getElementById(previewId);
         const label = document.getElementById(labelId);
 
-        input.addEventListener('input', function () {
-            if (input.value.trim() !== "") {
-                preview.src = input.value;
-                preview.classList.remove('hidden');
-                label.classList.add('hidden');
-            } else {
+        input.addEventListener('change', function () {
+            const file = input.files[0];
+            if (!file) {
                 preview.classList.add('hidden');
                 label.classList.remove('hidden');
+                preview.removeAttribute('src');
+                return;
             }
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                preview.src = event.target.result;
+                preview.classList.remove('hidden');
+                label.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
         });
     }
 
-    setupURLPreview('imageInput1', 'preview1', 'label1');
-    setupURLPreview('imageInput2', 'preview2', 'label2');
+    setupFilePreview('imageInput1', 'preview1', 'label1');
+    setupFilePreview('imageInput2', 'preview2', 'label2');
 
     // 4. CSRF & Toggle Status Logic
     function getCSRFToken() {

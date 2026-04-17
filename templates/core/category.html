@@ -142,8 +142,10 @@
  {% for cat in category %}
 <div class="group bg-white rounded-lg shadow-sm border overflow-hidden hover:shadow-md transition-all duration-300 w-48">
     <div class="aspect-[4/3] bg-slate-50 overflow-hidden">
-        <img alt="{{ cat.name }}" src="{{ cat.image_url2 }}" 
-             class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+        {% if cat.image_url2 %}
+        <img alt="{{ cat.name }}" src="{{ cat.image_url2.url }}" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+        {% endif %}
     </div>
 
     <div class="p-3 text-center">

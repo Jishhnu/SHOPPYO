@@ -251,6 +251,28 @@ class CustomerViewDecoratorTests(TestCase):
         order = self._create_order("ORDER-CANCEL")
         self._assert_role_access("cancel_order", {"order_id": order.id}, expected_status=302)
 
+    def test_address_add_from_checkout_redirects_back_to_checkout(self):
+        self.client.force_login(self.customer)
+        checkout_url = reverse("checkout", kwargs={"cart_id": self.cart.id})
+        response = self.client.post(
+            reverse("customer_address_add"),
+            {
+                "full_name": "New Customer",
+                "phone_number": "8888888888",
+                "pincode": "654321",
+                "locality": "New Town",
+                "house_info": "Flat 1",
+                "city": "New City",
+                "state": "New State",
+                "country": "India",
+                "landmark": "Near school",
+                "address_type": "HOME",
+                "next": checkout_url,
+            },
+        )
+
+        self.assertRedirects(response, checkout_url)
+
     @patch("customer.views.razorpay.Client")
     def test_create_payment_requires_customer_role(self, client_class):
         client_class.return_value.order.create.return_value = {"id": "razor-order-2"}

@@ -108,7 +108,7 @@
         <div class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-slate-grey/5 flex flex-col sm:flex-row gap-6 items-center">
 
            <div class="w-32 h-32 bg-background-light rounded-lg flex-shrink-0 overflow-hidden flex items-center justify-center">
-                {% with item.variant.images.all.0 as img_obj %}
+                {% with img_obj=item.variant.primary_image %}
                     {% if img_obj %}
                         <img src="{{ img_obj.image_url }}" 
                              alt="{{ img_obj.alt_text|default:item.variant.product.name }}" 

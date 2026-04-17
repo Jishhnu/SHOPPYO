@@ -336,7 +336,7 @@
             <div class="flex -space-x-2 overflow-hidden">
 
                 {% for item in order.items.all|slice:":3" %}
-                {% with image=item.variant.images.first %}
+                {% with image=item.variant.primary_image %}
                 {% if image %}
                 <img class="inline-block size-11 rounded-lg ring-2 ring-white object-cover bg-gray-100"
                      src="{{ image.image_url }}"

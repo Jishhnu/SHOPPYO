@@ -209,9 +209,9 @@
 
         <!-- 🔹 IMAGE -->
         <div class="w-20 h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0 flex items-center justify-center">
-            {% with product.variants.first as variant %}
+            {% with product.variants.all|first as variant %}
                 {% if variant %}
-                    {% with variant.images.first as img %}
+                    {% with img=variant.primary_image %}
                         {% if img %}
                             <img src="{{ img.image_url }}" class="w-full h-full object-cover">
                         {% else %}

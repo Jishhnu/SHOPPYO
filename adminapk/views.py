@@ -13,9 +13,22 @@ from django.views.decorators.http import require_POST
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Sum
+from django.db.models import Prefetch
 from core.decorator import admin_required
 
 # Create your views here.
+def primary_image_prefetch():
+    return Prefetch(
+        "images",
+        queryset=ProductImage.objects.filter(is_primary=True),
+        to_attr="prefetched_primary_images",
+    )
+
+
+def admin_variant_queryset():
+    return ProductVariant.objects.select_related("product").prefetch_related(primary_image_prefetch())
+
+
 #---------Dashboard-----------------------
 @admin_required
 def admin_dashboard(request):
@@ -23,7 +36,9 @@ def admin_dashboard(request):
     approvedsellers=SellerProfile.objects.filter(status='APPROVED')
     users=User.objects.filter(role='CUSTOMER')
     totalusers=User.objects.all().order_by('-updated_at')[:4]
-    pendingproducts=Product.objects.filter(approval_status='PENDING')[:2]
+    pendingproducts=Product.objects.filter(approval_status='PENDING').prefetch_related(
+        Prefetch("variants", queryset=admin_variant_queryset())
+    )[:2]
     totalpendingproducts=Product.objects.filter(approval_status='PENDING')
 
     if request.method=="POST":
@@ -100,10 +115,8 @@ def admin_category(request):
         name= request.POST.get("name")
         slug= request.POST.get("slug")
         description= request.POST.get("description")
-        # image= request.FILES.get('image')
-        # image2= request.FILES.get('image2')
-        image_url = request.POST.get('image_url')
-        image_url2 = request.POST.get('image_url2')
+        image_url = request.FILES.get('image_url')
+        image_url2 = request.FILES.get('image_url2')
 
         if Category.objects.filter(slug=slug).exists():
             messages.error(request,"Slug already exists!")
@@ -149,7 +162,7 @@ def admin_subcategory(request,slug):
         category1 = Category.objects.get(id=category_id)
         name= request.POST.get('name')
         slug= request.POST.get('slug')
-        image_url= request.POST.get('image_url')
+        image_url= request.FILES.get('image_url')
         
         if SubCategory.objects.filter(slug=slug).exists():
             messages.error(request,"Slug already exists!")
@@ -304,7 +317,9 @@ def admin_suspendedsellers(request):
 #----------admin_productverification-------------------
 @admin_required
 def admin_productverification(request):
-    products = Product.objects.filter(approval_status='PENDING').order_by('-created_at')
+    products = Product.objects.filter(approval_status='PENDING').prefetch_related(
+        Prefetch("variants", queryset=admin_variant_queryset())
+    ).order_by('-created_at')
     if request.method=="POST":
         action=request.POST.get('action')
         product_id=request.POST.get('product_id')
@@ -332,7 +347,9 @@ def admin_productverification(request):
 #----------admin_approvalproduct-------------------
 @admin_required
 def admin_approvedproduct(request):
-    products = Product.objects.filter(approval_status='APPROVED').order_by('-created_at')
+    products = Product.objects.filter(approval_status='APPROVED').prefetch_related(
+        Prefetch("variants", queryset=admin_variant_queryset())
+    ).order_by('-created_at')
 
     if request.method=="POST":
         product_id=request.POST.get('product_id')
@@ -353,7 +370,9 @@ def admin_approvedproduct(request):
 #----------admin_rejectproduct-------------------
 @admin_required
 def admin_rejectproduct(request):
-    products = Product.objects.filter(approval_status='REJECTED').order_by('-created_at')
+    products = Product.objects.filter(approval_status='REJECTED').prefetch_related(
+        Prefetch("variants", queryset=admin_variant_queryset())
+    ).order_by('-created_at')
 
     if request.method=="POST":
         product_id=request.POST.get('product.id')
@@ -390,10 +409,20 @@ def user_toggle(request, id, action):
 #----------admin_orders-------------------
 @admin_required
 def admin_orders(request):
-    orders=Order.objects.all().order_by('-ordered_at')
+    orders=Order.objects.select_related("user", "address").order_by('-ordered_at')
     return render(request,'adminapk/admin_orders.html',{"orders":orders})
 
 @admin_required
 def admin_order_detail(request,id):
-    orders=get_object_or_404(Order,id=id)
+    orders=get_object_or_404(
+        Order.objects.select_related("user", "address").prefetch_related(
+            Prefetch(
+                "items",
+                queryset=OrderItem.objects.select_related("variant", "variant__product", "seller").prefetch_related(
+                    Prefetch("variant", queryset=admin_variant_queryset())
+                ),
+            )
+        ),
+        id=id,
+    )
     return render(request,'adminapk/admin_order_detail.html',{"order":orders})

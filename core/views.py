@@ -17,6 +17,7 @@ from .utils import generate_otp
 from datetime import timedelta
 from django.contrib.auth.hashers import check_password
 from django.core.paginator import Paginator
+from django.db.models import Prefetch
 
 
 def redirect_user_by_role(user):
@@ -32,6 +33,14 @@ def redirect_user_by_role(user):
     if user.role == "ADMIN":
         return redirect("admin_dashboard")
     return redirect("login")
+
+
+def primary_image_prefetch():
+    return Prefetch(
+        "images",
+        queryset=ProductImage.objects.filter(is_primary=True),
+        to_attr="prefetched_primary_images",
+    )
 
 
 #Create your views here.
@@ -165,7 +174,12 @@ def Customer_Home(request):
     if user.is_authenticated and user.role in ["SELLER", "ADMIN"]:
         return redirect_user_by_role(user)
 
-    product=Product.objects.filter(is_active=True, variants__isnull=False).distinct().prefetch_related('variants', 'variants__images').order_by('-created_at')
+    product=Product.objects.filter(is_active=True, variants__isnull=False).distinct().prefetch_related(
+        Prefetch(
+            "variants",
+            queryset=ProductVariant.objects.prefetch_related(primary_image_prefetch()),
+        )
+    ).order_by('-created_at')
     category=Category.objects.filter(is_active=True)
     cart_count=0
     if user.is_authenticated:
@@ -190,7 +204,7 @@ def sub_category(request,slug):
 def subcategory_product(request,slug):
     sub_category=get_object_or_404(SubCategory,slug=slug)
     product=Product.objects.filter(subcategory=sub_category)
-    productvariant=ProductVariant.objects.filter(product__in=product).prefetch_related('images')
+    productvariant=ProductVariant.objects.filter(product__in=product).prefetch_related(primary_image_prefetch())
 
     brand=request.GET.getlist('brand')
     min_price=request.GET.get('min_price')

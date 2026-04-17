@@ -12,18 +12,38 @@ from django.http import JsonResponse
 from django.urls import reverse
 from django.db.models import Q
 from django.db.models import Avg, Sum, Count, Min
+from django.db.models import Prefetch
 from django.utils import timezone
 
 # Create your views here.
+def primary_image_prefetch():
+    return Prefetch(
+        "images",
+        queryset=ProductImage.objects.filter(is_primary=True),
+        to_attr="prefetched_primary_images",
+    )
+
+def seller_variant_queryset():
+    return ProductVariant.objects.select_related("product").prefetch_related(primary_image_prefetch())
+
+
 #--------------Seller_Register--------------------------
 def Seller_Register(request):
-    if request.method=="POST":
-        first_name=request.POST.get("first_name")
-        last_name=request.POST.get("last_name")
-        email=request.POST.get("email").strip().lower()
-        password=request.POST.get("password")
-        confirm_password=request.POST.get("confirm_password")
+    if request.method == "POST":
+        #--------Account_Info------------------
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        email = request.POST.get("email").strip().lower()
+        password = request.POST.get("password")
+        confirm_password = request.POST.get("confirm_password")
+        
+        #------Store_Info---------------
         store_name = request.POST.get("store_name")
+        address = request.POST.get("business_address")
+        gst = request.POST.get("gst_number")
+        pan = request.POST.get("pan_number")
+        bank = request.POST.get("bank_account_number")
+        ifsc = request.POST.get("ifsc_code")
 
         if password!=confirm_password:
             messages.error(request, "Passwords do not match")
@@ -41,20 +61,52 @@ def Seller_Register(request):
             password=password,
             role="SELLER"
             )
+        
         SellerProfile.objects.create(
             user=user,
-            store_name=store_name
+            store_name=store_name,
+            gst_number=gst,
+            pan_number=pan,
+            business_address=address,
+            bank_account_number=bank,
+            ifsc_code=ifsc,
+            status="PENDING"
         )
         messages.success(request, "Seller account Created Successfully")
         return redirect("login")
     return render(request, "seller/Seller_Register.html")
 
+# def seller_onboarding(request):
+#     user=request.user
+#     if request.method == "POST":
+#         store_name = request.POST.get("store_name")
+#         gst = request.POST.get("gst_number")
+#         pan = request.POST.get("pan_number")
+#         address = request.POST.get("business_address")
+#         bank = request.POST.get("bank_account_number")
+#         ifsc = request.POST.get("ifsc_code")
+
+#         SellerProfile.objects.create(
+#             user=user,
+#             store_name=store_name,
+#             gst_number=gst,
+#             pan_number=pan,
+#             business_address=address,
+#             bank_account_number=bank,
+#             ifsc_code=ifsc,
+#             status="PENDING"
+#         )
+
+#         messages.success(request, "Seller profile created successfully!")
+#         return redirect("login")
+
+#     return render(request, "seller/onboarding.html")
 
 #--------------Seller_Home--------------------------
 def seller_home(request):
     return render(request, "seller/seller_home.html")
 
-
+#--------------Seller_Waiting--------------------------
 @seller_required
 def seller_waiting(request):
     seller = getattr(request.user, "seller_profile", None)
@@ -88,7 +140,14 @@ def Seller_Dashboard(request):
     low_stock_products = products.annotate(min_stock=Min('variants__stock_quantity')).filter(min_stock__lt=100).order_by('min_stock')[:4]
 
     #-----Recent_Order---------
-    recent_orders=Order.objects.filter(items__seller=seller).distinct().order_by('-ordered_at')[:4]
+    recent_orders=Order.objects.filter(items__seller=seller).prefetch_related(
+        Prefetch(
+            "items",
+            queryset=OrderItem.objects.filter(seller=seller).select_related("variant", "variant__product").prefetch_related(
+                Prefetch("variant", queryset=seller_variant_queryset())
+            ),
+        )
+    ).distinct().order_by('-ordered_at')[:4]
 
 
     return render(request, "seller/Seller_dashboard.html",{'store_name': seller.store_name,'total_revenue': total_revenue,'active_orders': active_orders,
@@ -141,7 +200,9 @@ def product_inventory(request):
     status = request.GET.get('status')
     query = request.GET.get('search')
 
-    products = Product.objects.filter(seller=seller).prefetch_related('variants__images').order_by('-created_at')
+    products = Product.objects.filter(seller=seller).prefetch_related(
+        Prefetch("variants", queryset=seller_variant_queryset())
+    ).order_by('-created_at')
 
     #------Page-Filter-------------
     if status == "active":
@@ -238,7 +299,7 @@ def delete_product(request, id):
 @approved_seller_required
 def edit_product(request, id):
     product = get_object_or_404(Product, id=id, seller=request.user.seller_profile)
-    variant = product.variants.first()
+    variant = seller_variant_queryset().filter(product=product).first()
     # variant = get_object_or_404(product=product)
     categories = Category.objects.all()
     subcategories = SubCategory.objects.filter(category=product.subcategory.category)
@@ -298,7 +359,14 @@ def edit_product(request, id):
 def seller_order(request):
     seller=request.user.seller_profile
     # orders=Order.objects.filter(items__seller=seller).order_by('-ordered_at')
-    orders = Order.objects.filter(items__seller=seller).prefetch_related('items__variant__images').order_by('-ordered_at')
+    orders = Order.objects.filter(items__seller=seller).select_related("address", "user").prefetch_related(
+        Prefetch(
+            "items",
+            queryset=OrderItem.objects.filter(seller=seller).select_related("variant", "variant__product").prefetch_related(
+                Prefetch("variant", queryset=seller_variant_queryset())
+            ),
+        )
+    ).order_by('-ordered_at')
 
     #-------Filter-----------------
     status = request.GET.get('status')
@@ -335,7 +403,18 @@ def seller_cancel_order(request,order_id):
 
 @approved_seller_required
 def seller_order_details(request,order_id):
-    orders=get_object_or_404(Order,id=order_id)
+    seller = request.user.seller_profile
+    orders=get_object_or_404(
+        Order.objects.select_related("address", "user").prefetch_related(
+            Prefetch(
+                "items",
+                queryset=OrderItem.objects.filter(seller=seller).select_related("variant", "variant__product").prefetch_related(
+                    Prefetch("variant", queryset=seller_variant_queryset())
+                ),
+            )
+        ),
+        id=order_id,
+    )
 
     if request.method == "POST":
         status = request.POST.get('status')
@@ -360,7 +439,10 @@ def seller_order_details(request,order_id):
 @approved_seller_required
 def seller_review(request):
     seller=request.user.seller_profile
-    products=Product.objects.filter(seller=seller).prefetch_related('reviews')
+    products=Product.objects.filter(seller=seller).prefetch_related(
+        "reviews",
+        Prefetch("variants", queryset=seller_variant_queryset()),
+    )
     reviews = Review.objects.filter(product__in=products).order_by('-created_at')
 
     total_reviews_count = reviews.count()

@@ -104,24 +104,25 @@
 
             <div class="bg-surface-container-lowest rounded-xl shadow-2xl overflow-hidden">
                 <form class="p-8 md:p-12 space-y-12" method="POST">
+                    {% csrf_token %}
                     
                     <div id="store-section" class="space-y-6">
                         <div class="flex items-center gap-2 border-b border-outline-variant/20 pb-2">
                             <span class="material-symbols-outlined text-primary">storefront</span>
                             <h2 class="text-xl font-headline font-bold text-primary">Store Details</h2>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-primary uppercase tracking-widest">Store Name</label>
                                 <input type="text" name="store_name" required class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/20" placeholder="e.g. Artisanal Crafts">
                             </div>
-                            <div class="space-y-2">
+                            <!-- <div class="space-y-2">
                                 <label class="text-xs font-bold text-primary uppercase tracking-widest">Store Slug (URL)</label>
                                 <div class="flex">
                                     <span class="inline-flex items-center px-3 rounded-l-lg bg-outline-variant/30 text-outline text-xs border-r-0">shoppyo.com/</span>
                                     <input type="text" name="store_slug" required class="w-full bg-surface-container-highest border-none rounded-r-lg px-4 py-3 focus:ring-2 focus:ring-primary/20" placeholder="my-store">
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="space-y-2 col-span-full">
                                 <label class="text-xs font-bold text-primary uppercase tracking-widest">Business Address</label>
                                 <textarea name="business_address" rows="3" required class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/20" placeholder="Street, City, State, ZIP"></textarea>

@@ -160,7 +160,7 @@ bg-blue-100 text-blue-800 border border-blue-200
         </div>
     {% endfor %}
     </div>
-    <a href="{% url 'customer_address_add' %}" class="mt-3 inline-block text-primary font-semibold text-sm hover:underline">+ Add New Address</a>
+    <a href="{% url 'customer_address_add' %}?next={{ request.get_full_path|urlencode }}" class="mt-3 inline-block text-primary font-semibold text-sm hover:underline">+ Add New Address</a>
 </div>
 
 {% else %}
@@ -175,7 +175,7 @@ bg-blue-100 text-blue-800 border border-blue-200
 <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Please add a delivery address to continue.</p>
 </div>
 </div>
-<a href="{% url 'customer_address_add' %}" class="text-primary font-semibold text-sm hover:underline">Add Address</a>
+<a href="{% url 'customer_address_add' %}?next={{ request.get_full_path|urlencode }}" class="text-primary font-semibold text-sm hover:underline">Add Address</a>
 </div>
 {% endif %}
 
@@ -246,7 +246,7 @@ bg-blue-100 text-blue-800 border border-blue-200
 <div class="flex gap-6 py-4 items-center border-b border-slate-100 dark:border-slate-700 last:border-0">
 
 <div class="w-24 h-24 rounded-lg overflow-hidden bg-slate-100 flex-shrink-0">
-    {% with item.variant.images.all.0 as img_obj %}
+    {% with img_obj=item.variant.primary_image %}
         {% if img_obj %}
         <img src="{{ img_obj.image_url }}" class="w-full h-full object-cover">
         {% else %}
@@ -286,8 +286,8 @@ Qty: {{ item.quantity }}
 <div class="flex gap-6 py-4 items-center">
 
 <div class="w-32 h-32 rounded-lg overflow-hidden bg-slate-100 flex-shrink-0">
-    {% if order.images.all %}
-    <img src="{{ order.images.all.0.image_url }}" class="w-full h-full object-cover">
+    {% if order.primary_image %}
+    <img src="{{ order.primary_image.image_url }}" class="w-full h-full object-cover">
     {% else %}
     <img src="/static/images/no-image.png" class="w-full h-full object-cover">
     {% endif %}

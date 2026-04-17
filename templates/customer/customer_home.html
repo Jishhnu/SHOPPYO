@@ -180,8 +180,10 @@
     <a href="#" class="block">
         
         <div class="w-24 h-24 rounded-xl bg-ice-white flex items-center justify-center shadow-sm group-hover:scale-105 transition overflow-hidden">
-            <img src="{{ category.image_url }}"
+            {% if category.image_url %}
+            <img src="{{ category.image_url.url }}"
                  class="w-24 h-24 mx-auto shadow-sm rounded-xl object-contain">
+            {% endif %}
         </div>
 
         <div class="flex items-center justify-center mt-3 gap-1">
@@ -201,8 +203,10 @@
         <a href="{% url 'subcategory_list' category.slug %}" class="block">
             
             <div class="w-24 h-24 rounded-xl bg-ice-white flex items-center justify-center shadow-sm group-hover:scale-105 transition overflow-hidden">
-                <img src="{{ category.image_url }}" alt="{{ category.name }}"
+                {% if category.image_url %}
+                <img src="{{ category.image_url.url }}" alt="{{ category.name }}"
                      class="w-full h-full p-2 object-contain">
+                {% endif %}
             </div>
         
             <div class="flex items-center justify-center mt-3 text-center">
@@ -265,7 +269,7 @@
                     <div onclick="window.location.href='{% url 'single_product_variant' product.slug %}'"
      class="block flex-1 group cursor-pointer">
     
-    <div class="relative aspect-[4/3] bg-white overflow-hidden border-b border-[#F5F1EA]">
+    <div class="relative h-52 bg-white overflow-hidden border-b border-[#F5F1EA]">
         
         {% if variant.discount_percentage > 0 %}
         <div class="absolute top-2 left-2 z-10 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded shadow-sm uppercase">
@@ -281,11 +285,11 @@
             </span>
         </a>
 
-        <div class="w-full h-full flex items-center justify-center p-1">
-            {% with variant.images.all.0 as img %}
+        <div class="w-full h-full flex items-center justify-center p-4">
+            {% with img=variant.primary_image %}
                 <img src="{{ img.image_url|default:'https://via.placeholder.com/300' }}" 
                      alt="{{ product.name }}"
-                     class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500">
+                     class="h-40 w-full object-contain group-hover:scale-105 transition-transform duration-500">
             {% endwith %}
         </div>
     </div>

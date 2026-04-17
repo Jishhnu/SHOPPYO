@@ -201,15 +201,15 @@
         <section class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
 
             {% for product in products %}
-            {% with variant=product.variants.first %}
+            {% with variant=product.variants.all|first %}
 
             <div class="product-card bg-white rounded-3xl border border-gray-100 transition-all duration-500 flex flex-col overflow-hidden group">
             
                 <!-- IMAGE SECTION -->
                 <div class="relative h-48 w-full bg-gray-100 overflow-hidden rounded-t-3xl">
                 
-                    {% if variant %}
-                        {% with img=variant.get_primary_image %}
+                    <!-- {% if variant %}
+                        {% with img=variant.primary_image %}
                             {% if img and img.image %}
                                 <img src="{{ img.image.url }}" 
                                      class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
@@ -224,7 +224,17 @@
                         <div class="h-full w-full flex items-center justify-center">
                             <i class="fa-solid fa-box text-gray-300 text-5xl"></i>
                         </div>
-                    {% endif %}
+                    {% endif %} -->
+
+                    {% if variant and variant.primary_image and variant.primary_image.image %}
+    <img src="{{ variant.primary_image.image.url }}"
+         class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+         alt="{{ product.name }}">
+{% else %}
+    <div class="h-full w-full flex items-center justify-center">
+        <i class="fa-solid fa-box text-gray-300 text-5xl"></i>
+    </div>
+{% endif %}
                     
                     <!-- OVERLAY BUTTONS -->
                     <div class="absolute inset-0 bg-pdark/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-3 backdrop-blur-[2px]">

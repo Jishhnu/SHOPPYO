@@ -222,7 +222,7 @@
                                         <div class="flex items-center gap-4">
                                             <div class="w-14 h-14 rounded-2xl bg-white border border-outline-variant/20 overflow-hidden flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
 
-                                                {% with primary_image=item.variant.images.all|dictsortreversed:"is_primary"|first %}
+                                                {% with primary_image=item.variant.primary_image %}
                                                     {% if primary_image %}
                                                         <img src="{{ primary_image.image_url }}" 
                                                              alt="{{ primary_image.alt_text|default:item.variant.product.name }}" 

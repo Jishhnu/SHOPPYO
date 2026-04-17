@@ -4,9 +4,12 @@ from seller import views
 
 urlpatterns = [
     path("seller_register/",views.Seller_Register,name="Seller_Register"),
+    # path("seller_onboarding/",views.seller_onboarding,name="seller_onboarding"),
     path("seller_home/",views.seller_home,name="seller_home"),
     path("seller_waiting/",views.seller_waiting,name="seller_waiting"),
     path("seller_logout/", views.seller_logout, name="seller_logout"),
+
+#-------------Seller_Dashboard-------------------------
     path("seller_dashboard/",views.Seller_Dashboard,name="seller_dashboard"),
     path("seller_profile/",views.seller_profile,name="seller_profile"),
     path("seller_editprofile/",views.seller_editprofile,name="seller_editprofile"),

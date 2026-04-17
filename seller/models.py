@@ -80,14 +80,29 @@ class ProductVariant(models.Model):
     
     @property
     def primary_image(self):
+        prefetched_primary_images = getattr(self, "prefetched_primary_images", None)
+        if prefetched_primary_images is not None:
+            return prefetched_primary_images[0] if prefetched_primary_images else None
         return self.images.filter(is_primary=True).first() or self.images.first()
+
+    @property
+    def image_url(self):
+        primary_image = self.primary_image
+        if primary_image and primary_image.image:
+            return primary_image.image.url
+        return ""
 
 class ProductImage(models.Model):
     variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE, related_name="images")
-    # image_url = models.URLField()
     image = models.ImageField(upload_to='products/',null=True,blank=True)
     alt_text = models.CharField(max_length=255, blank=True)
     is_primary = models.BooleanField(default=False)
+
+    @property
+    def image_url(self):
+        if self.image:
+            return self.image.url
+        return ""
 
 
 class Attribute(models.Model):

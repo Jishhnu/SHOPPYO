@@ -9,9 +9,12 @@ import uuid
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Q
+from django.db.models import Prefetch
 from django.http import JsonResponse,HttpResponse
 from django.conf import settings
 from core.decorator import customer_required
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.urls import reverse
 
 try:
     import razorpay
@@ -22,6 +25,31 @@ except ImportError:
                 raise ImportError("razorpay is required for payment operations")
 
     razorpay = _MissingRazorpayModule()
+
+
+def primary_image_prefetch():
+    return Prefetch(
+        "images",
+        queryset=ProductImage.objects.filter(is_primary=True),
+        to_attr="prefetched_primary_images",
+    )
+
+
+def variant_with_primary_image_queryset():
+    return ProductVariant.objects.select_related("product", "product__subcategory").prefetch_related(
+        primary_image_prefetch()
+    )
+
+
+def get_safe_next_url(request):
+    next_url = request.POST.get("next") or request.GET.get("next")
+    if next_url and url_has_allowed_host_and_scheme(
+        next_url,
+        allowed_hosts={request.get_host()},
+        require_https=request.is_secure(),
+    ):
+        return next_url
+    return None
 
 
 @customer_required
@@ -82,6 +110,8 @@ def Customer_Address_set_default(request, address_id):
 
 @customer_required
 def Customer_Address_add(request):
+    next_url = get_safe_next_url(request)
+    cancel_url = next_url or request.META.get("HTTP_REFERER") or reverse("customer_address")
     if request.method == "POST":
             full_name=request.POST.get("full_name")
             phone_number=request.POST.get("phone_number")
@@ -113,8 +143,12 @@ def Customer_Address_add(request):
                 address_type=address_type,
                 is_default=is_default,
                 )
-            return redirect('customer_address')
-    return render(request, "customer/customer_addressadd.html")
+            return redirect(next_url or 'customer_address')
+    return render(
+        request,
+        "customer/customer_addressadd.html",
+        {"next_url": next_url, "cancel_url": cancel_url},
+    )
 
 @customer_required
 def Customer_Address_update(request, address_id):
@@ -179,7 +213,9 @@ def Add_to_cart(request, variant_id):
 @customer_required
 def View_cart(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
-    cart_item=CartItem.objects.filter(cart=cart)
+    cart_item=CartItem.objects.filter(cart=cart).select_related("variant", "variant__product").prefetch_related(
+        Prefetch("variant", queryset=variant_with_primary_image_queryset())
+    )
 
     subtotal=0
     tax = 0
@@ -243,7 +279,9 @@ def wishlist_view(request):
         wishlist=Wishlist.objects.get(user=request.user, wishlist_name="My Wishlist")
     except Wishlist.DoesNotExist:
         wishlist=Wishlist.objects.create(user=request.user, wishlist_name="My Wishlist")
-    wishlist_item=WishlistItem.objects.filter(wishlist=wishlist)
+    wishlist_item=WishlistItem.objects.filter(wishlist=wishlist).select_related("variant", "variant__product").prefetch_related(
+        Prefetch("variant", queryset=variant_with_primary_image_queryset())
+    )
 
     return render(request, "customer/wishlist.html", {"items": wishlist_item})
 
@@ -306,9 +344,14 @@ def move_all_to_cart(request):
 
 def single_product_variant(request,slug):
     product=get_object_or_404(Product, slug=slug)
-    product_variant = ProductVariant.objects.filter(product=product).first()
+    product_variant = variant_with_primary_image_queryset().filter(product=product).first()
     product_image=ProductImage.objects.filter(variant=product_variant)
-    related_products=Product.objects.filter(subcategory=product.subcategory).exclude(id=product.id)
+    related_products=Product.objects.filter(subcategory=product.subcategory).exclude(id=product.id).prefetch_related(
+        Prefetch(
+            "variants",
+            queryset=ProductVariant.objects.prefetch_related(primary_image_prefetch()),
+        )
+    )
 
     if request.user.is_authenticated:
         review = Review.objects.filter(product=product,user=request.user).order_by('-created_at')
@@ -322,7 +365,7 @@ def single_product_variant(request,slug):
 @customer_required
 def order(request, slug):
     product = get_object_or_404(Product, slug=slug)
-    product_variant = ProductVariant.objects.filter(product=product).first()
+    product_variant = variant_with_primary_image_queryset().filter(product=product).first()
     
     addresses = Address.objects.filter(user=request.user).order_by('-is_default', '-updated_at')
     
@@ -341,7 +384,9 @@ def order(request, slug):
 def checkout(request, cart_id):
     user = request.user
     cart = get_object_or_404(Cart, id=cart_id, user=user)
-    cart_items = CartItem.objects.filter(cart=cart)
+    cart_items = CartItem.objects.filter(cart=cart).select_related("variant", "variant__product").prefetch_related(
+        Prefetch("variant", queryset=variant_with_primary_image_queryset())
+    )
 
     addresses = Address.objects.filter(user=user).order_by('-is_default', '-updated_at')
 
@@ -479,12 +524,21 @@ def place_order(request):
 @customer_required
 def order_confirmation(request,order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user)
-    order_item=OrderItem.objects.filter(order=order)
+    order_item=OrderItem.objects.filter(order=order).select_related("variant", "variant__product").prefetch_related(
+        Prefetch("variant", queryset=variant_with_primary_image_queryset())
+    )
     return render(request,"customer/order_confirmation.html",{"order":order,"order_item":order_item})
 
 @customer_required
 def order_history(request):
-    orders = Order.objects.filter(user=request.user).prefetch_related('items').order_by('-ordered_at')
+    orders = Order.objects.filter(user=request.user).prefetch_related(
+        Prefetch(
+            "items",
+            queryset=OrderItem.objects.select_related("variant", "variant__product").prefetch_related(
+                Prefetch("variant", queryset=variant_with_primary_image_queryset())
+            ),
+        )
+    ).order_by('-ordered_at')
 
     filter_type = request.GET.get("filter")
     if filter_type == "3months":
@@ -548,7 +602,12 @@ def search(request):
     max_price = request.GET.get("max_price")
     sort = request.GET.get("sort")
 
-    products = Product.objects.filter(is_active=True)
+    products = Product.objects.filter(is_active=True).prefetch_related(
+        Prefetch(
+            "variants",
+            queryset=ProductVariant.objects.prefetch_related(primary_image_prefetch()),
+        )
+    )
     if search:
         words=search.split()
         q_object=Q()
@@ -559,7 +618,12 @@ def search(request):
             q_object |= Q(subcategory__name__icontains=searchs)
             q_object |= Q(subcategory__category__name__icontains=searchs)
             q_object |= Q(model_number__icontains=searchs)
-        products=Product.objects.filter(q_object).distinct()
+        products=Product.objects.filter(q_object).distinct().prefetch_related(
+            Prefetch(
+                "variants",
+                queryset=ProductVariant.objects.prefetch_related(primary_image_prefetch()),
+            )
+        )
 
         if brand:
             products=products.filter(brand__in=brand)
@@ -597,6 +661,7 @@ def live_search(request):
 @customer_required
 def add_review(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+    variant = variant_with_primary_image_queryset().filter(product=product).first()
     user = request.user
     
     if request.method == "POST":
@@ -612,7 +677,7 @@ def add_review(request, product_id):
         messages.success(request, "Thank you for your review!")
         return redirect('single_product_variant', slug=product.slug)
     
-    return render(request, "customer/add_Review.html", {"product": product})
+    return render(request, "customer/add_Review.html", {"product": product, "variant": variant})
 
 
 #---------------------Payment|Razorpay--------------------------------

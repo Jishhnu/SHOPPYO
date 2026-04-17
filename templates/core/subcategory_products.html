@@ -249,7 +249,7 @@ Clear All
         
         <a href="{% url 'single_product_variant' variant.product.slug %}" class="absolute inset-0 z-10" aria-label="View {{ variant.product.name }}"></a>
 
-        <div class="relative aspect-square p-6 overflow-hidden bg-slate-50/30">
+        <div class="relative h-56 p-4 overflow-hidden bg-slate-50/30">
 
 <!-- ------productImage---------- -->
             <!-- {% with variant.images.all as all_images %}
@@ -278,18 +278,12 @@ Clear All
                 <img src="{{ img.image_url }}">
             {% endfor %} -->
 
-            {% with variant.images.all as images %}
-                {% for img in images %}
-                    {% if img.is_primary %}
-                        <img src="{{ img.image_url }}">
-                    {% endif %}
-                {% empty %}
-                    <img src="https://via.placeholder.com/300">
-                {% endfor %}
-
-                {% if not images|length %}
-                <img src="https://via.placeholder.com/300">
-                {% endif %}
+            {% with img=variant.primary_image %}
+                <img
+                    src="{{ img.image_url|default:'https://via.placeholder.com/300' }}"
+                    alt="{{ variant.product.name }}"
+                    class="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                >
             {% endwith %}
 
             <span class="absolute top-4 right-4 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded">NEW</span>

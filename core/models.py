@@ -38,7 +38,7 @@ class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
     title = models.CharField(max_length=255)
     message = models.TextField()
-    image_url = models.URLField(blank=True, null=True)
+    image_url = models.ImageField(upload_to="notifications/", blank=True, null=True)
     redirect_url = models.URLField(blank=True, null=True)
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -46,8 +46,8 @@ class Notification(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
-    image_url = models.URLField(blank=True, null=True)
-    image_url2 = models.URLField(blank=True, null=True)
+    image_url = models.ImageField(upload_to="categories/", blank=True, null=True)
+    image_url2 = models.ImageField(upload_to="categories/", blank=True, null=True)
     description = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -62,7 +62,7 @@ class SubCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="subcategories")
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
-    image_url = models.URLField(blank=True, null=True)
+    image_url = models.ImageField(upload_to="subcategories/", blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -74,7 +74,7 @@ class SubCategory(models.Model):
 
 class Banner(models.Model):
     title = models.CharField(max_length=255)
-    image_url = models.URLField()
+    image_url = models.ImageField(upload_to="banners/")
     redirect_url = models.URLField(blank=True, null=True)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()

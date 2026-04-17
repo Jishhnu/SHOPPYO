@@ -5,8 +5,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Order Confirmation - ShoppyO</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -51,7 +52,7 @@
         <div class="flex items-center justify-between h-16">
             <a href="{% url 'customer_home' %}" class="flex items-center gap-2 text-white group">
                 <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
-                  <!-- <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span> -->
+                  <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
                 </div>
 
                 <div class="flex flex-col">
@@ -168,7 +169,7 @@
                             style="background-image: url('{{ item.variant.image_url }}');">
                             </div> -->
 
-                            {% with image=item.variant.images.first %}
+                            {% with image=item.variant.primary_image %}
                             {% if image %}
                             <img src="{{ image.image_url }}"
                             class="w-16 h-16 rounded-lg object-cover border border-slate-200">
@@ -210,10 +211,10 @@
 
             </div>
                 <div class="flex flex-col sm:flex-row gap-4 pt-6 w-full">
-    <a href="#" 
+    <a href="{% url 'order_history' %}" 
        class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.98]">
         <span class="material-symbols-outlined text-xl">spatial_tracking</span>
-        <span>Track My Order</span>
+        <span>Track My Orders</span>
     </a>
 
     <a href="{% url 'customer_home' %}" 

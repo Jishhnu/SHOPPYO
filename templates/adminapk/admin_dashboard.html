@@ -342,9 +342,9 @@ Operational
 
             <!-- ✅ Product Image (from variant) -->
             <div class="size-10 rounded-lg bg-slate-300 overflow-hidden flex-shrink-0">
-                {% with variant=product.variants.first %}
-                    {% if variant and variant.images.first %}
-                        <img src="{{ variant.images.first.image_url }}" alt="Product">
+                {% with variant=product.variants.all|first %}
+                    {% if variant and variant.primary_image %}
+                        <img src="{{ variant.primary_image.image_url }}" alt="Product">
                     {% else %}
                         <img src="https://via.placeholder.com/40" alt="Product">
                     {% endif %}
@@ -359,7 +359,7 @@ Operational
 
                 <!-- ✅ Price fix -->
                 <p class="text-xs text-slate-500 mb-2">
-                    {% with variant=product.variants.first %}
+                    {% with variant=product.variants.all|first %}
                         {% if variant %}
                             ₹{{ variant.selling_price }}
                         {% else %}
