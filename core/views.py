@@ -75,7 +75,6 @@ def Customer_Register(request):
         user.otp= make_password(otp) # otp hash cheyuthu vechu
         user.otp_created_at= timezone.now() #ippozhathe Timezone set akki vech user table lle
         user.save()
-        print(otp)
 
         send_mail(
             'Your OTP code',
@@ -174,18 +173,24 @@ def Customer_Home(request):
     if user.is_authenticated and user.role in ["SELLER", "ADMIN"]:
         return redirect_user_by_role(user)
 
+    #---Product-Variants-Primary Images-----
     product=Product.objects.filter(is_active=True, variants__isnull=False).distinct().prefetch_related(
         Prefetch(
             "variants",
             queryset=ProductVariant.objects.prefetch_related(primary_image_prefetch()),
         )
     ).order_by('-created_at')
+
+    #---Category-----
     category=Category.objects.filter(is_active=True)
+
+    #---Cart-Count-----
     cart_count=0
     if user.is_authenticated:
         cart, _ = Cart.objects.get_or_create(user=user)
         cart_count=cart.items.count()
 
+    #----Paginator-------
     paginator = Paginator(product, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

@@ -16,40 +16,6 @@ from core.decorator import customer_required
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.urls import reverse
 
-try:
-    import razorpay
-except ImportError:
-    class _MissingRazorpayModule:
-        class Client:
-            def __init__(self, *args, **kwargs):
-                raise ImportError("razorpay is required for payment operations")
-
-    razorpay = _MissingRazorpayModule()
-
-
-def primary_image_prefetch():
-    return Prefetch(
-        "images",
-        queryset=ProductImage.objects.filter(is_primary=True),
-        to_attr="prefetched_primary_images",
-    )
-
-
-def variant_with_primary_image_queryset():
-    return ProductVariant.objects.select_related("product", "product__subcategory").prefetch_related(
-        primary_image_prefetch()
-    )
-
-
-def get_safe_next_url(request):
-    next_url = request.POST.get("next") or request.GET.get("next")
-    if next_url and url_has_allowed_host_and_scheme(
-        next_url,
-        allowed_hosts={request.get_host()},
-        require_https=request.is_secure(),
-    ):
-        return next_url
-    return None
 
 
 @customer_required
@@ -144,11 +110,7 @@ def Customer_Address_add(request):
                 is_default=is_default,
                 )
             return redirect(next_url or 'customer_address')
-    return render(
-        request,
-        "customer/customer_addressadd.html",
-        {"next_url": next_url, "cancel_url": cancel_url},
-    )
+    return render(request,"customer/customer_addressadd.html",{"next_url": next_url, "cancel_url": cancel_url},)
 
 @customer_required
 def Customer_Address_update(request, address_id):
@@ -545,6 +507,7 @@ def order_history(request):
         three_month_ago = timezone.now() - timedelta(days=90)
         orders = orders.filter(ordered_at__gte=three_month_ago)
 
+    #------Order Status------------------
     status = request.GET.get('status')
     if status == 'all':
         orders = Order.objects.filter(user=request.user).order_by('-ordered_at')
@@ -743,3 +706,41 @@ def payment_success(request):
         payment.save()
 
         return HttpResponse("Payment Failed")
+    
+
+
+
+try:
+    import razorpay
+except ImportError:
+    class _MissingRazorpayModule:
+        class Client:
+            def __init__(self, *args, **kwargs):
+                raise ImportError("razorpay is required for payment operations")
+
+    razorpay = _MissingRazorpayModule()
+
+
+def primary_image_prefetch():
+    return Prefetch(
+        "images",
+        queryset=ProductImage.objects.filter(is_primary=True),
+        to_attr="prefetched_primary_images",
+    )
+
+
+def variant_with_primary_image_queryset():
+    return ProductVariant.objects.select_related("product", "product__subcategory").prefetch_related(
+        primary_image_prefetch()
+    )
+
+
+def get_safe_next_url(request):
+    next_url = request.POST.get("next") or request.GET.get("next")
+    if next_url and url_has_allowed_host_and_scheme(
+        next_url,
+        allowed_hosts={request.get_host()},
+        require_https=request.is_secure(),
+    ):
+        return next_url
+    return None

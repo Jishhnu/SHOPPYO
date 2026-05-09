@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,6 +26,7 @@ SECRET_KEY = 'django-insecure-a#di4rr9azl6%8(8+d1m#5bjajmo^$b5mil39c%32-xgoaq1)0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Used for deployment access
 ALLOWED_HOSTS = ['*','13.219.92.228']
 
 
@@ -82,28 +84,41 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Page.wsgi.application'
+# ENV = os.getenv('ENV')
 
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+# if ENV == "Production":
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Ecommerce',
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'Ecommerce',
+#         'USER': 'root',
+#         'PASSWORD': 'password',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
 #     }
 # }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'Ecommerce',
+#         'USER': 'Admin',
+#         'PASSWORD': 'password',
+#         'HOST': 'database-1.c8dq8ekgwpa6.us-east-1.rds.amazonaws.com',
+#         'PORT': '3306',
+#     }
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -152,10 +167,10 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'login'         # UnAuthenticated users are redirected login page
 
-LOGIN_REDIRECT_URL = '/'    # Or whatever the 'name' of your login path is
-LOGOUT_REDIRECT_URL = '/'   # Where to go after success
+LOGIN_REDIRECT_URL = '/'    # After login->homepage
+LOGOUT_REDIRECT_URL = '/'   # After logout->homepage
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
 

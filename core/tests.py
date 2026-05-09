@@ -7,6 +7,7 @@ from seller.models import SellerProfile
 
 User = get_user_model()
 
+#---This test class verifies role-based redirection based on their role and status----
 
 class CoreRoleRedirectTests(TestCase):
     @classmethod

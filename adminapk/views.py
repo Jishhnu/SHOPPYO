@@ -34,11 +34,12 @@ def admin_variant_queryset():
 def admin_dashboard(request):
     pendingsellers= SellerProfile.objects.filter(status='PENDING')
     approvedsellers=SellerProfile.objects.filter(status='APPROVED')
+
     users=User.objects.filter(role='CUSTOMER')
+
     totalusers=User.objects.all().order_by('-updated_at')[:4]
-    pendingproducts=Product.objects.filter(approval_status='PENDING').prefetch_related(
-        Prefetch("variants", queryset=admin_variant_queryset())
-    )[:2]
+
+    pendingproducts=Product.objects.filter(approval_status='PENDING').prefetch_related(Prefetch("variants", queryset=admin_variant_queryset()))[:2]
     totalpendingproducts=Product.objects.filter(approval_status='PENDING')
 
     if request.method=="POST":
@@ -115,8 +116,8 @@ def admin_category(request):
         name= request.POST.get("name")
         slug= request.POST.get("slug")
         description= request.POST.get("description")
-        image_url = request.FILES.get('image_url')
-        image_url2 = request.FILES.get('image_url2')
+        image1 = request.FILES.get('image1')
+        image2 = request.FILES.get('image2')
 
         if Category.objects.filter(slug=slug).exists():
             messages.error(request,"Slug already exists!")
@@ -126,8 +127,8 @@ def admin_category(request):
             name=name,
             slug=slug,
             description=description,
-            image_url=image_url,
-            image_url2=image_url2,
+            image1=image1,
+            image2=image2,
         )
 
         messages.success(request,"Category Added Successfully!")
@@ -290,10 +291,7 @@ def admin_rejectsellers(request):
 #----------admin_suspendedsellers-------------------
 @admin_required
 def admin_suspendedsellers(request):
-    sellers=SellerProfile.objects.filter(
-        suspended_until__isnull=False,
-        suspended_until__gt=timezone.now()
-        ).order_by('-created_at')
+    sellers=SellerProfile.objects.filter(suspended_until__isnull=False,suspended_until__gt=timezone.now()).order_by('-created_at')
 
     if request.method == "POST":
         seller_id=request.POST.get('seller_id')
@@ -317,9 +315,7 @@ def admin_suspendedsellers(request):
 #----------admin_productverification-------------------
 @admin_required
 def admin_productverification(request):
-    products = Product.objects.filter(approval_status='PENDING').prefetch_related(
-        Prefetch("variants", queryset=admin_variant_queryset())
-    ).order_by('-created_at')
+    products = Product.objects.filter(approval_status='PENDING').prefetch_related(Prefetch("variants", queryset=admin_variant_queryset())).order_by('-created_at')
     if request.method=="POST":
         action=request.POST.get('action')
         product_id=request.POST.get('product_id')
@@ -335,9 +331,9 @@ def admin_productverification(request):
                 product.approval_status = "REJECTED"
                 product.is_active = False
 
-        if action == "approve_all":
-            Product.objects.filter(approval_status='PENDING').update(approval_status='APPROVED',is_active=True)
-            return redirect("admin_productverification")
+        # if action == "approve_all":
+        #     Product.objects.filter(approval_status='PENDING').update(approval_status='APPROVED',is_active=True)
+        #     return redirect("admin_productverification")
 
         product.save()
         return redirect("admin_productverification")
@@ -347,9 +343,7 @@ def admin_productverification(request):
 #----------admin_approvalproduct-------------------
 @admin_required
 def admin_approvedproduct(request):
-    products = Product.objects.filter(approval_status='APPROVED').prefetch_related(
-        Prefetch("variants", queryset=admin_variant_queryset())
-    ).order_by('-created_at')
+    products = Product.objects.filter(approval_status='APPROVED').prefetch_related(Prefetch("variants", queryset=admin_variant_queryset())).order_by('-created_at')
 
     if request.method=="POST":
         product_id=request.POST.get('product_id')
@@ -370,9 +364,7 @@ def admin_approvedproduct(request):
 #----------admin_rejectproduct-------------------
 @admin_required
 def admin_rejectproduct(request):
-    products = Product.objects.filter(approval_status='REJECTED').prefetch_related(
-        Prefetch("variants", queryset=admin_variant_queryset())
-    ).order_by('-created_at')
+    products = Product.objects.filter(approval_status='REJECTED').prefetch_related(Prefetch("variants", queryset=admin_variant_queryset())).order_by('-created_at')
 
     if request.method=="POST":
         product_id=request.POST.get('product.id')

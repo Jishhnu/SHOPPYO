@@ -11,10 +11,10 @@ def role_required(allowed_roles=[]):
     def decorators(view_func):
         @wraps(view_func)
         def wrap(request, *args, **kwargs):
+            
             if not request.user.is_authenticated:
-                
-
                 return redirect_to_login(request.get_full_path())
+            
             if request.user.role not in allowed_roles:
                 raise PermissionDenied
             return view_func(request, *args, **kwargs)
@@ -28,7 +28,7 @@ customer_required = role_required(["CUSTOMER"])
 seller_required = role_required(["SELLER"])
 admin_required = role_required(["ADMIN"])
 
-
+#------Special decorator for sellers----------
 def approved_seller_required(view_func):
     @wraps(view_func)
     def wrap(request, *args, **kwargs):
