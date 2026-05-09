@@ -203,8 +203,8 @@
         <a href="{% url 'subcategory_list' category.slug %}" class="block">
             
             <div class="w-24 h-24 rounded-xl bg-ice-white flex items-center justify-center shadow-sm group-hover:scale-105 transition overflow-hidden">
-                {% if category.image_url %}
-                <img src="{{ category.image_url.url }}" alt="{{ category.name }}"
+                {% if category.image1 %}
+                <img src="{{ category.image1.url }}" alt="{{ category.name }}"
                      class="w-full h-full p-2 object-contain">
                 {% endif %}
             </div>

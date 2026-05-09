@@ -152,8 +152,8 @@
         <a href="{% url 'subcategory_product' sub.slug %}" class="absolute inset-0 z-10" aria-label="View {{ sub.name }}"></a>
 
         <div class="relative aspect-square overflow-hidden bg-slate-50">
-            {% if sub.image_url %}
-                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="{{ sub.image_url.url }}" alt="{{ sub.name }}"/>
+            {% if sub.image %}
+                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="{{ sub.image.url }}" alt="{{ sub.name }}"/>
             {% else %}
                 <img class="w-full h-full object-cover" src="https://via.placeholder.com/400x400?text={{ sub.name }}" alt="{{ sub.name }}"/>
             {% endif %}
