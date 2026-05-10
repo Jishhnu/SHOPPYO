@@ -26,7 +26,7 @@ def redirect_user_by_role(user):
     if user.role == "SELLER":
         seller_profile = getattr(user, "seller_profile", None)
         if seller_profile is None:
-            return redirect("seller_register")
+            return redirect("Seller_Register")
         if seller_profile.status == "APPROVED":
             return redirect("seller_dashboard")
         return redirect("seller_waiting")
