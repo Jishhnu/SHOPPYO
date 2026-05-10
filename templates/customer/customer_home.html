@@ -173,31 +173,7 @@
                 [scrollbar-width:none]
                 [-ms-overflow-style:none]
                 [&::-webkit-scrollbar]:hidden">
-    <!-- <div class="grid grid-cols-2 md:grid-cols-7 gap-10"> -->
 
-      <!-- {% for category in categories %}
-<div class="relative group">
-    <a href="#" class="block">
-        
-        <div class="w-24 h-24 rounded-xl bg-ice-white flex items-center justify-center shadow-sm group-hover:scale-105 transition overflow-hidden">
-            {% if category.image_url %}
-            <img src="{{ category.image_url.url }}"
-                 class="w-24 h-24 mx-auto shadow-sm rounded-xl object-contain">
-            {% endif %}
-        </div>
-
-        <div class="flex items-center justify-center mt-3 gap-1">
-            <h4 class="font-semibold text-primary"> {{ category.name }} </h4>
-            
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                 class="w-4 h-4 text-primary transform transition-transform group-hover:translate-x-1" 
-                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-        </div>
-    </a>
-</div>
-{% endfor %} -->
     {% for category in categories %}
     <div class="relative group">
         <a href="{% url 'subcategory_list' category.slug %}" class="block">
@@ -402,7 +378,7 @@
 </div>
 <p class="text-ice-blue/60 text-sm leading-relaxed">
                     Your premium destination for high-quality electronics, fashion, and home essentials. Experience shopping redefined.
-                </p>
+    </p>
 <div class="flex gap-4">
 <a class="bg-white/10 p-2 rounded-lg hover:bg-white/20 transition-colors" href="#">
 <span class="material-symbols-outlined text-lg">public</span>

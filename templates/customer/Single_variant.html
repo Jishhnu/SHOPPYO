@@ -62,27 +62,38 @@
         </span>
       </div>
     </a>
+{% if user.is_authenticated %}
+    <div class="flex items-center gap-6">
 
-<div class="flex items-center gap-6">
+            <a href="{% url 'view_cart' %}" class="flex flex-col items-center p-1 transition-colors group relative">
+                <span class="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-xl">
+                    shopping_cart
+                </span>
+                <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">
+                    Cart
+                </span>
+            </a>
 
-        <a href="{% url 'view_cart' %}" class="flex flex-col items-center p-1 transition-colors group relative">
-            <span class="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-xl">
-                shopping_cart
-            </span>
-            <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">
-                Cart
-            </span>
+            <a href="{% url 'customer_dashboard' %}" class="flex flex-col items-center p-1 transition-colors group">
+                <span class="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-xl">
+                    person
+                </span>
+                <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">
+                    Profile
+                </span>
+            </a>
+    </div>
+{% else %}
+
+        <a href="{% url 'login' %}"
+            class="relative inline-flex items-center gap-2 px-6 py-3 font-bold text-sm text-primary bg-gradient-to-r from-ice-blue to-blue-200 rounded-full shadow-lg shadow-ice-blue/30 hover:shadow-xl hover:shadow-ice-blue/50 hover:scale-105 active:scale-95 transition-all duration-300 group overflow-hidden">
+            <span class="absolute inset-0 bg-gradient-to-r from-blue-300/0 via-white/20 to-blue-300/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            <span class="material-symbols-outlined relative z-10 text-lg">lock_open</span>
+            <span class="relative z-10 hidden sm:inline">Sign In</span>
+            <span class="relative z-10 sm:hidden">Login</span>
         </a>
 
-        <a href="{% url 'customer_dashboard' %}" class="flex flex-col items-center p-1 transition-colors group">
-            <span class="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-xl">
-                person
-            </span>
-            <span class="text-xs text-white/80 font-medium -mt-1 group-hover:text-white transition-colors">
-                Profile
-            </span>
-        </a>
-</div>
+{% endif %}
 </div>
 </header>
 <main class="max-w-[1200px] mx-auto px-4 py-8">
@@ -140,21 +151,8 @@ hover:border-ice-blue bg-mist-white overflow-hidden cursor-pointer transition-al
 {% endfor %}
 
 </div>
+</div>
 
-</div>
-<!-- <div class="p-8 bg-white flex flex-col gap-4 border-r border-slate-50">
-<div class="relative aspect-square rounded-lg bg-mist-white overflow-hidden flex items-center justify-center">
-<img class="w-full h-full object-cover" data-alt="High-end black wireless noise-cancelling headphones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBmfZs1hEhbDbWgsIr6HUcDCzOA0lguSN21XxBToqFpo9hb5YVCLm2JezzvcATc6MoASiezNiU9yNtmUouG9o3bD4am52WVBsTVmC7v39ouVNx71xHUyMBjaNF2za__EGXJnbY96nJ3h_XO5aff7TqcF7EiMosVwCOVNqVFX2p3SuwXEs_sruH4TlDQSCnviCogsQHOTiGgYJyAQkli-8DXg1GJUHNPAOcgvDLLeqROj1rPa2oiWkIY5p_yn6LQJCwH-p74o9Si5Su"/>
-<button class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-sm hover:text-red-500 transition-colors">
-<span class="material-symbols-outlined fill-0 hover:fill-1">favorite</span>
-</button>
-</div>
-<div class="grid grid-cols-4 gap-3">
-<div class="aspect-square rounded-lg border-2 border-primary bg-mist-white overflow-hidden cursor-pointer">
-<img class="w-full h-full object-cover" data-alt="Main view of professional headphones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhFpwgCtKCAisFoKupXINgPWlTJFJh3tx6kH1E9bI1eaS0iwR8MlM8xAxWr5HKg5mOjqK0dqqW3xan7ff1xAeXRR6Dl2WdbvvobCYiCkUYwoJMqueDSibbv7Jx2nFaorW1p68v14Hf4ONsAaQ3qJGYjwotK7fphmYSjdrr_8ep-4EWmuVBvu6ftmqe7WkKLaSFd2c15Spr2lwN8WYPRt9ctJwmUmTckz-hywuLnd5uKiwXX7SVdwfK4hOMOxB7Np7O3OWZRddW7lAt"/>
-</div>
-</div>
-</div> -->
 <!-- Product Actions -->
 <div class="p-8 flex flex-col justify-between">
 <div>
@@ -289,34 +287,45 @@ Buy Now
 </div>
 </div>
 <!-- Cross-selling Section -->
-<div class="mt-16">
-<div class="flex items-center justify-between mb-8">
+<div class="mt-12">
+<div class="flex items-center justify-between mb-6">
 <h3 class="text-2xl font-bold text-primary">You May Also Like</h3>
-<!-- <div class="flex gap-2">
-<button class="size-10 rounded-full border border-primary/10 bg-white flex items-center justify-center hover:bg-ice-blue transition-colors">
-<span class="material-symbols-outlined text-sm">arrow_back</span>
-</button>
-<button class="size-10 rounded-full border border-primary/10 bg-white flex items-center justify-center hover:bg-ice-blue transition-colors">
-<span class="material-symbols-outlined text-sm">arrow_forward</span>
-</button>
-</div> -->
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
 <!-- Related_Product Card -->
 {% for related in related_products %}
-<div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
-  <div class="h-52 bg-mist-white rounded-lg mb-4 overflow-hidden flex items-center justify-center p-4">
+<div class="bg-mist-white rounded-lg p-4 shadow-lg hover:shadow-md transition-shadow group cursor-pointer">
+  <div class="h-52 rounded-lg mb-3 overflow-hidden flex items-center justify-center p-1">
         {% with first_variant=related.variants.all|first %}
-        {% with img=first_variant.primary_image %}
-        <img class="h-full w-full object-contain group-hover:scale-105 transition-transform duration-500" src="{{ img.image_url|default:'/static/images/placeholder.jpg' }}" alt="{{ related.name }}">
-        {% endwith %}
+    {% with img=first_variant.primary_image %}
+    <img class="h-full w-full object-contain group-hover:scale-110 transition-transform duration-500" src="{{ img.image_url|default:'/static/images/placeholder.jpg' }}" alt="{{ related.name }}">
+    {% endwith %}
         {% endwith %}
   </div>
 <h4 class="font-bold text-primary truncate">{{ related.name }}</h4>
-<p class="text-sm text-charcoal/60 mb-2">{{ related.brand }}</p>
+<p class="text-sm text-charcoal/60 mb-1">{{ related.brand }}</p>
+
+<!-- Star Rating -->
+    <div class="flex items-center mb-1">
+      <div class="flex text-amber-400 gap-0.5">
+        <span class="material-symbols-outlined text-xs fill-1">star</span>
+        <span class="material-symbols-outlined text-xs fill-1">star</span>
+        <span class="material-symbols-outlined text-xs fill-1">star</span>
+        <span class="material-symbols-outlined text-xs fill-1">star</span>
+        <span class="material-symbols-outlined text-xs opacity-30">star</span>
+      </div>
+      <span class="text-[10px] text-slate-400 ml-1">(248)</span>
+    </div>
+
+    <!-- Price Section -->
 <div class="flex items-center justify-between">
         {% with related.variants.all|first as first_variant %}
-        <span class="font-bold text-primary">₹{{ first_variant.selling_price|floatformat:0 }}</span>
+            <div class="flex items-baseline gap-2">
+            <span class="text-lg font-black text-primary">₹{{ first_variant.selling_price|floatformat:0 }}</span>
+            {% if first_variant.mrp %}
+            <span class="text-xs text-slate-400 line-through">₹{{ first_variant.mrp|floatformat:0 }}</span>
+            {% endif %}
+            </div>
         {% endwith %}
         {% with related.variants.first as first_variant %}
         {% if first_variant %}
@@ -328,8 +337,6 @@ Buy Now
 </div>
 </div>
 {% endfor %}
-
-
 </div>
 </div>
 </main>
@@ -448,18 +455,28 @@ Buy Now
 <div class="max-w-[1400px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
 <div>
 <div class="flex items-center gap-2 mb-6">
-<span class="material-symbols-outlined text-3xl">shopping_bag</span>
-<h2 class="text-2xl font-black tracking-tight">ShoppyO</h2>
+    <div class="bg-gradient-to-br from-white/20 to-transparent p-2.5 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl font-light">shopping_bag</span>
+      </div>
+      
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-extrabold tracking-tighter leading-none">
+          Shoppy<span class="text-blue-300">O</span>
+        </h1>
+      </div>
 </div>
-<p class="text-charcoal/40 text-sm leading-relaxed mb-6">
-                    Premium audio equipment and tech accessories for the modern professional. Quality and style, delivered worldwide.
-                </p>
+<p class="text-ice-blue/60 text-sm leading-relaxed mb-6">
+                    Your premium destination for high-quality electronics, fashion, and home essentials. Experience shopping redefined.
+    </p>
 <div class="flex gap-4">
-<a class="size-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-ice-blue hover:text-primary transition-all" href="#">
-<span class="material-symbols-outlined text-xl">share</span>
+<a class="bg-white/10 p-2 rounded-lg hover:bg-white/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">public</span>
 </a>
-<a class="size-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-ice-blue hover:text-primary transition-all" href="#">
-<span class="material-symbols-outlined text-xl">mail</span>
+<a class="bg-white/10 p-2 rounded-lg hover:bg-white/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">alternate_email</span>
+</a>
+<a class="bg-white/10 p-2 rounded-lg hover:bg-white/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">call</span>
 </a>
 </div>
 </div>
@@ -501,7 +518,6 @@ Buy Now
 </div>
 </div>
 </footer>
-</body>
 <script>
 function updateMainImage(src, element) {
     // 1. Swap the main image source
@@ -517,4 +533,5 @@ function updateMainImage(src, element) {
     element.parentElement.classList.remove('border-transparent');
     element.parentElement.classList.add('border-primary');
 }
-</script></html>
+</script>
+</body></html>
