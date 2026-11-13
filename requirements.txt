@@ -2,10 +2,12 @@ asgiref==3.11.1
 certifi==2026.2.25
 cffi==2.0.0
 charset-normalizer==3.4.6
+cloudinary==1.47.0
 cryptography==46.0.5
 dj-database-url==3.1.2
 Django==6.0.2
 django-allauth==65.15.0
+django-cloudinary-storage==0.3.0
 Faker==28.1.0
 idna==3.11
 # mysql==0.0.3
