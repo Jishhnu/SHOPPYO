@@ -18,6 +18,11 @@ venv/
 media/
 staticfiles/
 
+# Temporary migration files
+upload_media_to_cloudinary.py
+shoppyo_data.json
+shoppyo_data_utf8.json
+
 # IDE
 .vscode/
 .idea/
