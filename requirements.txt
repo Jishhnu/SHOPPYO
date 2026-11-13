@@ -8,8 +8,8 @@ Django==6.0.2
 django-allauth==65.15.0
 Faker==28.1.0
 idna==3.11
-# mysql==0.0.3
-# mysqlclient==2.2.7
+mysql==0.0.3
+mysqlclient==2.2.7
 pillow==12.1.1
 psycopg==3.3.9
 psycopg-binary==3.3.9
